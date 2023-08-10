@@ -1,0 +1,8 @@
+<form method="post" action="{{ path('ant_heredofamiliares_delete', {'id': ant_heredofamiliare.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ant_heredofamiliare.id) }}">
+    <button class="btn btn-block btn-outline-danger btn-sm">
+        <i class="fas fa-trash-alt"> Eliminar
+        </i>
+    </button>
+</form>

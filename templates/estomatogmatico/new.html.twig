@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Estomatogmatico{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+ {{ include('full_antecedentes/ant_base.html.twig') }}
+ <br>
+    <h1>Crear nuevo registro</h1>
+<br>
+{{ include('estomatogmatico/_form.html.twig') }}
+<br>
+{% for flash_message in app.session.flashbag.get('exito') %}
+<div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+
+   
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="registros-tab" data-bs-toggle="tab" data-bs-target="#registros" type="button" role="tab" aria-controls="registros" aria-selected="true">Registros Consulta Actual</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="historia-tab" data-bs-toggle="tab" data-bs-target="#historia" type="button" role="tab" aria-controls="historia" aria-selected="false">Historial Estomatogmático</button>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="registros" role="tabpanel" aria-labelledby="registros-tab">
+        <table class="content-table table-lg">
+            <thead>
+                <tr>
+                    <th>Opciones Estomatogmáticas</th>
+                    <th>Observaciones</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="articles">
+                {% for estomatogmatico in estomatogmaticos %}
+                    <tr>
+                        <td>{{ estomatogmatico.opciones ? estomatogmatico.opciones|json_encode : '' }}</td>
+                        <td>{{ estomatogmatico.observaciones }}</td>
+                        <td>
+                            <a href="{{ path('app_estomatogmatico_edit', {p: paciente.id, id: estomatogmatico.id , c: consulta.id}) }}" style="font-size: 0.8em">Editar</a>
+                            <a href="#" class="dropdown-item delete-article" data-id="{{estomatogmatico.id}}" style="font-size: 0.8em">Eliminar</a> 
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No hay registros</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="tab-pane fade" id="historia" role="tabpanel" aria-labelledby="historia-tab">
+     <table id="example" style="width:100%" class="content-table table-lg">
+             <thead>
+               <tr>
+                    <th>Consulta</th>
+                    <th>Fecha Consulta</th>
+                    <th>Opciones Estomatogmáticas</th>
+                    <th>Observaciones</th>
+               </tr>
+            </thead>
+        <tbody>
+        {% for est in estomatogmaticos %}
+        {% if est.consulta.pacientes.id == paciente.id %}
+            <tr>
+                <td>{{est.consulta.motivoconsulta}}</td>
+                <td>{{est.consulta.fechaatencion ? est.consulta.fechaatencion|date('Y-m-d') : '' }}</td>
+                <td>{{est.opciones ? est.opciones|json_encode : '' }}</td>
+                <td>{{est.observaciones }}</td>  
+            </tr>
+         {% endif %}
+        
+          {% if est is empty  %}
+             <tr>
+               <td colspan="4">No hay registros disponibles</td>
+             </tr>
+          {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>  
+</div>
+
+
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+ <script type="text/javascript"> 
+     window.onload= function(){
+       document.getElementById("op13").style="background-color: #FDF4BC;";
+     }
+ </script> 
+
+
+<script> 
+       $(document).ready(function() {
+        $('#example').DataTable( {
+             
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+           order:[1, 'desc'],
+            columnDefs: [ {
+            targets: [ 0 ],
+            visible: false
+        } ],
+            rowGroup: {
+            dataSrc: [0]
+        },
+          
+          
+             
+  } );
+    } );
+
+  
+</script>
+
+
+ <script>
+  const articles = document.getElementById('articles');
+
+   if (articles) {
+     articles.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+              const value = e.target.getAttribute('data-id');
+              let route = "{{ path('delate_estomatogmatico', { id: 'fileId_' }) }}";
+              route = route.replace('fileId_', value);
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Signos Vitales{% endblock %}
+
+{% block body %}
+    <h1>Crear Signos Vitales</h1>
+
+    {{ include('signos_vitales/_form.html.twig') }}
+
+    <a href="{{ path('signos_vitales_index') }}">Regresar</a>
+{% endblock %}

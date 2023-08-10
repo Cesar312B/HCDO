@@ -1,0 +1,7 @@
+<form method="post" action="{{ path('employed_delete', {'id': employed.id}) }}" onsubmit="Está seguro de eliminar?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ employed.id) }}">
+    <button class="btn btn-outline-danger btn-block btn-sm">
+    <i class="fas fa-trash-alt"> Eliminar</i>
+    </button>
+</form>

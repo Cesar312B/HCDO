@@ -1,0 +1,214 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Exámenes{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+
+ {{ include('full_antecedentes/ant_base.html.twig') }}
+    {{ include('examenes/_form.html.twig') }}
+<br>
+{% for flash_message in app.session.flashbag.get('exito') %}
+    <div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+
+
+
+
+
+
+
+    <ul id="myTab1" role="tablist" class="nav nav-tabs nav-pills with-arrow flex-column flex-sm-row text-center">
+      <li class="nav-item flex-sm-fill">
+        <a id="home1-tab" data-toggle="tab" href="#home1" role="tab" aria-controls="home1" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 border active">Registros Consulta Actual</a>
+      </li>
+      <li class="nav-item flex-sm-fill">
+        <a id="profile1-tab" data-toggle="tab" href="#profile1" role="tab" aria-controls="profile1" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 border">REGISTROS TODAS LAS CONSULTAS</a>
+      </li>
+    </ul>
+
+
+    <div id="myTab1Content" class="tab-content">
+    
+      <div id="home1" role="tabpanel" aria-labelledby="home-tab" class="tab-pane fade px-4 py-5 show active">
+     
+              <div class="table-responsive">
+ 
+            <table   style="width:100%" class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Nombre Examen</th>
+                <th>Fecha Examen</th>
+                <th>Resultado Examen</th>
+                <th>Observaciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="articles5">
+        {% for examene in c %}
+            <tr>
+              
+                <td>{{ examene.nombre_examen }}</td>
+                <td>{{ examene.fecha_examen ? examene.fecha_examen|date('Y-m-d') : '' }}</td>
+                <td>{{ examene.resultado_examen }}</td>
+                <td>{{ examene.Observaciones}}</td>
+                <td>
+                    <a  class="dropdown-item" href="{{ path('examenes_edit', {p: paciente.id, c: consulta.id, id: examene.id}) }}">Editar</a>
+                    
+                     <a href="#" class="dropdown-item delete-article" data-id="{{examene.id}}" style="font-size: 0.8em">Eliminar</a>  
+                </td>
+            </tr>
+        {% if c is empty %}
+             <tr>
+               <td colspan="4">No hay registros disponibles</td>
+             </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+             </div>
+
+     </div>
+
+
+      <div id="profile1" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade px-4 py-5">
+       
+     
+    <div class="table-responsive">
+                <table  id="example" style="width:100%" class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Consulta</th>
+                <th>Fecha_Consulta</th>
+                <th>Nombre Examen</th>
+                <th>Fecha Examen</th>
+                <th>Resultado Examen</th>
+                <th>Observaciones</th>
+                <th>Acciones</th>
+              
+            </tr>
+        </thead>
+        <tbody id="articles55">
+        {% for examene in c2 %}
+            <tr>
+                 
+                <td>{{ examene.motivo_consulta }}</td>
+                <td>{{ examene.fecha_atencion ? examene.fecha_atencion|date('Y-m-d') : '' }}</td>
+                <td>{{ examene.nombre_examen }}</td>
+                <td>{{ examene.fecha_examen ? examene.fecha_examen|date('Y-m-d') : '' }}</td>
+                <td>{{ examene.resultado_examen }}</td>
+                <td>{{ examene.Observaciones}}</td>
+                 <td>
+                     <a  class="dropdown-item" href="{{ path('examenes_copiar', {p: paciente.id, c: consulta.id, id: examene.id}) }}">Copiar antecedente</a>
+                </td>
+            
+            </tr>
+            {% if c2 is empty %}
+             <tr>
+               <td colspan="4">No hay registros disponibles</td>
+             </tr>
+             {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    </div>
+      
+      </div>
+
+      </div>
+
+
+
+
+  
+     
+
+</div>
+   
+{% endblock %}
+{% block javascripts %}
+  
+  
+  
+  <script>
+
+  const articles5 = document.getElementById('articles5');
+
+   if (articles5) {
+     articles5.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+             const value = e.target.getAttribute('data-id');
+             let route = "{{ path('delate_examen', { id: 'fileId_' }) }}";
+             route = route.replace('fileId_', value);
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+
+
+    <script>
+
+  const articles55 = document.getElementById('articles55');
+
+   if (articles55) {
+     articles55.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+             const value = e.target.getAttribute('data-id');
+             let route = "{{ path('delate_examen', { id: 'fileId_' }) }}";
+             route = route.replace('fileId_', value);
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+          
+
+<script type="text/javascript"> 
+     window.onload= function(){
+       document.getElementById("op9").style="background-color: #FDF4BC;";
+     }
+ </script>
+
+
+  <script> 
+       $(document).ready(function() {
+        $('#example').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+          
+         'responsive': true,
+
+            order:[1, 'desc'],
+            columnDefs: [ {
+            targets: [ 0 ],
+            visible: false
+        } ],
+            rowGroup: {
+            dataSrc: [0]
+        },
+
+         
+  } );
+    } );
+
+  
+ </script>
+  
+
+   {% endblock %}

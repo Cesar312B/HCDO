@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit DiagnosticoD{% endblock %}
+
+{% block body %}
+ <h6>Editar Diagnostico Dental de: <b> {{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</b></h6>
+
+
+    {{ include('diagnostico_d/_form.html.twig', {'button_label': 'Update'}) }}
+
+      <a href="{{ path('app_diagnostico_d_new', {id: paciente.id, c:consulta.id}) }}">
+     <button class="btn btn-block btn-outline-warning btn-sm">
+<i class="fas fa-chevron-left">Regresar a la ficha médica</i>
+</button>
+      </a>
+
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    function mostrarOcultarCampoLado() {
+        const simbologiaSelect = document.querySelector('.simbologia-select');
+        const ladoSelect = document.querySelector('.lado-select');
+        const selectedOption = simbologiaSelect.value;
+        const opcionesMostrarLado = ['caries'];
+
+        if (opcionesMostrarLado.includes(selectedOption)) {
+            ladoSelect.style.display = 'block';
+        } else {
+            ladoSelect.style.display = 'none';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', mostrarOcultarCampoLado);
+
+    const simbologiaSelect = document.querySelector('.simbologia-select');
+    simbologiaSelect.addEventListener('change', mostrarOcultarCampoLado);
+</script>
+
+{% endblock %}

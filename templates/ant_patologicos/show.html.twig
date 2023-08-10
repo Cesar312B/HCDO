@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AntPatologicos{% endblock %}
+
+{% block body %}
+    <h1>AntPatologicos</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ant_patologico.id }}</td>
+            </tr>
+            <tr>
+                <th>Piel_anexos</th>
+                <td>{{ ant_patologico.pielAnexos }}</td>
+            </tr>
+            <tr>
+                <th>Organos_sentidos</th>
+                <td>{{ ant_patologico.organosSentidos }}</td>
+            </tr>
+            <tr>
+                <th>Respiratorio</th>
+                <td>{{ ant_patologico.respiratorio }}</td>
+            </tr>
+            <tr>
+                <th>Cardiovascular</th>
+                <td>{{ ant_patologico.cardiovascular }}</td>
+            </tr>
+            <tr>
+                <th>Digestivo</th>
+                <td>{{ ant_patologico.digestivo }}</td>
+            </tr>
+            <tr>
+                <th>Genito_urinario</th>
+                <td>{{ ant_patologico.genitoUrinario }}</td>
+            </tr>
+            <tr>
+                <th>Musculo_esqueletico</th>
+                <td>{{ ant_patologico.musculoEsqueletico }}</td>
+            </tr>
+            <tr>
+                <th>Endocrino</th>
+                <td>{{ ant_patologico.endocrino }}</td>
+            </tr>
+            <tr>
+                <th>Hemolinfatico</th>
+                <td>{{ ant_patologico.hemolinfatico }}</td>
+            </tr>
+            <tr>
+                <th>Nervioso</th>
+                <td>{{ ant_patologico.nervioso }}</td>
+            </tr>
+           
+            <tr>
+                <th>Enfermedad_actual</th>
+                <td>{{ ant_patologico.enfermedadActual }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ ant_patologico.observaciones }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ant_patologicos_index') }}">back to list</a>
+
+    <a href="{{ path('ant_patologicos_edit', {'id': ant_patologico.id}) }}">edit</a>
+
+    {{ include('ant_patologicos/_delete_form.html.twig') }}
+{% endblock %}

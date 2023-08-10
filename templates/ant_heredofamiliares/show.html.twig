@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AntHeredofamiliares{% endblock %}
+
+{% block body %}
+    <h1>AntHeredofamiliares</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ant_heredofamiliare.id }}</td>
+            </tr>
+            <tr>
+                <th>Discapacidad</th>
+                <td>{{ ant_heredofamiliare.discapacidad ? ant_heredofamiliare.discapacidad|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion_discapacidad</th>
+                <td>{{ ant_heredofamiliare.descripcionDiscapacidad }}</td>
+            </tr>
+            <tr>
+                <th>Patologia</th>
+                <td>{{ ant_heredofamiliare.Patologia }}</td>
+            </tr>
+            <tr>
+                <th>Parentesco</th>
+                <td>{{ ant_heredofamiliare.Parentesco }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ant_heredofamiliares_index') }}">back to list</a>
+
+    <a href="{{ path('ant_heredofamiliares_edit', {'id': ant_heredofamiliare.id}) }}">edit</a>
+
+    {{ include('ant_heredofamiliares/_delete_form.html.twig') }}
+{% endblock %}

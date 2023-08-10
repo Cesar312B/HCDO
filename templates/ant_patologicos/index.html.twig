@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Revisión Actual de Órganos y Sistemas{% endblock %}
+
+{% block body %}
+    <h1>Revisión Actual de Órganos y Sistemas</h1>
+    <div class="table-responsive">
+    <table  id="exmaple" style="width:100%" class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Enfermedad Actual</th>
+                <th>Piel Anexos</th>
+                <th>Órganos Sentidos</th>
+                <th>Respiratorio</th>
+                <th>Cardiovascular</th>
+                <th>Digestivo</th>
+                <th>Génito Urinario</th>
+                <th>Músculo Esquelético</th>
+                <th>Endocrino</th>
+                <th>Hemolinfático</th>
+                <th>Nervioso</th>
+                <th>Observaciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ant_patologico in ant_patologicos %}
+            <tr>
+                <td>{{ ant_patologico.enfermedadActual }}</td>
+                <td>{{ ant_patologico.pielAnexos }}</td>
+                <td>{{ ant_patologico.organosSentidos }}</td>
+                <td>{{ ant_patologico.respiratorio }}</td>
+                <td>{{ ant_patologico.cardiovascular }}</td>
+                <td>{{ ant_patologico.digestivo }}</td>
+                <td>{{ ant_patologico.genitoUrinario }}</td>
+                <td>{{ ant_patologico.musculoEsqueletico }}</td>
+                <td>{{ ant_patologico.endocrino }}</td>
+                <td>{{ ant_patologico.hemolinfatico }}</td>
+                <td>{{ ant_patologico.nervioso }}</td>
+                <td>{{ ant_patologico.observaciones }}</td>
+                <td>
+                    <a class="dropdown-item" href="/ant/patologicos/paciente/{{consulta.PI}}/antecedente/{{consulta.id}}" style="font-size: 0.8em">Editar Antecedente</a>
+                    <a href="#"  class="dropdown-item delete-article" data-id="{{consulta.id}}" style="font-size: 0.8em">Eliminar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">No existen registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+     
+    </div>
+    </div>
+    <button class="btn btn-block bg-primary btn-sm">
+    <a href="{{ path('ant_patologicos_new') }}">
+    <i class="fas fa-plus-square">
+                Crear Nuevo
+            </i>
+        </a>
+    </button>
+    
+{% endblock %}

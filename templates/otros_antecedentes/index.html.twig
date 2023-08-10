@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OtrosAntecedentes index{% endblock %}
+
+{% block body %}
+    <h1>OtrosAntecedentes index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Alergias</th>
+                <th>Vacunas</th>
+                <th>Fecha_vacuna</th>
+                <th>Lote_vacunas</th>
+                <th>Notas_vacunas</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for otros_antecedente in otros_antecedentes %}
+            <tr>
+                <td>{{ otros_antecedente.id }}</td>
+                <td>{{ otros_antecedente.alergias }}</td>
+                <td>{{ otros_antecedente.vacunas }}</td>
+                <td>{{ otros_antecedente.fechaVacuna ? otros_antecedente.fechaVacuna|date('Y-m-d') : '' }}</td>
+                <td>{{ otros_antecedente.loteVacunas }}</td>
+                <td>{{ otros_antecedente.notasVacunas }}</td>
+                <td>
+                    <a href="{{ path('otros_antecedentes_show', {'id': otros_antecedente.id}) }}">Mostrar</a>
+                    <a href="{{ path('otros_antecedentes_edit', {'id': otros_antecedente.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">No existen registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('otros_antecedentes_new') }}">Nuevo</a>
+{% endblock %}

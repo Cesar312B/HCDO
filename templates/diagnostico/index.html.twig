@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Diagnóstico{% endblock %}
+
+{% block body %}
+    <h1>Diagnóstico</h1>
+    <div class="table-responsive">
+    <table id="exmaple" style="width:100%" class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Tipo Diagnóstico</th>
+                <th>Aptitud</th>
+                <th>Exámenes Laboratorio</th>
+                <th>Fisioterapia</th>
+                <th>Recomendaciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for diagnostico in diagnosticos %}
+            <tr>
+                <td>{{ diagnostico.id }}</td>
+                <td>{{ diagnostico.tipoDiagnostico }}</td>
+                <td>{{ diagnostico.aptitud }}</td>
+                <td>{{ diagnostico.observacion }}</td>
+                <td>{{ diagnostico.limitacion }}</td>
+                <td>{{ diagnostico.recomendciones }}</td>
+                <td>
+                    <a href="{{ path('diagnostico_show', {'id': diagnostico.id}) }}">Mostrar</a>
+                    <a href="{{ path('diagnostico_edit', {'id': diagnostico.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

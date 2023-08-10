@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tratamiento{% endblock %}
+
+{% block body %}
+    <h1>Tratamiento</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Dosis</th>
+                <th>Frecuencia</th>
+                <th>Duracion</th>
+                <th>Indicaciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tratamiento in tratamientos %}
+            <tr>
+                <td>{{ tratamiento.id }}</td>
+                <td>{{ tratamiento.dosis }}</td>
+                <td>{{ tratamiento.frecuencia }}</td>
+                <td>{{ tratamiento.duracion }}</td>
+                <td>{{ tratamiento.indicaciones }}</td>
+
+                <td>
+                    <a href="{{ path('tratamiento_show', {'id': tratamiento.id}) }}">Mostrar</a>   
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <button class="btn btn-block bg-primary btn-sm">
+    <a href="{{ path('tratamiento_new') }}">Crear Nuevo</a>
+    <i class="fas fa-plus-square">
+                Crear Nuevo Puesto de Trabajo
+            </i>
+        </a>
+    </button>
+{% endblock %}

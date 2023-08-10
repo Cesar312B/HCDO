@@ -1,0 +1,238 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Antecedentes Patológicos{% endblock %}
+
+{% block body %}
+
+<div class="card-body p-5 bg-white rounded">
+
+  {{ include('full_antecedentes/ant_base.html.twig') }}
+
+    {{ include('ant_patologicos/_form.html.twig') }}
+<br>
+{% for flash_message in app.session.flashbag.get('exito') %}
+    <div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="registros-tab" data-bs-toggle="tab" data-bs-target="#registros" type="button" role="tab" aria-controls="registros" aria-selected="true">Registros Consulta Actual</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="historia-tab" data-bs-toggle="tab" data-bs-target="#historia" type="button" role="tab" aria-controls="historia" aria-selected="false">Historial AntPatologicos</button>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="registros" role="tabpanel" aria-labelledby="registros-tab">
+     <div class="table-responsive">
+    <table  id="example" style="width:100%" class="content-table table-lg">
+        <thead>
+            <tr>
+                <th>Fecha de registro</th>
+                <th>Fecha de edicion</th>
+                <th>Enfermedad Actual </th>
+                 {% if is_granted('ROLE_MEDICO')%}
+                <th>Piel Anexos </th>
+                <th>Órganos Sentidos </th>
+                <th>Respiratorio </th>
+                <th>Cardiovascular </th>
+                <th>Digestivo </th>
+                <th>Génito Urinario </th>
+                <th>Músculo Esquelético </th>
+                <th>Endócrino </th>
+                <th>Hemolinfático </th>
+                <th>Nervioso </th>
+              {% endif %}
+                <th>Observaciones </th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="articles">
+        {% for ant_patologico in antecedentes1 %}
+            <tr>
+                <td>{{ant_patologico.creatdate ? ant_patologico.creatdate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ant_patologico.updatedate ? ant_patologico.updatedate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ant_patologico.enfermedadactual }}</td>
+                {% if is_granted('ROLE_MEDICO') %}
+                <td>{{ ant_patologico.pielanexos }}</td>
+                <td>{{ ant_patologico.organossentidos }}</td>
+                <td>{{ ant_patologico.respiratorio }}</td>
+                <td>{{ ant_patologico.cardiovascular }}</td>
+                <td>{{ ant_patologico.digestivo }}</td>
+                <td>{{ ant_patologico.genitourinario}}</td>
+                <td>{{ ant_patologico.musculoesqueletico }}</td>
+                <td>{{ ant_patologico.endocrino }}</td>
+                <td>{{ ant_patologico.hemolinfatico }}</td>
+                <td>{{ ant_patologico.nervioso }}</td>
+                {% endif %}
+                <td>{{ ant_patologico.observaciones }}</td>
+                    <td> 
+                <a  class="dropdown-item" href="{{ path('ant_patologicos_edit', {p: paciente.id, id: ant_patologico.id , c: consulta.id}) }}" style="font-size: 0.8em">Editar Antecedente</a>
+                 <a href="#" class="dropdown-item delete-article" data-id="{{ant_patologico.id}}" style="font-size: 0.8em">Eliminar</a> 
+                </td>
+                 
+            </tr>
+         {% if antecedentes2 is empty %}
+           <tr>
+              <td colspan="4">No hay registros disponibles</td>
+           </tr>
+         {% endif %}
+           
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+     
+    
+    </div>
+    
+    <div class="tab-pane fade" id="historia" role="tabpanel" aria-labelledby="historia-tab">
+    <table  id="example2" style="width:100%" class="content-table table-lg">
+        <thead>
+            <tr>
+                <th>Consulta</th>
+                <th>Fecha de Consulta</th>
+                <th>Fecha de registro</th>
+                <th>Fecha de edicion</th>
+                <th>Enfermedad Actual </th>
+                 {% if is_granted('ROLE_MEDICO') or is_granted('ROLE_SUPER_ADMIN')   %}
+                <th>Piel Anexos </th>
+                <th>Órganos Sentidos </th>
+                <th>Respiratorio </th>
+                <th>Cardiovascular </th>
+                <th>Digestivo </th>
+                <th>Génito Urinario </th>
+                <th>Músculo Esquelético </th>
+                <th>Endócrino </th>
+                <th>Hemolinfático </th>
+                <th>Nervioso </th>
+              {% endif %}
+                <th>Observaciones </th>
+                
+            </tr>
+        </thead>
+        <tbody >
+        {% for ant_patologico in antecedentes2 %}
+            <tr>
+                {% if  ant_patologico.consulta.motivoconsulta is defined and ant_patologico.consulta.motivoconsulta is null  %}
+                .....
+                {% elseif ant_patologico.consulta.motivoconsulta  is defined and ant_patologico.consulta.motivoconsulta  is not null  %}
+                 <td>{{ant_patologico.consulta.motivoconsulta}}</td>
+                {% endif %}
+                {% if  ant_patologico.consulta.fechaatencion is defined and ant_patologico.consulta.fechaatencion is null  %}
+                .....
+                {% elseif ant_patologico.consulta.fechaatencion  is defined and ant_patologico.consulta.fechaatencion  is not null  %}
+                 <td>{{ant_patologico.consulta.fechaatencion ? ant_patologico.consulta.fechaatencion|date('Y-m-d H:i:s') : '' }}</td>
+                {% endif %}
+                <td>{{ ant_patologico.creatdate ? ant_patologico.creatdate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ ant_patologico.updatedate ? ant_patologico.updatedate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ ant_patologico.enfermedadactual }}</td>
+                {% if is_granted('ROLE_MEDICO') or is_granted('ROLE_SUPER_ADMIN')   %}
+                <td>{{ ant_patologico.pielanexos }}</td>
+                <td>{{ ant_patologico.organossentidos }}</td>
+                <td>{{ ant_patologico.respiratorio }}</td>
+                <td>{{ ant_patologico.cardiovascular }}</td>
+                <td>{{ ant_patologico.digestivo }}</td>
+                <td>{{ ant_patologico.genitourinario}}</td>
+                <td>{{ ant_patologico.musculoesqueletico }}</td>
+                <td>{{ ant_patologico.endocrino }}</td>
+                <td>{{ ant_patologico.hemolinfatico }}</td>
+                <td>{{ ant_patologico.nervioso }}</td>
+                {% endif %}
+                <td>{{ ant_patologico.observaciones }}</td>
+              
+             
+            </tr>
+         {% if antecedentes2 is empty %}
+           <tr>
+              <td colspan="4">No hay registros disponibles</td>
+           </tr>
+         {% endif %}
+           
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>  
+</div>
+
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+  <script> 
+       $(document).ready(function() {
+        $('#example').DataTable( {
+
+        
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+       
+         'responsive': true,
+          order:[0, 'desc'],
+         
+  } );
+    } );
+ </script>
+
+
+   <script> 
+       $(document).ready(function() {
+        $('#example2').DataTable( {
+
+        
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+       
+         'responsive': true,
+            order:[1, 'desc'],
+            columnDefs: [ {
+            targets: [ 0 ],
+            visible: false
+        } ],
+            rowGroup: {
+            dataSrc: [0]
+        },
+         
+  } );
+    } );
+ </script>
+
+
+
+<script type="text/javascript"> 
+     window.onload= function(){
+       document.getElementById("op1").style="background-color: #FDF4BC;";
+     }
+</script>
+
+
+
+<script>
+  const articles = document.getElementById('articles');
+   if (articles) {
+     articles.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+             const value = e.target.getAttribute('data-id');
+              let route = "{{ path('delate_patologicos', { id: 'fileId_' }) }}";
+              route = route.replace('fileId_', value);
+   
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+</script>
+{% endblock %}
+

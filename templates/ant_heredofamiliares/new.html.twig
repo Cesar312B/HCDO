@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New AntHeredofamiliares{% endblock %}
+
+{% block body %}
+  <div class="card-body p-5 bg-white rounded">
+
+    {{ include('full_antecedentes/ant_base.html.twig') }}
+
+    {{ include('ant_heredofamiliares/_form.html.twig') }}
+    <br>
+{% for flash_message in app.session.flashbag.get('exito') %}
+    <div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+        <div class="table-responsive">
+        <table  id="example" style="width:100%" class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha de registro</th>
+                <th>Fecha de edicion</th>
+                <th>Patología</th>
+                <th>Descripción_Enfermedad</th>
+                <th>Parentesco</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="articles4">
+        {% for c in antecedentes2 %}
+            <tr>
+                <td>{{c.id}}</td>
+                <td>{{ c.creatdate ? c.creatdate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ c.updatedate ? c.updatedate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ c.Patologia }}</td>
+                <td>{{ c.descripcion }}</td>
+                <td>{{ c.Parentesco }}</td>
+                <td>
+                   <a class="dropdown-item" href="{{ path('ant_heredofamiliares_edit', {p: paciente.id, id: c.id, c:consulta.id}) }}" style="font-size: 0.8em">Editar Antecedente</a>
+                   
+                    <a href="#" class="dropdown-item delete-article" data-id="{{c.id}}" style="font-size: 0.8em">Eliminar</a>  
+                </td>
+            </tr>
+       {% if antecedentes2 is empty %}
+         <tr>
+             <td colspan="4">No hay registros disponibles</td>
+         </tr>
+      {% endif %}
+        {% endfor %}
+    </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script> 
+$(document).ready(function() {
+      $('#example').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+       
+         'responsive': true,
+          order:[0, 'desc'],
+        } );
+} );
+</script>
+
+
+ <script>
+  const articles4 = document.getElementById('articles4');
+
+   if (articles4) {
+     articles4.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+              const value = e.target.getAttribute('data-id');
+              let route = "{{ path('delate_herencia', { id: 'fileId_' }) }}";
+              route = route.replace('fileId_', value);
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+
+   <script type="text/javascript"> 
+     window.onload= function(){
+       document.getElementById("op4").style="background-color: #FDF4BC;";
+     }
+ </script>
+
+
+
+   
+
+
+  
+
+   {% endblock %}

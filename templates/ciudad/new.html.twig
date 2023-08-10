@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Ciudad{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+    <h6>Crear Ciudad en la Provincia: <b>{{provincia.nombre}}</b>  del pais:  <b>{{provincia.pais}}</b>   </h6>
+
+    {{ include('ciudad/_form.html.twig') }}
+    </br>
+    <table class="table">
+        <thead>
+            <tr>
+               
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="articles">
+        {% for ciudad in ciudades %}
+            <tr>
+                <td>{{ ciudad.nombre }}</td>
+                <td>
+                <a href="#" class="dropdown-item  delete-article" data-id="{{ciudad.id}}"><i class="fas fa-trash-alt"></i></a> 
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+  <button class="btn btn-block btn-outline-warning btn-sm">
+    <a href="{{ path('provincia_index') }}"><i class="fas fa-chevron-left"> Regresar a ubicaciones</i></a>
+</button>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script> 
+          
+        $(function() {
+  // Sidebar toggle behavior
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+  });
+});
+</script>
+
+          <script>
+
+           const articles = document.getElementById('articles');
+
+   if (articles) {
+     articles.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item  delete-article') {
+         if (confirm('Esta seguro de elimianar este elemento?')) {
+            const value = e.target.getAttribute('data-id');
+             let route = "{{ path('delate_ciudad', { id: 'fileId_' }) }}";
+             route = route.replace('fileId_', value);
+   
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+
+
+   {% endblock %}

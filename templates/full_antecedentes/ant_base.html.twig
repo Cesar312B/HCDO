@@ -1,0 +1,582 @@
+  
+     {% set var = "Ingreso" %}  
+      {% set var2 = "Periódica" %}  
+      {% set var3 = "Salida" %}  
+       {% set var4 = "Reingreso" %}  
+       {% set var5 = "Dental" %}  
+      {% set s1 = "Mujer" %}  
+     {% set s2 = "Hombre" %}  
+
+  
+<a href="{{ path('consulta_new', {'id': paciente.id}) }}" title="Consulta" > 
+      <button class="btn btn-block btn-outline-primary btn-sm text-uppercase">
+        <i class="fas fa-chevron-left"> Regresar a consulta MEdica</i>
+      </button>
+    </a>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="card">
+                <div class="card-horizontal">
+                
+                    <div class="img-square-wrapper">
+                      {% if paciente.sexo == s2  %}
+                        <img class="mr-3  img-thumbnail shadow-sm" src="{{ asset('image/usuario.jpg') }}"  width="200" height="200" alt="Card image cap">
+                 {% elseif paciente.sexo == s1 %}
+                      <img class="mr-3  img-thumbnail shadow-sm" src="{{ asset('image/usuaria.jpg') }}"  width="200" height="200" alt="Card image cap">
+                {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Cédula: {{ paciente.cedula }}</h5></br>
+           <p class="font-weight-light text-muted mb-0">Nombre: <b>{{ paciente.pnombre }} {{ paciente.snombre }} {{ paciente.papellido }} {{ paciente.sapellido }}</p></b>
+              <p class="font-weight-light text-muted mb-0">Edad: <b>{{ date('now').diff((date(paciente.fechaNacimiento))).format('%y años') }}</p></b>
+                 <p class="font-weight-light text-muted mb-0">Sexo: <b>{{paciente.sexo}}</p></b>
+                    <p class="font-weight-light text-muted mb-0">Puesto de Trabajo: <b>{{ paciente.puestotrabajo.nombre }}</p></b>
+                    </div>
+
+                     <div style="float:right" >
+
+                    <div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h6 class="card-title">Aptitud Médica: <b>{{ consulta.tipoaptitud}}</b></h6>
+ 
+     <p class="card-text"><h6>Observaciones: <b>{{ consulta.observaciones}} </b></h6>  <h6>Recomendaciones: <b>{{ consulta.limitaciones}}</h6></b>
+     
+      {% if consulta.motivoconsulta == var3 %}
+        <h5 class="card-title">Evaluación de Retiro</h5></br>
+    <h6>{{consulta.evaluacionretiro}} <h6>
+      <h6>Observaciónes:{{consulta.observacionesretiro}} <h6>
+ {% endif %}
+      </p>
+     
+  </div>
+</div> 
+    </div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">  
+
+                                    
+<a type="button"  data-toggle="modal" data-target="#exampleModalLong3">
+ <i class="fas fa-child"> Ver Datos personales del Paciente</i> 
+</a>
+<a type="button" data-toggle="modal" data-target="#exampleModalLong1">
+<i class="fas fa-info-circle"> Ver Signos Vitales</i> 
+</a>
+<br>
+
+
+<a type="button"  data-toggle="modal">
+Motivo de la Consulta: {{consulta.motivoconsulta}}
+</a>
+<br>
+<a type="button" data-toggle="modal" >
+Medico: {{consulta.employed.Nombre}} {{consulta.employed.Apellido}}
+</a> 
+<br>
+<a type="button" data-toggle="modal" >
+Fecha de la Consulta: {{ consulta.fechaatencion ? consulta.fechaatencion|date('Y-m-d') : '' }} 
+</a> 
+
+
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  
+ 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Signos Vitales</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+       <table class="table table-striped">
+    
+    <div class="contenedor">
+       <tbody>
+         
+           
+      <tr>
+        <th>Estatura </th>
+
+          <td>
+            {% if  consulta.signosvitales.estatura is defined and consulta.signosvitales.estatura is null  %}
+            {% elseif consulta.signosvitales.estatura  is defined and consulta.signosvitales.estatura is not null  %}
+            {{ consulta.signosvitales.estatura}} Cm
+          </td> 
+            {% endif %}
+      </tr>
+
+      <tr>
+        <th>Peso </th>
+          
+          <td>
+            {% if  consulta.signosvitales.peso is defined and  consulta.signosvitales.peso is null  %}
+            {% elseif  consulta.signosvitales.peso is defined and  consulta.signosvitales.peso is not null  %}
+            {{ consulta.signosvitales.peso}} Kg
+          </td>
+            {% endif %}
+      </tr>
+          {% if  consulta.signosvitales.peso is defined and  consulta.signosvitales.peso is null  %}
+            {% elseif  consulta.signosvitales.peso is defined and  consulta.signosvitales.peso is not null  %}
+            {% set masacorporal = 0 %}
+
+
+            {% if consulta.signosvitales.estatura != 0 %}
+            {% set tv = ((consulta.signosvitales.peso)/(consulta.signosvitales.estatura **2))*10000 %}
+            {% else %}
+            {% set tv = 0 %}
+            {% endif %}
+              
+      <tr>
+        <th>Masa Corporal</th>
+            
+          <td>
+            {{ tv |number_format(2)}}  
+            {% if tv  <= 18.5  and  tv is not null %}
+              ->Bajo peso
+            {% elseif tv >= 18.6  and  tv <= 24.9 %}
+              ->Normal
+            {% elseif tv >= 25  and  tv <= 29.9 %}
+              ->Sobrepeso
+            {% elseif tv >= 30 %}
+              ->Obesidad
+            {% endif %}
+
+          {% endif %}
+          </td>
+      </tr>
+      <tr>
+                 <th>Temperatura Grados</th>
+                <td>{{ consulta.signosvitales.temperatura}} 
+                   {% if consulta.signosvitales.temperatura >= 37 %}
+                     ->Fiebre
+                  {% elseif consulta.signosvitales.temperatura < 36  and  consulta.signosvitales.grasacorporal is not null %}
+                    ->Hipotermia
+                    {% elseif consulta.signosvitales.temperatura >= 36 %}
+                    ->Normal
+                  {% endif %}
+                </td>
+                </tr>
+                <tr>
+                
+                 <th>Frecuencia Respiratoria Por Minuto</th>
+                <td>{{ consulta.signosvitales.frecuenciarespiratoria}}
+                {% if consulta.signosvitales.frecuenciarespiratoria >= 12 and consulta.signosvitales.frecuenciarespiratoria <= 20 %}
+                     ->Normal
+                  {% elseif consulta.signosvitales.frecuenciarespiratoria >= 20 %}
+                     ->Taquinea
+                  {% elseif consulta.signosvitales.frecuenciarespiratoria <= 12  and  consulta.signosvitales.grasacorporal is not null %}
+                    ->Bradipnea
+                {% endif %}
+                </td>
+                </tr>
+                <tr>
+                 <th>Sistole</th>
+                   <td>
+                   {{consulta.signosvitales.sistole}}
+                    {% if consulta.signosvitales.sistole >= 90  and consulta.signosvitales.sistole <= 120 %}
+                    ->Normal
+                     {% elseif consulta.signosvitales.sistole  >= 121   and consulta.signosvitales.sistole <= 139 %}
+                     ->PHTA
+                     {% elseif consulta.signosvitales.sistole  >= 140   %}
+                     ->HTA
+                {% endif %}
+                </td>
+                    
+
+                </tr>
+                <tr>
+                 <th>Diastole</th>
+                  <td> 
+                  {{ consulta.signosvitales.diastole}}
+                  {% if consulta.signosvitales.diastole >= 60  and consulta.signosvitales.diastole <= 80 %}
+                     Normal
+                     {% elseif consulta.signosvitales.diastole  >= 81   and consulta.signosvitales.diastole <= 89 %}
+                     ->PHTA
+                       {% elseif consulta.signosvitales.diastole  >= 90   %}
+                       ->HTA
+                   {% endif %}
+               </td>
+                </tr>
+                <tr>
+                 <th>Frecuencia Cardiaca</th>
+                <td>{{ consulta.signosvitales.frecuenciacardiaca}}
+                   {% if consulta.signosvitales.frecuenciacardiaca >= 100 %}
+                    ->Taquicardia
+                  {% elseif consulta.signosvitales.frecuenciacardiaca <= 60   and  consulta.signosvitales.grasacorporal is not null %}
+                    ->Bradicardia
+                    {% elseif consulta.signosvitales.frecuenciacardiaca > 60 and consulta.signosvitales.frecuenciacardiaca < 100 %}
+                    ->Normal
+                  {% endif %}
+                </td>
+                </tr>
+
+                <tr>
+                 <th>Saturacion de Oxígeno</th>
+                <td> 
+                 {{ consulta.signosvitales.saturacionoxigeno}}
+                 {% if  consulta.signosvitales.saturacionoxigeno  >= 95 and  consulta.signosvitales.saturacionoxigeno <= 100  %}
+                 ->Normal
+                {% elseif  consulta.signosvitales.saturacionoxigeno  > 90 and  consulta.signosvitales.saturacionoxigeno <= 94  %}
+                ->Hipoxemia leve
+                {% elseif  consulta.signosvitales.saturacionoxigeno  <= 90  and  consulta.signosvitales.grasacorporal is not null  %}
+                 ->Hipoxemia severa
+                  {% endif %}
+
+              </td>
+            
+
+                <tr>
+                 <th>Cintrura Abdominal Cm</th>
+                <td>{{ consulta.signosvitales.cintura}}
+                 {% if consulta.signosvitales.cintura <= 80  and  paciente.sexo == 'Mujer'  and  consulta.signosvitales.cintura is not null %}
+                  ->Sano 
+                 {% elseif consulta.signosvitales.cintura <= 90  and  paciente.sexo == 'Hombre'  and  consulta.signosvitales.cintura is not null %}
+                  ->Sano
+                  {% elseif consulta.signosvitales.cintura > 90 and  paciente.sexo == 'Hombre'  and  consulta.signosvitales.cintura is not null %}
+                   ->No Adecuado 
+                   {% elseif consulta.signosvitales.cintura > 80 and  paciente.sexo == 'Mujer'  and  consulta.signosvitales.cintura is not null %}
+                   ->No Adecuado
+                   {% endif %}
+                </td>
+                </tr>
+                <tr>
+                 <th>Glucosa en ayunas</th>
+                <td>{{ consulta.signosvitales.glucosaayunas}}
+                {% if consulta.signosvitales.glucosaayunas <= 70  and  consulta.signosvitales.glucosaayunas  is not null %}
+                  ->Hipoglisemia 
+                     {% elseif consulta.signosvitales.glucosaayunas > 70  and  consulta.signosvitales.glucosaayunas <= 100 %}
+                     ->Normal
+                       {% elseif consulta.signosvitales.glucosaayunas > 100  and  consulta.signosvitales.glucosaayunas <= 125 %}
+                       ->Prediabetes
+                      
+                      {% elseif consulta.signosvitales.glucosaayunas > 125 %}
+                         ->Diabetes Mellitus 
+                    {% endif %}
+                </td>
+                </tr>
+
+                <tr>
+                 <th>Glucosa Post</th>
+                <td>{{ consulta.signosvitales.glucosapost}}
+                 {% if consulta.signosvitales.glucosapost <= 140  and consulta.signosvitales.glucosapost  is not null %}
+                 ->Adecuado
+                  {% elseif consulta.signosvitales.glucosapost > 140   %}
+                  ->No Adecuado
+                  {% endif %}
+                </td>
+                </tr>
+
+         </tbody> 
+
+ </table>
+            </div>
+                
+      </div>
+      
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+<div class="modal fade" id="exampleModalLong3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Datos personales del paciente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <table class="table table-striped">
+    
+    <div class="contenedor">
+    
+        <tbody>
+          
+            <tr>
+                <th>Cédula</th>
+                <td>{{ paciente.cedula }}</td>
+            </tr>
+        
+
+            
+            <tr>
+                <th>Primer Nombre</th>
+                <td>{{ paciente.pnombre }}</td>
+            </tr>
+            <tr>
+                <th>Segundo Nombre</th>
+                <td>{{ paciente.snombre }}</td>
+            </tr>
+            <tr>
+                <th>Primer Apellido</th>
+                <td>{{ paciente.papellido }}</td>
+            </tr>
+            <tr>
+                <th>Segundo Apellido</th>
+                <td>{{ paciente.sapellido }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ paciente.sexo }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de nacimiento</th>
+                <td>{{ paciente.fechaNacimiento ? paciente.fechaNacimiento|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Estado civil</th>
+                <td>{{ paciente.estadoCivil }}</td>
+            </tr>
+            <tr>
+                <th>Tipo de sangre</th>
+                <td>{{ paciente.tipoSangre }}</td>
+            </tr>
+            <tr>
+                <th>Discapacidad</th>
+                <td>{{  paciente.discapacidad  ? paciente.discapacidad|json_encode : '' }}</td>
+                
+            </tr>
+            <tr>
+                <th>Tipo de discapacidad</th>
+                <td>{{ paciente.tipoDiscapacidad }}</td>
+            </tr>
+            <tr>
+                <th>Religión</th>
+                <td>{{ paciente.religion }}</td>
+            </tr>
+            <tr>
+                <th>Identidad de género</th>
+                <td>{{ paciente.identidadGenero }}</td>
+            </tr>
+            <tr>
+                <th>Email paciente</th>
+                <td>{{ paciente.emailPaciente }}</td>
+            </tr>
+            <tr>
+                <th>Celular</th>
+                <td>{{ paciente.celular }}</td>
+            </tr>
+            <tr>
+                <th>Fecha ingreso</th>
+                <td>{{ paciente.fechaIngreso ? paciente.fechaIngreso|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+        </div>
+    </table>
+
+ 
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+       
+      {% if consulta.motivoconsulta == var %}
+
+<nav class="navbar navbar-light navbar-expand-lg ">
+<div class="container-fluid">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+        <a class="nav-item nav-link" id="op6" href="{{ path('ant_quirugicos_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Ant Clínico Quirúrgicos</a>
+        <a class="nav-item nav-link" id="op3" href="{{ path('ant_reproductivos_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Ant Reproductivos</a>
+        <a class="nav-item nav-link" id="op2" href="{{ path('ant_no_patologicos_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Hábitos Tóxicos</a>
+        <a class="nav-item nav-link" id="op5" href="{{ path('ant_laborales_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Ant Laborales</a>
+        <a class="nav-item nav-link" id="op4" href="{{ path('ant_heredofamiliares_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Ant Familiares</a>
+        <a class="nav-item nav-link" id="op1" href=" {{ path('ant_patologicos_new', {id: paciente.id, c: consulta.id}) }}"  style="font-size: 0.57em">Revisión de Órganos y Sistemas</a>
+        <a class="nav-item nav-link" id="op12" href="{{ path('examen_fisico_new', {id: paciente.id, c: consulta.id}) }}"  style="font-size: 0.57em">Examen Físico</a>
+         <!--
+        <a class="nav-item nav-link" id="op7" href="{{ path('otros_antecedentes_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Otros Antecedentes</a>
+        -->
+        <a class="nav-item nav-link" id="op9" href="{{ path('examenes_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Resultados de Exámenes</a>
+        <a class="nav-item nav-link" id="op8" href="{{ path('diagnostico_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Diagnóstico y Tratamiento</a>
+      <!-- Main Sidebar Container
+        <a class="nav-item nav-link" id="op10" href="{{ path('nutricional_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Nutricional</a>
+         -->
+        <a class="nav-item nav-link" id="op11" href="{{ path('aptitud_edit', {id: consulta.id, p: paciente.id}) }}" style="font-size: 0.57em">Aptitud Médica</a>
+    </ul>
+  </div>
+  </div>
+
+</nav>
+
+
+{% endif %}
+
+
+
+      {% if consulta.motivoconsulta == var2 %}
+
+<nav class="navbar navbar-light navbar-expand-lg ">
+<div class="container-fluid">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+       <a class="nav-item nav-link" id="op6" href="{{ path('ant_quirugicos_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Ant Clínico Quirúrgicos</a>
+       <a class="nav-item nav-link" id="op2" href="{{ path('ant_no_patologicos_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Hábitos Tóxicos</a>
+       <a class="nav-item nav-link" id="op5" href="{{ path('ant_laborales_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Ant Laborales</a>
+       <a class="nav-item nav-link" id="op4" href="{{ path('ant_heredofamiliares_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Ant Familiares</a>
+        <a class="nav-item nav-link" id="op1" href=" {{ path('ant_patologicos_new', {id: paciente.id, c: consulta.id}) }}"  style="font-size: 0.7em">Revisión de Órganos y Sistemas</a>
+          <a class="nav-item nav-link" id="op12"  href="{{ path('examen_fisico_new', {id: paciente.id, c: consulta.id}) }}"  style="font-size: 0.7em">Examen Físico</a>
+          <!--
+        <a class="nav-item nav-link" id="op7" href="{{ path('otros_antecedentes_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Otros Antecedentes</a>
+        -->
+         <a class="nav-item nav-link" id="op9" href="{{ path('examenes_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Resultados de Exámenes</a>
+        <a class="nav-item nav-link" id="op8" href="{{ path('diagnostico_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Diagnóstico y Tratamiento</a>
+        <!--
+        <a class="nav-item nav-link" id="op10" href="{{ path('nutricional_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Nutricional</a>
+        -->
+        <a class="nav-item nav-link" id="op11" href="{{ path('aptitud_edit', {id: consulta.id, p: paciente.id}) }}" style="font-size: 0.7em">Aptitud Médica</a>
+    </ul>
+  </div>
+  </div>
+
+</nav>
+{% endif %}
+
+
+  {% if consulta.motivoconsulta == var3 %}
+
+<nav class="navbar navbar-light navbar-expand-lg ">
+<div class="container-fluid">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto"> 
+
+        <a class="nav-item nav-link" id="op6" href="{{ path('ant_quirugicos_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Ant Clínico Quirúrgicos</a>
+        <a class="nav-item nav-link" id="op5" href="{{ path('ant_laborales_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Ant Laborales</a>
+        <a class="nav-item nav-link" id="op12"  href="{{ path('examen_fisico_new', {id: paciente.id, c: consulta.id}) }}"  style="font-size: 0.7em">Examen Físico</a> 
+        <!--  
+        <a class="nav-item nav-link" id="op7" href="{{ path('otros_antecedentes_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Otros Antecedentes</a>
+        -->
+        <a class="nav-item nav-link" id="op9" href="{{ path('examenes_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Resultados de Exámenes</a>
+        <a class="nav-item nav-link" id="op8" href="{{ path('diagnostico_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Diagnóstico y Tratamiento</a>
+        <!--
+        <a class="nav-item nav-link" id="op10" href="{{ path('nutricional_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Nutricional</a>
+        -->
+        <a class="nav-item nav-link" id="op13" href="{{ path('retiro_edit', {p: paciente.id, id: consulta.id}) }}" style="font-size: 0.7em"> Evaluación de Retiro </a>
+    </ul>
+  </div>
+  </div>
+
+</nav>
+{% endif %}
+
+
+
+
+
+{% if consulta.motivoconsulta == var4 %}
+
+<nav class="navbar navbar-light navbar-expand-lg ">
+<div class="container-fluid">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <a class="nav-item nav-link" id="op1"  href="{{ path('ant_patologicos_new', {id: paciente.id, c: consulta.id}) }}"  style="font-size: 0.7em">Revisión de Organos y Sistemas</a>
+        <a class="nav-item nav-link" id="op12"  href="{{ path('examen_fisico_new', {id: paciente.id, c: consulta.id}) }}"  style="font-size: 0.7em">Examen Físico</a>
+        <!--
+        <a class="nav-item nav-link" id="op7" href="{{ path('otros_antecedentes_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Otros Antecedentes</a>
+        -->
+        <a class="nav-item nav-link" id="op9" href="{{ path('examenes_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Resultados de Exámenes</a>
+        <a class="nav-item nav-link" id="op8" href="{{ path('diagnostico_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Diagnóstico y Tratamiento</a>
+        <!--
+        <a class="nav-item nav-link" id="op10" href="{{ path('nutricional_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.7em">Nutricional</a>
+        -->
+        <a class="nav-item nav-link" id="op11" href="{{ path('aptitud_edit', {id: consulta.id, p: paciente.id}) }}" style="font-size: 0.7em">Aptitud Médica</a>
+    </ul>
+  </div>
+
+  </div>
+
+</nav>
+
+{% endif %}
+
+
+
+{% if consulta.motivoconsulta == var5 %}
+
+<nav class="navbar navbar-light navbar-expand-lg ">
+<div class="container-fluid">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+        <a class="nav-item nav-link" id="op1" href=" {{ path('ant_patologicos_new', {id: paciente.id, c: consulta.id}) }}"  style="font-size: 0.57em">Revisión de Órganos y Sistemas</a>
+        <a class="nav-item nav-link" id="op4" href="{{ path('ant_heredofamiliares_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Ant HeredoFamiliares</a>
+        <a class="nav-item nav-link" id="op13" href="{{ path('app_estomatogmatico_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Examen del Sistema Estomatogmatico</a>
+        <a class="nav-item nav-link" id="op14" href="{{ path('app_diagnostico_d_new', {id: paciente.id, c: consulta.id}) }}" style="font-size: 0.57em">Odontograma</a>
+    </ul>
+  </div>
+  </div>
+
+</nav>
+
+{% endif %}
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+

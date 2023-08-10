@@ -1,0 +1,161 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pacientes{% endblock %}
+
+{% block body %}
+<div class="page-header">
+   <img src="{{ asset('image/Recursos_Banner 2.jpg') }}" height="100" width=100% >
+</div> 
+    <div class="card-body p-5 bg-white rounded">
+    <a href="{{ path('pacientes_new') }}">
+    <button class="btn btn-block bg-primary btn-sm">
+    <i class="fas fa-plus-square"></i>
+    Crear Nuevo Paciente
+    </button>
+    </a>
+
+  {% if is_granted("ROLE_SUPER_ADMIN") %}
+      
+{{ form_start(form) }}
+ </br>
+      {{ form_row(form.file, {
+        attr: {
+            'placeholder': 'Seleccione un archivo'
+        }
+    }) }}
+       <button class="btn btn-block btn-success btn-sm">
+    <i class="fas fa-file-import"></i>
+                  {{ button_label|default('Importar datos') }}
+    </button>
+     {{ form_end(form) }}
+ {% endif %}
+     </br>
+
+  {% if is_granted('ROLE_MEDICO') or is_granted('ROLE_SUPER_ADMIN') or  is_granted('ROLE_ODONTOLOGO')   %}
+       <div class="table-responsive">
+       <table id="example" class="content-table table-sm" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Cedula</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Fecha Nacimiento</th>
+                <th>Edad</th>
+                <th>Fecha Ingreso</th>
+                <th>Provincia</th>
+                <th>Ciudad</th>
+                <th>Puesto de Trabajo </th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for paciente in pacientes %}
+            <tr>
+           
+                <td>{{ paciente.id }}</td>
+                <td>{{ paciente.cedula }}</td>
+               
+                <td>{{ paciente.pnombre }} {{ paciente.snombre }}</td>
+                <td>{{ paciente.papellido }} {{ paciente.sapellido }}</td>
+                <td>{{ paciente.fechaNacimiento ? paciente.fechaNacimiento|date('Y-m-d') : '' }}</td>
+                <td>{{ date('now').diff((date(paciente.fechaNacimiento))).format('%y años') }}</td>
+                <td>{{ paciente.fechaIngreso ? paciente.fechaIngreso|date('Y-m-d') : '' }}</td>
+                 <td>
+                {% if  paciente.ciudad.provincia.nombre is defined and paciente.ciudad.provincia.nombre is null  %}
+                .....
+                {% elseif paciente.ciudad.provincia.nombre  is defined and paciente.ciudad.provincia.nombre  is not null  %}
+                {{ paciente.ciudad.provincia.nombre}}
+                {% endif %}
+                 </td>
+                 <td>
+                {% if  paciente.ciudad.nombre is defined and paciente.ciudad.nombre is null  %}
+                .....
+                {% elseif paciente.ciudad.nombre  is defined and paciente.ciudad.nombre  is not null  %}
+                {{ paciente.ciudad.nombre}}
+                {% endif %}
+                 </td>
+           
+                <td>
+
+                {% if  paciente.puestotrabajo.nombre is defined and paciente.puestotrabajo.nombre is null  %}
+                   ....
+                  {% elseif paciente.puestotrabajo.nombre is defined and paciente.puestotrabajo.nombre is not null  %}
+                     {{ paciente.puestotrabajo.nombre}}
+                {% endif %}
+                
+                </td>
+
+                <td>
+
+                    <a href="{{ path('consulta_new', {'id': paciente.id}) }}" title="Ficha Médica"><i class="fas fa-calendar-plus"></i></a> 
+                   
+                </td>
+
+            </tr>
+           {% if paciente is empty  %}
+            <tr>
+                <td colspan="25">No Existen Registros</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+          
+        </tbody>
+        <tfoot>
+        </tfoot>
+       
+    </table>
+ </div>
+  {% endif %}
+
+
+      
+
+        </div>
+
+ 
+{% endblock %}
+
+
+{% block javascripts %}
+<script> 
+          
+        $(function() {
+  // Sidebar toggle behavior
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+  });
+});
+        </script>
+
+  <script> 
+       $(document).ready(function() {
+        $('#example').DataTable( {
+
+             
+        
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+          dom: 'Bfrtip',
+       
+         'responsive': true,
+         "order": [[ 0, "desc" ]],
+ 
+
+         
+  } );
+    } );
+
+  
+ </script>
+
+
+
+
+
+  
+
+   {% endblock %}
+

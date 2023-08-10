@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo CIE{% endblock %}
+
+{% block body %}
+ <div class="card-body p-5 bg-white rounded">
+    <h1>Crear Nueva enfermedad CIE10</h1>
+
+  {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button class="btn btn-block bg-gradient-primary btn-sm">
+    <i class="fas fa-save"></i>
+    {{ button_label|default('Guardar') }}
+    </button>
+{{ form_end(form) }}
+  </br>
+    <button class="btn btn-block btn-outline-warning btn-sm">
+      <a href="{{ path('c_i_e_index') }}"><i class="fas fa-chevron-left"> Regresar a la CIE10</i>
+      </a>
+    </button>
+</div>
+{% endblock %}

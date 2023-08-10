@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Diagnostico{% endblock %}
+
+{% block body %}
+    <h1>Diagnostico</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ diagnostico.id }}</td>
+            </tr>
+            <tr>
+                <th>Tipo Diagnóstico</th>
+                <td>{{ diagnostico.tipoDiagnostico }}</td>
+            </tr>
+            <tr>
+                <th>Aptitud</th>
+                <td>{{ diagnostico.aptitud }}</td>
+            </tr>
+            <tr>
+                <th>Observación</th>
+                <td>{{ diagnostico.observacion }}</td>
+            </tr>
+            <tr>
+                <th>Limitación</th>
+                <td>{{ diagnostico.limitacion }}</td>
+            </tr>
+            <tr>
+                <th>Recomendaciones</th>
+                <td>{{ diagnostico.recomendciones }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('diagnostico_index') }}">back to list</a>
+
+    <a href="{{ path('diagnostico_edit', {'id': diagnostico.id}) }}">edit</a>
+
+    {{ include('diagnostico/_delete_form.html.twig') }}
+{% endblock %}

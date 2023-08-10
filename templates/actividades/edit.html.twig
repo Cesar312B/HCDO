@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Actividades{% endblock %}
+
+{% block body %}
+     <h6>Editar actividades del puesto de trabajo: <b>{{puesto.nombre}}</b></h6>
+
+    {{ include('actividades/_form.html.twig', {'button_label': 'Actualizar'}) }}
+
+     <button class="btn btn-block btn-outline-warning btn-sm">
+     <a href="{{ path('actividades_new', {'id': puesto.id}) }}" title="Regresar a la Lista"><i class="fas fa-chevron-left"> Regresar a la matriz de riesgos</i></a>
+     </button>
+{% endblock %}

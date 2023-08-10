@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CIE index{% endblock %}
+
+{% block body %}
+<div class="page-header">
+   <img src="{{ asset('image/Recursos_Banner 5.jpg') }}" height="100" width=100% >
+</div> 
+  <div class="card-body p-5 bg-white rounded">
+    </br>
+    <button class="btn btn-block bg-primary btn-sm">
+        <a href="{{ path('c_i_e_new') }}">
+            <i class="fas fa-plus-square">
+                Registrar nueva enfermedad CIE10
+            </i>    
+        </a>
+     </button>
+    </br>
+{{ form_start(form) }}
+      {{ form_row(form.file, {
+        attr: {
+            'placeholder': 'Seleccione un archivo'
+        }
+    }) }}
+
+    <button class="btn btn-block btn-success btn-sm">
+        <i class="fas fa-file-import"></i>
+            {{ button_label|default('Importar datos') }}
+    </button>
+
+     {{ form_end(form) }}
+     </br>
+
+        <div class="table-responsive" >
+    <table class="records_list table table-striped table-bordered table-hover w-100" id="mydatatable">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>Tipo</th>
+                <th>Codigo_Tipo</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th><input type="text" class="form-control" placeholder="Filtrar.." /></th>
+                <th><input type="text" class="form-control" placeholder="Filtrar.." /></th>
+                <th><input type="text" class="form-control" placeholder="Filtrar.." /></th>
+                <th><input type="text" class="form-control" placeholder="Filtrar.." /></th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+    </div>
+
+<style>
+#mydatatable tfoot input{
+    width: 100% !important;
+}
+#mydatatable tfoot {
+    display: table-header-group !important;
+}
+.dataTables_filter {
+	display: none;
+}
+/* Move tfood in the upper part of the table */
+tfoot {
+    display: table-header-group;
+}
+</style>
+   
+
+{% endblock %}
+
+
+{% block javascripts %}
+<script> 
+          
+        $(function() {
+  // Sidebar toggle behavior
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+  });
+});
+        </script>
+
+
+<script>
+$(document).ready(function() {
+
+  var path = "{{ path('server_processing_cie') }}";
+ 
+    var table = $('#mydatatable').DataTable({
+        language: {
+            "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+        },
+
+
+        responsive: true,
+        ordering: false,
+        processing: true,
+        stateSave: true,
+        serverSide: true, 
+
+        lengthMenu: [
+            [5, 10, 25],
+            [5, 10, 25],
+        ],
+        ajax: path,
+        columnDefs: [
+            { name: "codigo", targets: 0},
+            { name: "descripcion", targets: 1 },
+            { name: "tipo", targets: 2 },
+            { name: "codigo_tipo", targets: 3 }, 
+        ],
+
+        rowGroup: {
+            startRender: null,
+            startRender: function ( rows, group ) {
+                return group +' ('+rows.count()+')';
+            },
+            dataSrc: 2
+        },
+
+
+  
+        "initComplete": function () {
+            this.api().columns().every( function () {
+                
+                var that = this;
+
+                $( 'input', this.footer() ).on( 'keyup change', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                        }
+                });
+            })
+        },
+
+
+       
+
+    });
+
+    
+  
+
+  
+
+ $('tfoot').each(function () {
+    $(this).insertAfter($(this).siblings('thead'));
+});
+
+
+
+});
+</script>
+
+
+
+
+  
+
+   {% endblock %}

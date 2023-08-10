@@ -1,0 +1,47 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Diagnostico{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+    <h6>Editar Diagnóstico para el/la Paciente: <b> {{diagnostico.pacientes.pnombre}} {{diagnostico.pacientes.snombre}} {{diagnostico.pacientes.papellido}} {{diagnostico.pacientes.sapellido}}</b></h6>
+    <h6>Motivo de la Consulta: <b>{{ diagnostico.consulta.motivoconsulta }}</b>  Fecha: <b>{{ diagnostico.consulta.fechaatencion  ? diagnostico.consulta.fechaatencion|date('Y-m-d') : '' }}</b> Médico: <b>{{consulta.employed.Nombre }} {{consulta.employed.Apellido }}</b></h6>
+</br>
+{% for flash_message in app.session.flashbag.get('exito') %}
+<div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+    {{ include('diagnostico/_form.html.twig', {'button_label': ' Actualizar'}) }}
+    
+    <a href="{{ path('diagnostico_new', {id: paciente.id, c: consulta.id}) }}">
+    
+    <button class="btn btn-block btn-outline-warning btn-sm">
+<i class="fas fa-chevron-left">Regresar a ficha médica</i>
+</button>
+      </a>
+
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+          $('select[data-select="true"]').select2({
+                minimumInputLength: 2,
+             allowClear: true,
+             placeholder: 'Seleccione un medicamento->'
+          });
+        });
+    </script>
+  
+
+ 
+
+
+  
+
+   {% endblock %}

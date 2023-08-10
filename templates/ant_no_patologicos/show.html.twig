@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AntNoPatologicos{% endblock %}
+
+{% block body %}
+    <h1>AntNoPatologicos</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ant_no_patologico.id }}</td>
+            </tr>
+            <tr>
+                <th>Actividad_fisica</th>
+                <td>{{ ant_no_patologico.actividadFisica }}</td>
+            </tr>
+            <tr>
+                <th>Tabaquismo</th>
+                <td>{{ ant_no_patologico.tabaquismo }}</td>
+            </tr>
+            <tr>
+                <th>Alcoholismo</th>
+                <td>{{ ant_no_patologico.alcoholismo }}</td>
+            </tr>
+            <tr>
+                <th>Uso_otras_sustancias</th>
+                <td>{{ ant_no_patologico.usoOtrasSustancias }}</td>
+            </tr>
+            <tr>
+                <th>Vacuna_reciente</th>
+                <td>{{ ant_no_patologico.vacunaReciente }}</td>
+            </tr>
+            <tr>
+                <th>Otros_anp</th>
+                <td>{{ ant_no_patologico.otrosAnp }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ant_no_patologicos_index') }}">Regresar a la lista</a>
+
+    <a href="{{ path('ant_no_patologicos_edit', {'id': ant_no_patologico.id}) }}">Editar</a>
+
+    {{ include('ant_no_patologicos/_delete_form.html.twig') }}
+{% endblock %}

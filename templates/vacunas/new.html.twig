@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vacunas{% endblock %}
+
+{% block body %}
+    <h1 class="text-primary">Crear nueva vacuna</h1>
+
+    {{ include('vacunas/_form.html.twig') }}
+</p>
+    <button class="btn btn-block btn-outline-warning btn-sm">
+    <a href="{{ path('vacunas_index') }}"> <i class="fas fa-chevron-left">Regresar a vacunas</i></a>
+    </button>
+{% endblock %}

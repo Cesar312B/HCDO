@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="page-header">
+   <img src="{{ asset('image/Recursos_Banner 1.jpg') }}" height="100" width=100% >
+</div> 
+<div class="card-body p-5 bg-white rounded">
+
+<button class="btn bg-primary btn-sm">
+    <a href="{{ path('employed_new') }}">
+    Registrar Nuevo Médico
+    <i class="fas fa-plus-square"></i>
+    </a>
+    </button>
+    </br>
+       <div class="table-responsive">
+            <table id="example" style="width:100%" class="content-table table-sm">
+              <thead>
+                <tr>
+                <th>Cédula</th>
+                <th>Nombre</th>
+                <th>Foto</th>
+                <th>Especialidad</th>
+                <th>Unidad Operativa</th>
+                <th>Fecha Ingreso</th>
+                <th>Roles</th>
+                <th>Bloqueado</th>
+                <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                 {% for employed in employeds %}
+            <tr>
+                <td>{{ employed.username }}</td>
+                <td>{{ employed.Nombre }} {{ employed.Apellido }}</td>
+                <td> <img src="{{ asset('uploads/'~employed.foto) }}" alt="" width="50" class="mr-3 rounded-circle img-thumbnail shadow-sm"></td>
+                <td>{{ employed.Profesion }}</td>
+                <td>{{ employed.unidadesoperativas.nombre }}</td>
+                <td>{{ employed.FechaIngreso ? employed.FechaIngreso|date('Y-m-d') : '' }}</td>
+                <td>{{ employed.roles ? employed.roles|json_encode : '' }}</td>
+                <td>{{ employed.isActive ? 'No' : 'Si' }}</td>
+                <td>
+                    <a href="{{ path('employed_edit', {'id': employed.id}) }}" title="Editar"><i class="fas fa-edit"></i> </a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+              </tbody>
+            </table>
+            </div>
+</div>
+
+ 
+{% endblock %}
+
+{% block javascripts %}
+
+  <script> 
+          $(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Plfrtip',
+       
+          columnDefs: [
+        
+             {
+                searchPanes: {
+                    show: true
+                },
+                targets: [6]
+            },
+
+        
+           
+        ],
+       language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json',
+
+             searchPanes: {
+                clearMessage: 'Limpiar Panel',
+                title: {
+                     _: 'Filters Selected - %d',
+                    0: 'Ningun Filtro Seleccionado',
+                    1: 'Filtros seleccionado - %d', 
+                   
+                },
+                
+
+            }
+        },
+
+       
+         'responsive': true,
+    });
+});
+   
+  
+        </script>
+
+
+  
+
+   {% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Antecedentes No Patológicos{% endblock %}
+
+{% block body %}
+    <h1>Antecedentes No Patológicos</h1>
+    <div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Realiza Actividad Física</th>
+                <th>Actividad Física</th>
+                <th>Frecuencia</th>
+
+                <th>Consumo de Alcohol</th>
+                <th>Frecuencia</th>
+                <th>Tiempo Consumo (años)</th>
+                <th>Exconsumidor</th>
+                <th>Abstinencia (años)</th>
+
+                <th>Consumo de Tabaco</th>
+                <th>Frecuencia</th>
+                <th>Tiempo Consumo (años)</th>
+                <th>Exconsumidor</th>
+                <th>Abstinencia (años)</th>
+
+                <th>Consumo de Drogas</th>
+                <th>Tipo de Droga</th>
+                <th>Frecuencia</th>
+                <th>Tiempo Consumo (años)</th>
+                <th>Exconsumidor</th>
+                <th>Abstinencia (años)</th>
+
+                <th>Consumo de Medicamentos</th>
+                <th>Medicación Habitual</th>
+                <th>Años de consumo</th>
+
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ant_no_patologico in ant_no_patologicos %}
+            <tr>
+                <td>{{ ant_no_patologico.deporte_select }}</td>
+                <td>{{ ant_no_patologico.actividadfisica }}</td>
+                <td>{{ ant_no_patologico.numero_actividad_fisica }}</td>
+
+                <td>{{ ant_no_patologico.sustancia_selec }}</td>
+                <td>{{ ant_no_patologico.tiempo_consumo_a }}</td>
+                <td>{{ ant_no_patologico.cantidad_a }}</td>
+                <td>{{ ant_no_patologico.exconsumidor_a }}</td>
+                <td>{{ ant_no_patologico.tiempo_abstinencia_a }}</td>
+
+                <td>{{ ant_no_patologico.tabaco }}</td>
+                <td>{{ ant_no_patologico.tiempo_consumo }}</td>
+                <td>{{ ant_no_patologico.cantidad }}</td>
+                <td>{{ ant_no_patologico.exconsumidor }}</td>
+                <td>{{ ant_no_patologico.tiempo_abstinencia }}</td>
+
+                <td>{{ ant_no_patologico.uso_sustancias }}</td>
+                <td>{{ ant_no_patologico.droga_descripcion }}</td>
+                <td>{{ ant_no_patologico.tiempo_consumo_d }}</td>
+                <td>{{ ant_no_patologico.numero_sustancias }}</td>
+                <td>{{ ant_no_patologico.ex_consumidor }}</td>
+                <td>{{ ant_no_patologico.tiempo_abstinencia_d }}</td>
+
+                <td>{{ ant_no_patologico.medicamento_select }}</td>
+                <td>{{ ant_no_patologico.medicacion_abitual }}</td>
+                <td>{{ ant_no_patologico.cantdad_medicacion }}</td>
+                <td>
+                    <a href="{{ path('ant_no_patologicos_show', {'id': ant_no_patologico.id}) }}">Mostrar</a>
+                    <a href="{{ path('ant_no_patologicos_edit', {'id': ant_no_patologico.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">No existen registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <button class="btn btn-block bg-primary btn-sm">
+        <a href="{{ path('ant_no_patologicos_new') }}
+            <i class="fas fa-plus-square">
+                Crear Nuevo Puesto de Trabajo
+            </i>
+        </a>
+    </button>
+{% endblock %}

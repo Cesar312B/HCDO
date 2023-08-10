@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AntReproductivos index{% endblock %}
+
+{% block body %}
+    <h1>AntReproductivos index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Menarquia</th>
+                <th>Ciclos</th>
+                <th>Gestas</th>
+                <th>Partos</th>
+                <th>Abortos</th>
+                <th>Hijos</th>
+                <th>Vida_sexual</th>
+                <th>Última Menstruación</th>
+                <th>Ultima_mastografia</th>
+                <th>Fecha_colposcopia</th>
+                <th>Resultado_colposcopia</th>
+                <th>Edad_inicio_act_sexual</th>
+                <th>Otros_antrep</th>
+                <th>Metodo_planificacion</th>
+                <th>Examen_realizado</th>
+                <th>Tiempo_er</th>
+                <th>Resultado_er</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ant_reproductivo in ant_reproductivos %}
+            <tr>
+                <td>{{ ant_reproductivo.id }}</td>
+                <td>{{ ant_reproductivo.menarquia }}</td>
+                <td>{{ ant_reproductivo.ciclos }}</td>
+                <td>{{ ant_reproductivo.gestas }}</td>
+                <td>{{ ant_reproductivo.partos }}</td>
+                <td>{{ ant_reproductivo.abortos }}</td>
+                <td>{{ ant_reproductivo.hijos }}</td>
+                <td>{{ ant_reproductivo.vidaSexual }}</td>
+                <td>{{ ant_reproductivo.ultimaMenstruacion ? ant_reproductivo.ultimaMenstruacion|date('Y-m-d') : '' }} }}</td>
+
+                <td>{{ ant_reproductivo.ultimaMastografia }}</td>
+                <td>{{ ant_reproductivo.fechaColposcopia ? ant_reproductivo.fechaColposcopia|date('Y-m-d') : '' }}</td>
+                <td>{{ ant_reproductivo.resultadoColposcopia }}</td>
+                <td>{{ ant_reproductivo.edadInicioActSexual }}</td>
+                <td>{{ ant_reproductivo.otrosAntrep }}</td>
+                <td>{{ ant_reproductivo.metodoPlanificacion }}</td>
+                <td>{{ ant_reproductivo.examenRealizado }}</td>
+                <td>{{ ant_reproductivo.tiempoEr }}</td>
+                <td>{{ ant_reproductivo.resultadoEr }}</td>
+                <td>
+                    <a href="{{ path('ant_reproductivos_show', {'id': ant_reproductivo.id}) }}">show</a>
+                    <a href="{{ path('ant_reproductivos_edit', {'id': ant_reproductivo.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="18">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('ant_reproductivos_new') }}">Crear Nuevo</a>
+{% endblock %}

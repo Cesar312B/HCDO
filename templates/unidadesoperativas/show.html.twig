@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Unidadesoperativas{% endblock %}
+
+{% block body %}
+    <h1>Unidad Operativa</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ unidadesoperativa.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ unidadesoperativa.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Ruc</th>
+                <td>{{ unidadesoperativa.ruc }}</td>
+            </tr>
+            <tr>
+                <th>Regional</th>
+                <td>{{ unidadesoperativa.regional }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ unidadesoperativa.estado ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('unidadesoperativas_index') }}">Regresar a la Lista</a>
+
+    <a href="{{ path('unidadesoperativas_edit', {'id': unidadesoperativa.id}) }}">Editar</a>
+
+    {{ include('unidadesoperativas/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nueva Provincia{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+    <h1>Crear nueva provincia</h1>
+
+    {{ include('provincia/_form.html.twig') }}
+
+    <button class="btn btn-block btn-outline-warning btn-sm">
+    <a href="{{ path('provincia_index') }}"><i class="fas fa-chevron-left"> Regresar a ubicaciones</i> 
+    </a>
+    </button>
+</div>
+{% endblock %}

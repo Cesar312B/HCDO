@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulta Inicio{% endblock %}
+
+{% block body %}
+    <h1>Consulta Inicio</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Motivo Consulta</th>
+                <th>Fecha Atención</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for consultum in consultas %}
+            <tr>
+                <td>{{ consultum.id }}</td>
+                <td>{{ consultum.motivoConsulta }}</td>
+                <td>{{ consultum.fechaAtencion ? consultum.fechaAtencion|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('consulta_show', {'id': consultum.id}) }}">Mostrar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

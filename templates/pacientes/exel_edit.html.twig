@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pacientes{% endblock %}
+
+{% block body %}
+    <div class="card-body p-5 bg-white rounded">
+
+    <a href="{{ path('pacientes_new') }}">
+    <button class="btn btn-block bg-primary btn-sm">
+    <i class="fas fa-plus-square"></i>
+    Crear Nuevo Paciente
+    </button>
+    </a>
+
+      
+{{ form_start(form) }}
+ </br>
+      {{ form_row(form.file, {
+        attr: {
+            'placeholder': 'Seleccione un archivo'
+        }
+    }) }}
+       <button class="btn btn-block btn-success btn-sm">
+    <i class="fas fa-file-import"></i>
+                  {{ button_label|default('Importar datos') }}
+    </button>
+     {{ form_end(form) }}
+     </br>
+     
+       <div class="table-responsive">
+       <table id="example" class="content-table table-sm" style="width:100%">
+        <thead>
+            <tr>
+                <th>Cedula</th>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha Nacimiento</th>
+                <th>Edad</th>
+                <th>Fecha Ingreso</th>
+                <th>Provincia</th>
+                <th>Ciudad</th>
+         
+            </tr>
+        </thead>
+        <tbody>
+        {% for paciente in pacientes %}
+            <tr>
+                <td>{{ paciente.cedula }}</td>
+                <td><img src="{{ asset('uploads/'~paciente.image) }}" alt="" width="50" class="mr-3 rounded-circle img-thumbnail shadow-sm"></td>
+                <td>{{ paciente.pnombre }} {{ paciente.snombre }}</td>
+                <td>{{ paciente.papellido }} {{ paciente.sapellido }}</td>
+                <td>{{ paciente.fechaNacimiento ? paciente.fechaNacimiento|date('Y-m-d') : '' }}</td>
+                <td>{{ date('now').diff((date(paciente.fechaNacimiento))).format('%y años') }}</td>
+                <td>{{ paciente.fechaIngreso ? paciente.fechaIngreso|date('Y-m-d') : '' }}</td>
+                <td>{{ paciente.ciudad.provincia.nombre}}</td>
+                <td>{{ paciente.ciudad.nombre}}</td>
+              
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="25">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+          
+        </tbody>
+        <tfoot>
+        </tfoot>
+       
+    </table>
+
+       
+            </div>
+      
+
+        </div>
+
+ 
+{% endblock %}
+
+
+{% block javascripts %}
+<script> 
+          
+        $(function() {
+  // Sidebar toggle behavior
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+  });
+});
+        </script>
+
+  <script> 
+       $(document).ready(function() {
+        $('#example').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+       
+         'responsive': true,
+         
+  } );
+    } );
+
+  
+ </script>
+
+
+  <script> 
+       $(document).ready(function() {
+        $('#example1').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+       
+         'responsive': true,
+         
+  } );
+    } );
+
+  
+ </script>
+
+
+  
+
+   {% endblock %}

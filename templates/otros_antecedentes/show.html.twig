@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}OtrosAntecedentes{% endblock %}
+
+{% block body %}
+    <h1>OtrosAntecedentes</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ otros_antecedente.id }}</td>
+            </tr>
+            <tr>
+                <th>Alergias</th>
+                <td>{{ otros_antecedente.alergias }}</td>
+            </tr>
+            <tr>
+                <th>Vacunas</th>
+                <td>{{ otros_antecedente.vacunas }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_vacuna</th>
+                <td>{{ otros_antecedente.fechaVacuna ? otros_antecedente.fechaVacuna|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Lote_vacunas</th>
+                <td>{{ otros_antecedente.loteVacunas }}</td>
+            </tr>
+            <tr>
+                <th>Notas_vacunas</th>
+                <td>{{ otros_antecedente.notasVacunas }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('otros_antecedentes_index') }}">Regresar a la lista Pacientes</a>
+
+    <a href="{{ path('otros_antecedentes_edit', {'id': otros_antecedente.id}) }}">Editar</a>
+
+    {{ include('otros_antecedentes/_delete_form.html.twig') }}
+{% endblock %}

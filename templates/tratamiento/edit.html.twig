@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Tratamiento{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+    <h5 class="text-primary">Editar Tratamiento</h5>
+    <h6>Paciente:  <b>{{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</h6></b>
+{% for flash_message in app.session.flashbag.get('exito') %}
+<div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+    {{ include('tratamiento/_form.html.twig', {'button_label': 'Actualizar'}) }}
+</p>
+ <a href="{{ path('tratamiento_new', {p:paciente.id ,d: diagnostico.id,c:consulta.id}) }}">
+ <button class="btn btn-block btn-outline-primary btn-sm">
+<i class="fas fa-chevron-left"> Regresar a la lista de Tratamientos</i>
+</button>
+</a>
+
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+
+          <script type="text/javascript">
+        $(document).ready(function() {
+          $('select[data-select="true"]').select2({
+              minimumInputLength: 2,
+             allowClear: true,
+             placeholder: 'Seleccione un medicamento->'
+          });
+        });
+    </script>
+  
+
+ 
+
+
+  
+
+   {% endblock %}

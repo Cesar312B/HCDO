@@ -1,0 +1,157 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New AntNoPatologicos{% endblock %}
+
+{% block body %}
+    <div class="card-body p-5 bg-white rounded">
+ 
+
+    {{ include('full_antecedentes/ant_base.html.twig') }}
+    {{ include('ant_no_patologicos/_form.html.twig') }}
+    <br>
+{% for flash_message in app.session.flashbag.get('exito') %}
+<div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+<div class="table-responsive">
+     <table id="example" style="width:100%" class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha de registro</th>
+                <th>Fecha de edicion</th>
+                <th>Realiza Actividad Física</th>
+                <th>Actividad Física</th>
+                <th>Frecuencia</th>
+
+                <th>Consumo de Alcohol</th>
+                <th>Frecuencia</th>
+                <th>Tiempo Consumo (años)</th>
+                <th>Exconsumidor</th>
+                <th>Abstinencia (años)</th>
+
+                <th>Consumo de Tabaco </th>
+                <th>Frecuencia </th>
+                <th>Tiempo Consumo (años) </th>
+                <th>Exconsumidor </th>
+                <th>Abstinencia (años): </th>
+
+                <th>Consumo de Drogas: </th>
+                <th>Tipo de Droga: </th>
+                <th>Frecuencia: </th>
+                <th>Tiempo Consumo (años): </th>
+                <th>Exconsumidor: </th>
+                <th>Abstinencia (años): </th>
+
+                <th>Consumo de Medicamentos: </th>
+                <th>Medicación Habitual: </th>
+                <th>Años de consumo: </th>
+
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="articles">
+        {% for c in antecedentes2 %}
+            <tr>
+                <td>{{c.id}}</td>
+                 <td>{{ c.creatdate ? c.creatdate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ c.updatedate ? c.updatedate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ c.deporteselect }}</td>
+                <td>{{ c.actividadfisica}} </td>
+                <td>{{ c.numeroactividadfisica}} </td>
+
+                <td>{{ c.sustanciaselec }}</td>
+                <td>{{ c.tiempoconsumoa }}</td>
+                <td>{{ c.cantidada }}</td>
+                <td>{{ c.exconsumidora }}</td>
+                <td>{{ c.tiempoabstinenciaa }}</td>
+
+                <td>{{ c.tabaco }}</td>
+                <td>{{ c.tiempoconsumo }}</td>
+                <td>{{ c.cantidad }}</td>
+                <td>{{ c.exconsumidor }}</td>
+                <td>{{ c.tiempoabstinencia }}</td>
+
+                <td>{{ c.usosustancias }}</td>
+                <td>{{ c.drogadescripcion }}</td>
+                <td>{{ c.tiempoconsumod }}</td>
+                <td>{{ c.numerosustancias }}</td>
+                <td>{{ c.exconsumidor }}</td>
+                <td>{{ c.tiempoabstinenciad }}</td>
+
+                <td>{{ c.medicamentoselect }}</td>
+                <td>{{ c.medicacionabitual }}</td>
+                <td>{{ c.cantdadmedicacion }}</td>
+      
+                <td>
+                <a  class="dropdown-item" href="{{ path('ant_no_patologicos_edit', {p: paciente.id, id: c.id , c: consulta.id}) }}" style="font-size: 0.8em">Editar Antecedente</a>
+                
+                 <a href="#" class="dropdown-item delete-article" data-id="{{c.id}}" style="font-size: 0.8em">Eliminar</a> 
+                </td>
+            </tr>
+         {% if antecedentes2 is empty %}
+           <tr>
+        <td colspan="4">No hay registros disponibles</td>
+           </tr>
+        {% endif %} 
+        {% endfor %}
+        </tbody>
+    </table>
+</div> 
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+
+
+  <script> 
+       $(document).ready(function() {
+        $('#example').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+          
+         'responsive': true,
+          order:[0, 'desc'],
+         
+  } );
+    } );
+ </script>
+
+
+  <script type="text/javascript"> 
+     window.onload= function(){
+       document.getElementById("op2").style="background-color: #FDF4BC;";
+     }
+ </script>
+
+
+   
+<script>
+
+  const articles = document.getElementById('articles');
+
+   if (articles) {
+     articles.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+             const value = e.target.getAttribute('data-id');
+              let route = "{{ path('delate_nopatologicos', { id: 'fileId_' }) }}";
+              route = route.replace('fileId_', value);
+   
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+
+  
+
+   {% endblock %}
+

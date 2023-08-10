@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+<style>
+    .row {
+        display: flex;
+    }
+    .align-items-center {
+        align-items: center;
+    }
+</style>
+
+{% set var3 = "Salida" %}  
+ <a href="{{ path('aptitud_edit', {id: consulta.id, p: paciente.id}) }}" class="btn btn-block btn-outline-primary btn-sm" > Regresar a la ficha médica</a></br>
+<a href="javascript:void(0);" id="print_Button_Full" class="btn btn-block btn-primary" align="left" >Imprimir Certificado de Aptitud</a>
+<div class="content">
+
+<img src="https://i.ibb.co/RBZB7KQ/rlogo.png" class="rounded mx-auto d-block"  width="200" height="150"  >
+<img class="mr-3  img-thumbnail shadow-sm rounded mx-auto d-block" src="{{ asset('uploads/'~paciente.image) }}"  width="100" height="100" alt="Card image cap">
+   </br>
+   <h4 class="text-center">CERTIFICADO DE SALUD EN EL TRABAJO</h4>
+   <h4 class="text-center">SNS-MSP/Form. HCU 081/2019</h4>
+
+<h5 class="text-primary">DATOS DEL ESTABLECIMIENTO -EMPRESA Y USUARIO</h5>
+<table  class="content-table table-sm" style="width:100%">
+  <thead>
+    <tr>
+      <th scope="col">Unidad Operativa</th>
+      <th scope="col">Historia Clínica</th>
+      <th scope="col">Nombres y apellidos </th>
+      <th scope="col">Edad</th>
+      <th scope="col">Sexo</th>
+      <th scope="col">Puesto de Trabajo</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ consulta.employed.unidadesoperativas.nombre }}</td>
+      <td>{{ paciente.cedula }}</td>
+      <td>{{ paciente.pnombre }} {{ paciente.snombre }} {{ paciente.papellido }} {{ paciente.sapellido }}</td>
+      <td>{{ date('now').diff((date(paciente.fechaNacimiento))).format('%y años') }}</td>
+      <td>{{paciente.sexo}}</td>
+      <td>{{ paciente.puestotrabajo.nombre }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 class="text-primary">DATOS GENERALES</h5>
+<table  class="content-table table-sm" style="width:100%">
+  <thead>
+    <tr>
+      <th scope="col">Fecha Consulta</th>
+      <th scope="col">Tipo de Evaluación</th>
+       <th scope="col">Descripcion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+     
+      <td>{{ consulta.fechaAtencion ? consulta.fechaAtencion|date('Y-m-d H:i:s') : '' }}</td>
+        <td>{{ consulta.motivoconsulta}}</td>
+        <td>{{ consulta.descripcion}}</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<h5 class="text-primary">APTITUD MÉDICA LABORAL</h5>
+<table  class="content-table table-sm" style="width:100%">
+
+  <thead>
+    <tr>
+      <th scope="col">Aptitud Médica</th>
+      <th scope="col">Observaciones </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ consulta.tipoaptitud}} </td>
+      <td>{{ consulta.observaciones}}</td>
+    </tr>
+  </tbody>
+</table>
+
+{% if consulta.motivoconsulta == var3 %}
+    <h5 class="text-primary">EVALUACIÓN MÉDICA DE RETIRO</h5>
+      <table  class="content-table table-sm" style="width:100%" >
+  <thead>
+    <tr>
+      <th scope="col">Evalución de Retiro</th>
+      <th scope="col">Condición del Diagnóstico</th>
+      <th scope="col">Condición de Salud</th>
+      <th scope="col">Observaciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">{{consulta.evaluacionretiro}}</th>
+      <td>{{consulta.condiciondiagnostico}}</td>
+      <td>{{consulta.condicionsalud}}</td>
+      <td>{{consulta.observacionesretiro}}</td>
+    </tr>
+  </tbody>
+</table>
+ {% endif %}
+
+<h5 class="text-primary">RECOMENDACIONES</h5>
+<table  class="content-table table-sm" style="width:100%">
+
+  <thead>
+    <tr>
+      <th scope="col">Recomendaciones</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ consulta.limitaciones}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h6 class="text-primary">Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para (el ingreso /la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.</h6>
+<h6 class="text-primary">La presente certificación se expide con base en la historia ocupacional del usuario (a), la cual tiene carácter de confidencial.</h6>
+ </br>
+ <h5 class="text-primary">DATOS DEL PROFESIONAL DE SALUD</h5>
+ <h5>Dr/Dra: <b>{{consulta.employed.Nombre}}  {{consulta.employed.Apellido}} </b>  Fecha: <b>{{ consulta.fechaAtencion ? consulta.fechaAtencion|date('Y-m-d H:i:s') : '' }}</b></h5>
+ <h5>Fecha: <b>{{ consulta.fechaAtencion ? consulta.fechaAtencion|date('Y-m-d H:i:s') : '' }}</b></h5>
+ </br>
+ </br>
+</br>
+
+
+ <div class="row vh-30 align-items-center">
+    <div class="col text-center">
+        <h6>Dr/Dra: <b>{{consulta.employed.Nombre }} {{consulta.employed.Apellido }}</b></h6>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h6>_______________________</h6> 
+    </div>
+    <div class="col text-center">
+        <h6>Paciente: <b>{{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</b></h6>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h6>_______________________</h6>
+    </div>
+</div>
+
+      
+    </div>
+
+ 
+
+{% endblock %}
+
+{% block javascripts %}
+ 
+
+ <script>
+  $(document).ready(function(){
+       $("#print_Button_Full").click(function(){
+          var mode = 'iframe'; // popup
+          var close = mode == "popup";
+          var options = { mode : mode, popClose : close};
+          $("div.content").printArea( options );
+      });
+  });
+
+</script>
+
+
+   {% endblock %}

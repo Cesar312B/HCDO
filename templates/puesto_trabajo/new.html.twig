@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Puesto de Trabajo{% endblock %}
+
+{% block body %}
+    <h1>Crear Nuevo Puesto de Trabajo</h1>
+
+    {{ include('puesto_trabajo/_form.html.twig') }}
+
+    <a href="{{ path('puesto_trabajo_index') }}">
+        <button class="btn btn-block btn-outline-warning btn-sm">
+            <i class="fas fa-chevron-left"> Regresar</i>
+        </button>
+    </a>
+{% endblock %}

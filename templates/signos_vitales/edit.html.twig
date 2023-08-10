@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Signos Vitales{% endblock %}
+
+{% block body %}
+ <div class="card-body p-5 bg-white rounded">
+    <h5 class="text-primary">EDITAR SIGNOS VITALES</h5> 
+    <h6>Paciente: <b>{{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</h6></b>
+   
+
+    {{ include('signos_vitales/_form.html.twig', {'button_label': 'Actualizar'}) }}
+    </br>
+
+     <a href="{{ path('consulta_new', {'id': paciente.id}) }}">
+         <button class="btn btn-block btn-outline-primary btn-sm">
+            <i class="fas fa-chevron-left"> Regresar a la consulta</i>
+         </button>
+     </a>
+</div>
+
+{% endblock %}

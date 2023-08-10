@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pacientes{% endblock %}
+
+{% block body %}
+    <div class="card-body p-5 bg-white rounded">
+    <h5>Paciente</h5>
+    
+    <a href="{{ path('pacientes_index') }}" class="btn"><i class="fas fa-chevron-left"></i> </a>
+    <a href="{{ path('pacientes_edit', {'id': paciente.id}) }}" class="btn"><i class="fas fa-edit"></i></a> 
+    {{ include('pacientes/_delete_form.html.twig') }}
+    
+    
+    <table class="table table-striped">
+    
+    <div class="contenedor">
+    
+        <tbody>
+          
+            <tr>
+                <th>Cedula</th>
+                <td>{{ paciente.cedula }}</td>
+            </tr>
+             <tr>
+                <th>Historia Clinica</th>
+                <td>{{ paciente.historiaclinica}}</td>
+            </tr>
+
+             <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
+            
+            <img src="{{ asset('uploads/'~paciente.image) }}" alt=""  class="img-fluid mb-3 d-none d-md-block  img-thumbnail shadow-sm" >
+        </div>
+            <tr>
+                <th>Primer Nombre</th>
+                <td>{{ paciente.pnombre }}</td>
+            </tr>
+            <tr>
+                <th>Segundo Nombre</th>
+                <td>{{ paciente.snombre }}</td>
+            </tr>
+            <tr>
+                <th>Primer Apellido</th>
+                <td>{{ paciente.papellido }}</td>
+            </tr>
+            <tr>
+                <th>Segundo Apellido</th>
+                <td>{{ paciente.sapellido }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ paciente.sexo }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_nacimiento</th>
+                <td>{{ paciente.fechaNacimiento ? paciente.fechaNacimiento|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Estado_civil</th>
+                <td>{{ paciente.estadoCivil }}</td>
+            </tr>
+            <tr>
+                <th>Tipo_sangre</th>
+                <td>{{ paciente.tipoSangre }}</td>
+            </tr>
+            <tr>
+                <th>Discapacidad</th>
+                <td>{{  paciente.discapacidad }}</td>
+                
+            </tr>
+            <tr>
+                <th>Tipo_discapacidad</th>
+                <td>{{ paciente.tipoDiscapacidad }}</td>
+            </tr>
+            <tr>
+                <th>Religion</th>
+                <td>{{ paciente.religion }}</td>
+            </tr>
+            <tr>
+                <th>Identidad_genero</th>
+                <td>{{ paciente.identidadGenero }}</td>
+            </tr>
+            <tr>
+                <th>Email_paciente</th>
+                <td>{{ paciente.emailPaciente }}</td>
+            </tr>
+            <tr>
+                <th>Celular</th>
+                <td>{{ paciente.celular }}</td>
+            </tr>
+            <tr>
+                <th>Fecha_ingreso</th>
+                <td>{{ paciente.fechaIngreso ? paciente.fechaIngreso|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+        </div>
+    </table>
+
+   
+   
+   
+    </div>
+{% endblock %}

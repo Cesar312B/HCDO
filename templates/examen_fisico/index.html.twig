@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ExamenFisico index{% endblock %}
+
+{% block body %}
+    <h1>ExamenFisico index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Piel</th>
+                <th>Ojos</th>
+                <th>Oido</th>
+                <th>Oro_farinje</th>
+                <th>Nariz</th>
+                <th>Cuello</th>
+                <th>Torax1</th>
+                <th>Torax2</th>
+                <th>Abdomen</th>
+                <th>Columna</th>
+                <th>Pelvis</th>
+                <th>Extremidades</th>
+                <th>Neurologico</th>
+                <th>Observaciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for examen_fisico in examen_fisicos %}
+            <tr>
+                <td>{{ examen_fisico.id }}</td>
+                <td>{{ examen_fisico.piel }}</td>
+                <td>{{ examen_fisico.ojos }}</td>
+                <td>{{ examen_fisico.oido }}</td>
+                <td>{{ examen_fisico.oroFarinje }}</td>
+                <td>{{ examen_fisico.nariz }}</td>
+                <td>{{ examen_fisico.cuello }}</td>
+                <td>{{ examen_fisico.torax1 }}</td>
+                <td>{{ examen_fisico.torax2 }}</td>
+                <td>{{ examen_fisico.abdomen }}</td>
+                <td>{{ examen_fisico.columna }}</td>
+                <td>{{ examen_fisico.pelvis }}</td>
+                <td>{{ examen_fisico.extremidades }}</td>
+                <td>{{ examen_fisico.neurologico }}</td>
+                <td>{{ examen_fisico.observaciones }}</td>
+                <td>
+                 
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="16">No existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('examen_fisico_new') }}">Crear Nuevo</a>
+{% endblock %}

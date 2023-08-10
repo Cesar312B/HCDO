@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Medicamentos{% endblock %}
+
+{% block body %}
+ <div class="card-body p-5 bg-white rounded">
+    <h1>Crear nuevo Medicamento</h1>
+
+    {{ include('medicamentos/_form.html.twig') }}
+
+    <a href="{{ path('medicamentos_index') }}">
+    <i class="fas fa-chevron-left"></i>
+    </a>
+    </div>
+{% endblock %}

@@ -1,0 +1,162 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New AntReproductivos{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+
+ {{ include('full_antecedentes/ant_base.html.twig') }}
+        
+    {{ include('ant_reproductivos/_form.html.twig') }}
+
+    {% set var = "Mujer" %}  
+     {% set var2 = "Hombre" %}  
+         <br>
+{% for flash_message in app.session.flashbag.get('exito') %}
+    <div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+ <div class="table-responsive">
+        <table  id="example" style="width:100%" class="content-table table-lg">
+        <thead>
+            <tr> 
+                <th>Id</th>
+                <th>Fecha de registro</th>
+                <th>Fecha de edicion</th>
+                <th>Hijos</th> 
+                <th>Vida Sexual</th> 
+                <th>Método Planificación</th>
+              {% if paciente.sexo == var %}
+                <th>Menarquía</th>
+                <th>Ciclos</th>
+                <th>Gestas</th>
+                <th>Partos</th>
+                <th>Abortos</th>
+                <th>Cesáreas</th>
+                <th>Última Menstruación</th>
+                <th>Última Mastografía</th>
+                <th>Tiempo Mastografía</th>
+                <th>Resultado Mastografía</th>
+                <th>Colposcopía</th>
+                <th>Tiempo Colposcopía</th>
+                <th>Resultado Colposcopía</th>
+                <th>Papanicolau</th>
+                <th>Tiempo Papanicolau</th>
+                <th>Resultado Papanicolau</th>
+                <th>Eco Mamario</th>
+                <th>Tiempo Eco Mamario</th>
+                <th>Resultado Eco Mamario</th>
+               {% endif %}
+                {% if paciente.sexo == var2 %}
+                <th>Examen Antígeno Prostático</th>
+                <th>Tiempo Antígeno Prostático</th>
+                <th>Resultado Antígeno Prostático</th>
+                <th>Examen Eco Prostático</th>
+                <th>Tiempo Eco Prostático</th>
+                <th>Resultado Eco Prostático</th>
+                   {% endif %}
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="articles">
+        {% for ant_reproductivo in antecedentes2 %}
+            <tr>
+                <td>{{ant_reproductivo.id}}</td>
+                <td>{{ ant_reproductivo.creatdate ? ant_reproductivo.creatdate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ ant_reproductivo.updatedate ? ant_reproductivo.updatedate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ ant_reproductivo.hijos }}</td>
+                <td>{{ ant_reproductivo.vidasexual }}</td> 
+                <td>{{ ant_reproductivo.metodoplanificacion }}</td>
+                {% if paciente.sexo == var %}
+                <td>{{ ant_reproductivo.menarquia }}</td>
+                <td>{{ ant_reproductivo.ciclos }}</td>
+                <td>{{ ant_reproductivo.gestas }}</td>
+                <td>{{ ant_reproductivo.partos }}</td>
+                <td>{{ ant_reproductivo.abortos }}</td>
+                <td>{{ ant_reproductivo.cesareas }}</td>
+                <td>{{ ant_reproductivo.ultimamenstruacion ? ant_reproductivo.ultimamenstruacion|date('Y-m-d') : '' }}</td>
+                <td>{{ ant_reproductivo.ultimamastografia }}</td>
+                <td>{{ ant_reproductivo.tiempomastografia }}</td>
+                <td>{{ ant_reproductivo.resultadomastografia }}</td>
+                <td>{{ ant_reproductivo.colposcopia }}</td>
+                <td>{{ ant_reproductivo.tiempocolposcopia }}</td>
+                <td>{{ ant_reproductivo.resultadocolposcopia }}</td>
+                <td>{{ ant_reproductivo.papanicolaou }}</td>
+                <td>{{ ant_reproductivo.tiempopapanicolaou }}</td>
+                <td>{{ ant_reproductivo.resultadopapanicolaou }}</td>
+                <td>{{ ant_reproductivo.ecomamario }}</td>
+                <td>{{ ant_reproductivo.tiempoecomamario }}</td>
+                <td>{{ ant_reproductivo.resultadoecomamario }}</td>
+                {% endif %}
+                {% if paciente.sexo == var2 %}
+                <td>{{ ant_reproductivo.antigenoprostatico }}</td>
+                <td>{{ ant_reproductivo.tiempoantigenoprostatico }}</td>
+                <td>{{ ant_reproductivo.resultadoantigenoprostatico }}</td>
+                <td>{{ ant_reproductivo.ecoprostatico }}</td>
+                <td>{{ ant_reproductivo.tiempoecoprostatico }}</td>
+                <td>{{ ant_reproductivo.resultadoecoprostatico }}</td>
+                {% endif %}
+                <td>
+                 <a  class="dropdown-item" href=" {{ path('ant_reproductivos_edit', {p: paciente.id, id: ant_reproductivo.id, c: consulta.id }) }}" style="font-size: 0.8em">Editar Antecedente</a> 
+                  <a href="#" class="dropdown-item delete-article" data-id="{{ant_reproductivo.id}}" style="font-size: 0.8em">Eliminar</a> 
+                </td>
+            </tr>
+        {% if antecedentes2 is empty %}
+           <tr>
+              <td colspan="4">No hay registros disponibles</td>
+           </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+ 
+</div>
+{% endblock %}
+
+{% block javascripts %}
+
+<script> 
+       $(document).ready(function() {
+        $('#example').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+          
+         'responsive': true,
+           order:[0, 'desc'],
+         
+  } );
+    } );
+</script>
+
+
+  <script>
+
+  const articles = document.getElementById('articles');
+   if (articles) {
+     articles.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+             const value = e.target.getAttribute('data-id');
+             let route = "{{ path('delate_reproductivo', { id: 'fileId_' }) }}";
+             route = route.replace('fileId_', value);
+   
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+
+ <script type="text/javascript"> 
+     window.onload= function(){
+       document.getElementById("op3").style="background-color: #FDF4BC;";
+     }
+ </script>
+
+   {% endblock %}

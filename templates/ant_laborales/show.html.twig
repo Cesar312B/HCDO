@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AntLaborales{% endblock %}
+
+{% block body %}
+    <h1>AntLaborales</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ ant_laborale.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('ant_laborales_index') }}">back to list</a>
+
+    <a href="{{ path('ant_laborales_edit', {'id': ant_laborale.id}) }}">edit</a>
+
+    {{ include('ant_laborales/_delete_form.html.twig') }}
+{% endblock %}

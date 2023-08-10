@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit AntNoPatologicos{% endblock %}
+
+{% block body %}
+ <div class="card-body p-5 bg-white rounded">
+    <h6>Editar Antecedentes No Patológicos del Paciente: <b> {{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</b></h6>
+   {% for flash_message in app.session.flashbag.get('exito') %}
+    <div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+    {{ include('ant_no_patologicos/_form.html.twig', {'button_label': 'Actualizar'}) }}
+
+    <a href="{{ path('ant_no_patologicos_new', {id: paciente.id, c:consulta.id}) }}">
+        <button class="btn btn-block btn-outline-warning btn-sm">
+            <i class="fas fa-chevron-left"> Regresar a la ficha médica</i>
+        </button>
+    </a>
+
+    </div>
+{% endblock %}

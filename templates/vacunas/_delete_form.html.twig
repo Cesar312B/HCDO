@@ -1,0 +1,9 @@
+<form method="post" action="{{ path('vacunas_delete', {'id': vacuna.id}) }}" onsubmit="return confirm('Está Seguro que Desea Eliminar?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ vacuna.id) }}">
+    <button class="btn btn-block btn-outline-danger btn-sm">
+        
+            Eliminar
+        </i>
+    </button>
+</form>

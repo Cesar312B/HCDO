@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Otros Antecedentes{% endblock %}
+
+{% block body %}
+{% set consulta_id = consulta.id %}
+<div class="card-body p-5 bg-white rounded">
+{% for flash_message in app.session.flashbag.get('exito') %}
+    <div class="flash-notice">
+        {{ flash_message }}
+    </div>
+{% endfor %}
+  {{ include('full_antecedentes/ant_base.html.twig') }}
+  {{ include('otros_antecedentes/_form.html.twig') }}
+    <br>
+<div class="table-responsive">
+    <table id="example" style="width:100%" class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha de registro</th>
+                <th>Fecha de edicion</th>
+                <th>Alergias</th>
+                <th>Vacunas</th>
+                <th>N-Dosis</th>
+                <th>Fecha de vacunación</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="articles">
+        {% for otros_antecedentes in antecedentes2 %}
+            <tr>
+                <td>{{otros_antecedentes.id}}</td>
+                <td>{{ otros_antecedentes.creatdate ? otros_antecedentes.creatdate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ otros_antecedentes.updatedate ? otros_antecedentes.updatedate|date('Y-m-d H:i:s') : ''  }}</td>
+                <td>{{ otros_antecedentes.alergias}}</td>
+                <td>{{ otros_antecedentes.vacunas.Nombre}}</td>
+                <td>{{ otros_antecedentes.ndosis}}</td>
+                <td>{{ otros_antecedentes.fechavacuna  ? otros_antecedentes.fechavacuna|date('Y-m-d') : ''}}</td>
+                <td>
+                  <a  class="dropdown-item" href="{{ path('otros_antecedentes_edit', {p: paciente.id, id: otros_antecedentes.id, c: consulta.id}) }}" style="font-size: 0.8em">Editar Antecedente</a>
+                  
+                    <a href="#" class="dropdown-item delete-article" data-id="{{otros_antecedentes.id}}" style="font-size: 0.8em">Eliminar</a> 
+                </td>
+            </tr>
+           {% if antecedentes2 is empty %}
+            <tr>
+              <td colspan="4">No hay registros disponibles</td>
+            </tr>
+           {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>   
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+
+  <script> 
+$(document).ready(function() {
+
+    $('#example').DataTable( {
+           language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+        'responsive': true,
+         order:[0, 'desc'],
+
+       
+    } );
+} );
+ </script>
+
+<script type="text/javascript">
+        $(document).ready(function() {
+          $('select[data-select="true"]').select2();
+        });
+</script>  
+
+
+<script>
+
+  const articles = document.getElementById('articles');
+
+   if (articles) {
+     articles.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+             const value = e.target.getAttribute('data-id');
+             let route = "{{ path('delate_otros', { id: 'fileId_' }) }}";
+             route = route.replace('fileId_', value);
+   
+   
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+
+   <script type="text/javascript"> 
+     window.onload= function(){
+       document.getElementById("op7").style="background-color: #FDF4BC;";
+     }
+ </script>
+
+
+  
+
+   {% endblock %}

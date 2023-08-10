@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Signos Vitales Inicio{% endblock %}
+
+{% block body %}
+    <h1>Signos Vitales Inicio</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Estatura</th>
+                <th>Peso</th>
+                <th>Temperatura</th>
+                <th>Frecuencia Respiratoria</th>
+                <th>Sistole</th>
+                <th>Diastole</th>
+                <th>Frecuenci Cardíaca</th>
+                <th>Grasa Corporal</th>
+                <th>Masa Muscular</th>
+                <th>Saturación Oxígeno</th>
+                <th>Grasa visceral</th>
+                <th>Hidratación</th>
+                <th>Cintura Abdominal</th>
+                <th>Glucosa en Ayunas</th>
+                <th>Glucosa Post</th>
+
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for signos_vitale in signos_vitales %}
+            <tr>
+                <td>{{ signos_vitale.id }}</td>
+                <td>{{ signos_vitale.estatura }}</td>
+                <td>{{ signos_vitale.peso }}</td>
+                <td>{{ signos_vitale.temperatura }}</td>
+                <td>{{ signos_vitale.frecuenciaRespiratoria }}</td>
+                <td>{{ signos_vitale.sistole }}</td>
+                <td>{{ signos_vitale.diastole }}</td>
+                <td>{{ signos_vitale.frecuenciaCardiaca }}</td>
+                <td>{{ signos_vitale.grasaCorporal }}</td>
+                <td>{{ signos_vitale.masaMuscular }}</td>
+                <td>{{ signos_vitale.saturacionOxigeno }}</td>
+                <td>{{ signos_vitale.grasaVisceral }}</td>
+                <td>{{ signos_vitale.hidratacion }}</td>
+                <td>{{ signos_vitale.cintura }}</td>
+                <td>{{ signos_vitale.glucosa_ayunas }}</td>
+                <td>{{ signos_vitale.glucosa_post }}</td>
+                <td>
+                    <a href="{{ path('signos_vitales_show', {'id': signos_vitale.id}) }}">Mostrar</a>
+                   
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="15">No existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('signos_vitales_new') }}">Crear Nuevo</a>
+{% endblock %}

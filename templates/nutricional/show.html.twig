@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nutricional{% endblock %}
+
+{% block body %}
+    <h1>Nutricional</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ nutricional.id }}</td>
+            </tr>
+            <tr>
+                <th>Habito</th>
+                <td>{{ nutricional.habito }}</td>
+            </tr>
+            <tr>
+                <th>Subtipo_hab</th>
+                <td>{{ nutricional.subtipoHab }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion_hab</th>
+                <td>{{ nutricional.descripcionHab }}</td>
+            </tr>
+            <tr>
+                <th>Diagnostico</th>
+                <td>{{ nutricional.diagnostico }}</td>
+            </tr>
+            <tr>
+                <th>Plan_nutricional</th>
+                <td>{{ nutricional.planNutricional }}</td>
+            </tr>
+            <tr>
+                <th>Recomendaciones</th>
+                <td>{{ nutricional.recomendaciones }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('nutricional_index') }}">
+    <button class="btn btn-block btn-outline-warning btn-sm">
+    <i class="fas fa-chevron-left">Regresar</i>
+    </button>
+      </a>  
+
+    <a href="{{ path('nutricional_edit', {'id': nutricional.id}) }}">Editar</a>
+
+    {{ include('nutricional/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,279 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Medicamentos index{% endblock %}
+
+{% block body %}
+<div class="page-header">
+   <img src="{{ asset('image/Recursos_Banner 3.jpg') }}" height="100" width=100% >
+</div> 
+  <div class="card-body p-5 bg-white rounded">
+    </br>
+   
+{{ form_start(form) }}
+<button class="btn bg-primary btn-sm">
+    <a href="{{ path('medicamentos_new') }}">  Crear nuevo Medicamento <i class="fas fa-plus-square"></i>
+    </a>
+</button>
+
+ </br>
+    {{ form_row(form.file, {
+        attr: {
+            'placeholder': 'Seleccione un archivo'
+        }
+    }) }}
+    </div>    
+    <button class="btn btn-success btn-sm">
+            {{ button_label|default('Importar datos') }}
+            <i class="fas fa-file-import"></i>
+    </button>
+    
+
+     {{ form_end(form) }}
+     </br>
+
+       <div class="table-responsive">
+ 
+    <table id="example" style="width:100%" class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>Principio Activo</th>
+                <th>Laboratorio</th>
+                <th>Se Puede Fraccionar</th>
+                <th>Clasificacion</th>
+                <th>Marca</th>
+                <th>Estado del Producto</th>
+                <th>Presentacion</th>
+                <th>Mercado</th>
+                <th>Iva</th>
+                <th>Generico</th>
+                <th>Portafolio Cat</th>
+                <th>Observacion</th>
+                <th>Año</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for medicamento in medicamentos %}
+            <tr>
+                <td>{{ medicamento.codigo }}</td>
+                <td>{{ medicamento.descripcion }}</td>
+                <td>{{ medicamento.principio_activo}}</td>
+                <td>{{ medicamento.laboratorio}}</td>
+                <td>{{ medicamento.fraccion}}</td>
+                <td>{{ medicamento.Clasificacion}}</td>
+                <td>{{ medicamento.Marca}}</td>
+                <td>{{ medicamento.estado_producto}}</td>
+                <td>{{ medicamento.presentacion_producto}}</td>
+                <td>{{ medicamento.mercado}}</td>
+                <td>{{ medicamento.iva}}</td>
+                <td>{{ medicamento.generico}}</td>
+                <td>{{ medicamento.portafolio_cat}}</td>
+                <td>{{ medicamento.observaciones}}</td>
+                <td>{{ medicamento.year}}</td>
+                <td>
+                   
+                    <a href="{{ path('medicamentos_edit', {'id': medicamento.id}) }}" title="Editar">
+                    <i class="fas fa-edit"></i>
+                </td>
+            </tr>
+        {% if medicamentos is empty %}
+             <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endif %}
+           
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+
+    
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script> 
+          
+        $(function() {
+  // Sidebar toggle behavior
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+  });
+});
+        </script>
+
+ <script> 
+          $(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Plfrtip',
+       language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json',
+
+            searchPanes: {
+                clearMessage: 'Limpiar Panel',
+                title: {
+                     _: 'Filters Selected - %d',
+                    0: 'Ningun Filtro Seleccionado',
+                    1: 'Filtros seleccionado - %d', 
+                   
+                },
+            }
+        },
+
+        columnDefs: [
+
+             {
+                searchPanes: {
+                    show: false
+                },
+                targets: [0]
+            },
+        
+             {
+                searchPanes: {
+                    show: false
+                },
+                targets: [1]
+            },
+
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [2]
+            },
+
+              {
+                searchPanes: {
+                    show: true
+                },
+                targets: [3]
+            },
+
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [4]
+            },
+
+            
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [4]
+            },
+
+            
+              {
+                searchPanes: {
+                    show: true
+                },
+                targets: [5]
+            },
+
+            
+              {
+                searchPanes: {
+                    show: true
+                },
+                targets: [6]
+            },
+
+            
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [7]
+            },
+
+            
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [8]
+            },
+
+            
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [9]
+            },
+
+            
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [10]
+            },
+            
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [11]
+            },
+
+            
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [12]
+            },
+
+            
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [13]
+            },
+
+              
+              {
+                searchPanes: {
+                    show: true
+                },
+                targets: [14]
+            },
+
+              
+              {
+                searchPanes: {
+                    show: false
+                },
+                targets: [15]
+            },
+
+
+        
+
+
+
+
+        
+           
+        ],
+       
+         'responsive': true,
+    });
+});
+   
+  
+        </script>
+
+
+  
+
+   {% endblock %}

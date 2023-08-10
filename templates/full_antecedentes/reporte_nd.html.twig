@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+ <a href="{{ path('nutricional_new', {id: paciente.id, c:consulta.id}) }}" class="btn btn-block btn-outline-primary btn-sm" > Regresar a la ficha médica</a></br>
+<a href="javascript:void(0);" id="print_Button_Full" class="btn btn-block btn-primary" align="left" >Imprimir Dieta Nutricional</a>
+<div class="content">
+
+<img src="https://i.ibb.co/RBZB7KQ/rlogo.png" class="rounded mx-auto d-block"  width="200" height="150"   >
+</br>
+
+       <table class="table table-striped" style="width:100%">
+    <img class="mr-3  img-thumbnail shadow-sm rounded mx-auto d-block" src="{{ asset('uploads/'~paciente.image) }}"  width="150" height="100" alt="Card image cap">
+     </br>
+     <h4 class="text-center">DIETA NUTRICIONAL</h4>
+     
+    <h5>Fecha: {{ consulta.fechaAtencion ? consulta.fechaAtencion|date('Y-m-d') : '' }}</h5>
+    <h5 class="text-primary"> DATOS PERSONALES</h5>
+    <div class="contenedor">
+    
+        <tbody>
+          
+            <tr>
+                <th>Cédula</th>
+                <td>{{ paciente.cedula }}</td>
+         
+                <th>Nombres</th>
+                <td>{{ paciente.pnombre }} {{ paciente.snombre }}</td>
+         
+                <th>Apellidos</th>
+                <td>{{ paciente.papellido }} {{ paciente.sapellido }}</td>
+         
+                <th>Sexo</th>
+                <td>{{ paciente.sexo }}</td>
+
+                <th>Edad</th>
+                <td>{{ date('now').diff((date(paciente.fechaNacimiento))).format('%y años') }}</td>
+
+            </tr>
+        </tbody>
+        </div>
+    </table>
+
+
+<h5 class="text-primary"> ESTADO NUTRICIONAL </h5>
+  <table class="table table-striped" style="width:100%">
+
+       <tbody>     
+      <tr>
+        <th>Estatura </th>
+
+          <td>
+            {% if  consulta.signosvitales.estatura is defined and consulta.signosvitales.estatura is null  %}
+            {% elseif consulta.signosvitales.estatura  is defined and consulta.signosvitales.estatura is not null  %}
+            {{ consulta.signosvitales.estatura}} Cm
+          </td> 
+            {% endif %}
+
+        <th>Peso </th>
+          
+          <td>
+            {% if  consulta.signosvitales.peso is defined and  consulta.signosvitales.peso is null  %}
+            {% elseif  consulta.signosvitales.peso is defined and  consulta.signosvitales.peso is not null  %}
+            {{ consulta.signosvitales.peso}} Kg
+          
+            {% endif %}
+          
+            {% if  consulta.signosvitales.peso is defined and  consulta.signosvitales.peso is null  %}
+            {% elseif  consulta.signosvitales.peso is defined and  consulta.signosvitales.peso is not null  %}
+            {% set masacorporal = 0 %}
+            {% set tv = ((consulta.signosvitales.peso)/(consulta.signosvitales.estatura **2))*10000 %}
+            </td>  
+        <th>Masa Corporal</th>
+          <td>
+            {{ tv |number_format(2)}}  
+            {% if tv  <= 18.5  and  tv is not null %}
+              ->Bajo peso
+            {% elseif tv >= 18.6  and  tv <= 24.9 %}
+              ->Normal
+            {% elseif tv >= 25  and  tv <= 29.9 %}
+              ->Sobrepeso
+            {% elseif tv >= 30 %}
+              ->Obesidad
+            {% endif %}
+
+         {% endif %}
+          </td>
+      </tr>
+
+
+
+                <tr>
+                  {% set genero1 = "Mujer" %}  
+                   {% set genero2 = "Hombre" %}  
+                 <th>Grasa Corporal</th>
+                <td>
+                 {{ consulta.signosvitales.grasacorporal}}
+                   {% if consulta.signosvitales.grasacorporal  < 20 and paciente.sexo == genero2 and  consulta.signosvitales.grasacorporal is not null %}
+                   Sano 
+                    {% elseif consulta.signosvitales.grasacorporal < 30 and  paciente.sexo == genero1 and  consulta.signosvitales.grasacorporal is not null %}
+                    Sano 
+                     {% elseif consulta.signosvitales.grasacorporal > 20  and  paciente.sexo == genero2 and  consulta.signosvitales.grasacorporal is not null %}
+                     No Adecuado
+                    {% elseif consulta.signosvitales.grasacorporal > 30  and paciente.sexo == genero1 and  consulta.signosvitales.grasacorporal is not null %}
+                    No adecuado 
+                    {% endif %}
+                
+                
+               </td>
+                <th>Grasa Viceral</th>
+                <td>{{ consulta.signosvitales.grasavisceral}}</td>
+
+                 <th>Masa Muscular</th>
+                <td>{{ consulta.signosvitales.masamuscular}}</td>
+                </tr>
+
+                <tr>
+                 <th>Cintura Abdominal(cm)</th>
+                <td>{{ consulta.signosvitales.cintura}}</td>
+                 <th>Glucosa en ayunas</th>
+                <td>{{ consulta.signosvitales.glucosaayunas}}</td>
+                 <th>Glucosa Post</th>
+                <td>{{ consulta.signosvitales.glucosapost}}</td>
+                </tr>
+
+                  <tr>
+                 <th>Hidratación</th>
+                <td>{{ consulta.signosvitales.hidratacion}}</td>
+                </tr>
+
+         </tbody> 
+
+ </table>
+
+
+    <div class="card">
+  <h5 class="text-primary"> MOTIVO CITA NUTRICIONAL</h5>
+<h6 class="card-body"> {{consulta.motivonutricional}} </h6>
+
+<h5 class="text-primary"> DIAGNÓSTICO NUTRICIONAL</h5>
+<h6 class="card-body"> {{consulta.diagnosticonutricional}} </h6>
+
+<h5 class="text-primary"> PLAN NUTRICIONAL</h5>
+
+<pre>{{consulta.plannutricional}} </pre>
+
+
+<h5 class="text-primary"> RECOMENDACIONES GENERALES</h5>
+
+<pre>{{consulta.recomendaciones}} </pre>
+
+
+ </br>
+ </br>
+ </br>
+
+ </br>
+ </br>
+ </br>
+<h6 class="text-center">_____________________________</h6>
+<h6 class="text-center">Dra. Ana Patricia Moreno Recalde</h6>
+<h6 class="text-center">Nutrióloga</h6>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+ 
+
+ <script>
+  $(document).ready(function(){
+       $("#print_Button_Full").click(function(){
+          var mode = 'iframe'; // popup
+          var close = mode == "popup";
+          var options = { mode : mode, popClose : close};
+          $("div.content").printArea( options );
+      });
+  });
+
+</script>
+
+
+   {% endblock %}

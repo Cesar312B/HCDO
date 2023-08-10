@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('consulta_delete', {'id': consultum.id}) }}" onsubmit="return confirm('Está seguro de eliminar?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ consultum.id) }}">
+    <button class="btn btn-primary">Eliminar</button>
+</form>

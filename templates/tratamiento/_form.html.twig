@@ -1,0 +1,65 @@
+{{ form_start(form) }}
+<h4 class="text-primary">Detalles del tratamiento</h4>
+  <div class="row">
+  <div class="col-md-6">
+    {{ form_row(form.medicamentos) }}
+    </div>
+  <div class="col-md-6">
+    {{ form_row(form.presentacion,{
+      attr: {
+        'label': 'Presentación',
+        'placeholder': 'Describa presentación del medicamento'
+        
+            }
+
+    }) }}
+    </div>
+
+
+  <div class="col-md-6">
+    {{ form_row(form.dosis,{
+      attr: {
+        'label': 'Dosis',
+        'placeholder': '1 tableta'
+            }
+    }) }}
+    </div>
+
+    <div class="col-md-6">
+    {{ form_row(form.frecuencia,{
+      attr: {
+        'label': 'Frecuencia',
+        'placeholder': 'Cada 8 horas'
+            }
+    }) }}
+   </div>
+
+   <div class="col-md-6">
+    {{ form_row(form.duracion,{
+      attr: {
+        'label': 'Duración',
+        'placeholder': 'Durante 5 días'
+            }
+    }) }}
+    </div>
+
+     <div class="col-md-6">
+    {{ form_row(form.cantidad,{
+      attr: {
+        'label': 'Dosis',
+        'placeholder': 'Cantidad total de medicamento'
+            }
+    }) }}
+    </div>
+
+    <div class="col-md-6">
+    {{ form_row(form.indicaciones) }}
+    </div>    
+
+  </div>
+
+    <button class="btn btn-block bg-gradient-primary btn-sm">
+    <i class="fas fa-save"></i>
+    {{ button_label|default('Guardar') }}
+    </button>
+{{ form_end(form) }}

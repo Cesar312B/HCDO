@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Examenes{% endblock %}
+
+{% block body %}
+    <h1>Pedidos de Exámenes</h1>
+{% for flash_message in app.session.flashbag.get('exito') %}
+<div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+    {{ include('examenes/_form2.html.twig', {'button_label': 'Copiar'}) }}
+
+  <a  href="{{ path('examenes_new', {id: paciente.id, c: consulta.id}) }}">
+  
+  <button class="btn btn-block btn-outline-warning btn-sm">
+<i class="fas fa-chevron-left">Regresar a la ficha del paciente</i>
+</button>
+      </a>
+
+{% endblock %}

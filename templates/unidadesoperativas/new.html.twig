@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nueva Unidad Operativa{% endblock %}
+
+{% block body %}
+    <h1 class="text-primary">Crear nueva Unidad Operativa</h1>
+
+    {{ include('unidadesoperativas/_form.html.twig') }}
+
+    <button class="btn btn-block btn-outline-warning btn-sm">
+    <a href="{{ path('unidadesoperativas_index') }}"> <i class="fas fa-chevron-left">Regresar a Unidades Operativas</i></a>
+    </button>
+{% endblock %}

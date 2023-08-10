@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Paciente{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+    <h4 class="text-primary">Crear nuevo paciente</h4>
+    
+    
+    {{ include('pacientes/_form.html.twig') }}
+
+ <a href="{{ path('pacientes_index') }}">
+ <button class="btn btn-block btn-outline-primary btn-sm">
+ <i class="fas fa-chevron-left"></i> Regresar a la lista de pacientes
+ </button>
+ </a>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script>     
+              $('.custom-file-input').on('change', function(event) {
+                    var inputFile = event.currentTarget;
+                    $(inputFile).parent()
+                        .find('.custom-file-label')
+                        .html(inputFile.files[0].name);
+                });
+            </script>
+       
+  <script type="text/javascript">
+        $(document).ready(function() {
+          $('select[data-select="true"]').select2();
+        });
+    </script>
+
+<script>
+        var $notas_Carrera = $('#pacientes_Provincia')
+        var $token = $('#pacientes_token')
+$notas_Carrera.change(function ()
+{
+    var $form =$(this).closest('form')
+    var data={}
+    data[$token.attr('name')]= $token.val()
+    data[$notas_Carrera.attr('name')]= $notas_Carrera.val()
+
+    $.post($form.attr('action'),data).then(function (response)
+    {
+        $('#pacientes_Ciudad').replaceWith(
+            $(response).find('#pacientes_Ciudad')
+        )
+    })
+
+})
+function log($msg){
+    console.log($msg)
+}
+</script>
+
+
+   {% endblock %}

@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="row py-5 mt-4 align-items-center">
+        <!-- For Demo Purpose -->
+     
+        <!-- Registeration Form -->
+       
+        {{ form_start(form) }}
+            
+            <div class="row">
+                <!-- Cédula médico -->
+                    <div class="col-md-6">
+                          {{ form_row(form.Cedula,{
+                              attr: {
+                            'placeholder': 'Digite Número de Cédula'
+                               }
+                                 }) }}
+                    </div>
+                    <!-- Correo -->
+                    <div class="col-md-6">
+                          {{ form_row(form.email,{
+                              attr: {
+                            'placeholder': 'nombre@correo.com'
+                               }
+                                 }) }}
+                    </div>
+                    <!-- Nombres -->
+                    <div class="col-md-6">
+                          {{ form_row(form.Nombre,{
+                              attr: {
+                            'placeholder': 'Ingrese 2 Nombres'
+                               }
+                                 }
+                     
+                     ) }}
+                    </div>
+
+                    <!-- Apellidos -->
+                    <div class="col-md-6">
+                          {{ form_row(form.Apellido,{
+                              attr: {
+                            'placeholder': 'Ingrese 2 Apellidos'
+                               }
+                                 }) }}
+                    </div>
+
+                       <!-- Fotografía del médico -->
+                      <div class="col-md-12">
+                             {{ form_row(form.foto, {
+                              attr: {
+                            'placeholder': 'Foto de perfil'
+                               }
+                                 }) }}
+                    </div>
+                    
+                     
+                    <div class="col-md-6">
+                       
+                        {{ form_row(form.Profesion,{
+                              attr: {
+                            'placeholder': 'Medicina General'
+                               }
+                                 }) }}
+                    </div>
+
+                     <div class="col-md-6">
+                       
+                        {{ form_row(form.unidadesoperativas,{
+                              attr: {
+                            'placeholder': 'Unidades Operativas'
+                               }
+                                 }) }}
+                    </div>
+
+                  <!-- Roles -->
+                    <div class="col-md-6">
+                         {{ form_row(form.roles) }}
+                    </div>
+
+                  <!-- Fecha de Ingreso -->
+                    <div class="col-md-6">
+                            {{ form_row(form.Fecha_Ingreso) }}
+                    </div>
+
+                  <!-- Estado trabaja o no en la empresa -->
+                    <div class="input-group col-lg-12 mb-4">
+                         {{ form_row(form.estado) }}
+                    </div>
+
+                  <!-- bloquear/desbloquear usuario -->
+                    <div class="input-group col-lg-12 mb-4">
+                         {{ form_row(form.is_active) }}
+                    </div>
+
+              <button class="btn btn-block bg-gradient-primary btn-sm">
+                <i class="fas fa-save"> </i>
+                  {{ button_label|default('Registrar') }}
+              </button>
+            </div> 
+            {{ form_end(form) }}
+    </div>
+</div>
+
+

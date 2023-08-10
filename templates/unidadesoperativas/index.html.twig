@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Unidades Operativas index{% endblock %}
+
+{% block body %}
+
+ <div class="card-body p-5 bg-white rounded">
+    <h4 class="text-primary">Unidades Operativas</h4>
+
+    {{ form_start(form) }}
+</br>
+
+      {{ form_row(form.file, {
+        attr: {
+            'placeholder': 'Seleccione un archivo'
+        }
+    }) }}
+
+ 
+               
+                  
+            
+           
+    <button class="btn btn-block btn-success btn-sm">
+        <i class="fas fa-file-import"></i>
+            {{ button_label|default('Importar datos') }}
+    </button>
+
+     {{ form_end(form) }}
+     </br>
+
+    <button class="btn btn-block bg-primary btn-sm">
+    <a href="{{ path('unidadesoperativas_new') }}">
+    <i class="fas fa-edit">
+    Crear nueva unidad operativa
+    </i>
+    </a>
+    </button>
+    </br>
+
+    <table class=" table">
+        <thead>
+            <tr>
+               
+                <th>Oficina</th>
+                <th>Direccion</th>
+                <th>Regional</th>
+                <th>Activo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for unidadesoperativa in unidadesoperativas %}
+            <tr>
+                <td>{{ unidadesoperativa.nombre }}</td>
+                <td>{{ unidadesoperativa.direccion }}</td>
+                <td>{{ unidadesoperativa.regional }}</td>
+                <td>{{ unidadesoperativa.estado ? 'Si' : 'No' }}</td>
+                <td>
+                   
+                    <a href="{{ path('unidadesoperativas_edit', {'id': unidadesoperativa.id}) }}"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% endblock %}

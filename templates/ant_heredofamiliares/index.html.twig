@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AntHeredofamiliares index{% endblock %}
+
+{% block body %}
+    <h1>AntHeredofamiliares index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Patologia</th>
+                <th>Descripción Enfermedad</th>
+                <th>Parentesco</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for ant_heredofamiliare in ant_heredofamiliares %}
+            <tr>
+                <td>{{ ant_heredofamiliare.Patologia }}</td>
+                <td>{{ ant_heredofamiliare.descripcion }}</td>
+                <td>{{ ant_heredofamiliare.Parentesco }}</td>
+                <td>
+                    <a href="{{ path('ant_heredofamiliares_edit', {'id': ant_heredofamiliare.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+  
+{% endblock %}

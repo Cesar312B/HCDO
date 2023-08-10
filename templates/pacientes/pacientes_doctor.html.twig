@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pacientes{% endblock %}
+
+{% block body %}
+    <div class="card-body p-5 bg-white rounded">
+{% if is_granted("ROLE_MEDICO") %}
+<h5>Pacientes Asignados</h5>
+
+ <div class="table-wrapper-scroll-y my-custom-scrollbar">
+ 
+       <table  id="example1" class="content-table table-sm" style="width:100%">
+       <div class="scrolling-wrapper row flex-row flex-nowrap mt-4 pb-4 pt-2">
+        <thead>
+            <tr>
+                <th>Cédula</th>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Motivo Consulta</th>
+                 <th>Unidad Operativa</th>
+                <th>Fecha Atención</th>
+                 <th>Estatura</th>
+                <th>Peso</th>
+                <th>Masa Corporal</th>
+                <th>Temperatura</th>
+                <th>Frecuencia Respiratoria</th>
+                <th>Sistole</th>
+                <th>Diastole</th>
+                <th>Frecuencia Cardiaca</th>
+                <th>Grasa Corporal</th>
+                <th>Masa Muscular</th>
+                <th>Saturación Oxígeno</th>
+                <th>Grasa Visceral</th>
+                <th>Hidratación</th>
+                <th>Cintura Abdominal</th>
+                <th>Glucosa en Ayunas</th>
+                <th>Glucosa Post</th>
+                <th>Piel</th>
+                <th>Ojos</th>
+                <th>Oídos</th>
+                <th>Oro Farinje</th>
+                <th>Nariz</th>
+                <th>Cuello</th>
+                <th>Torax</th>
+                <th>Abdomen</th>
+                <th>Columna</th>
+                <th>Pelvis</th>
+                <th>Extremidades</th>
+                <th>Neurológico</th>
+                <th>Observaciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for paciente in pacientes_medico %}
+            <tr>
+                <td>{{ paciente.cedula }}</td>
+                <td><img src="{{ asset('uploads/'~paciente.image) }}" alt="" width="50" class="mr-3 rounded-circle img-thumbnail shadow-sm"></td>
+                <td>{{ paciente.pnombre }} {{ paciente.snombre }}</td>
+                <td>{{ paciente.papellido }} {{ paciente.sapellido }}</td>
+                <td>{{ paciente.motivo_consulta}}</td>
+                <td>{{ paciente.nombre}}</td>
+                <td> {{paciente.fecha_atencion ? paciente.fecha_atencion|date('Y-m-d') : ''}}</td>
+                <td>{{ paciente.estatura}}</td>
+                <td>{{ paciente.peso}}</td>
+                   {% set masacorporal = 0 %}
+                  {% set masacorporal = (paciente.peso)/(paciente.estatura **2) %}
+                <td>{{ masacorporal}}</td>
+                <td>{{ paciente.temperatura}}
+                   {% if paciente.temperatura > 38 %}
+                     Fiebre
+                  {% elseif paciente.temperatura < 36 %}
+                    Hipotermia
+                    {% elseif paciente.temperatura == 37 %}
+                    Normal
+                  {% endif %}
+                </td>
+                <td>{{ paciente.frecuencia_respiratoria}}
+                {% if paciente.frecuencia_respiratoria > 12 and paciente.frecuencia_respiratoria < 18 %}
+                     Normal
+                  {% elseif paciente.frecuencia_respiratoria > 18 %}
+                     Taqupnea
+                  {% elseif paciente.frecuencia_respiratoria < 12 %}
+                    Bradipnea
+                {% endif %}
+                </td>
+
+                <td>{{ paciente.sistole}}</td>
+                <td>{{ paciente.diastole}}</td>
+                <td>{{ paciente.frecuencia_cardiaca}}
+                   {% if paciente.frecuencia_cardiaca > 100 %}
+                    Taquicardia
+                  {% elseif paciente.frecuencia_cardiaca < 60 %}
+                    Bradicardia
+                  {% endif %}
+                </td>
+                <td>{{ paciente.grasa_corporal}}</td>
+                <td>{{ paciente.masa_muscular}}</td>
+                <td>{{ paciente.saturacion_oxigeno}}</td>
+                <td>{{ paciente.grasa_visceral}}</td>
+                <td>{{ paciente.hidratacion}}</td>
+                <td>{{ paciente.cintura }}</td>
+                <td>{{ paciente.glucosa_ayunas }}</td>
+                <td>{{ paciente.glucosa_post }}</td>
+                <td>{{ paciente.piel}}</td>
+                <td>{{ paciente.ojos}}</td>
+                <td>{{ paciente.oido}}</td>
+                <td>{{ paciente.oro_farinje}}</td>
+                <td>{{ paciente.nariz}}</td>
+                <td>{{ paciente.cuello}}</td>
+                <td>{{ paciente.torax1}}</td>
+                <td>{{ paciente.abdomen}}</td>
+                <td>{{ paciente.columna}}</td>
+                <td>{{ paciente.pelvis}}</td>
+                <td>{{ paciente.extremidades}}</td>
+                <td>{{ paciente.neurologico}}</td>
+                <td>{{ paciente.observaciones}}</td>
+                <td>
+                   <a href="{{ path('diagnostico_new', {'id': paciente.PI}) }}" title="Diagnóstico"> <i class="fas fa-diagnoses"></i></a>
+                  <a href="{{ path('consulta_new', {'id': paciente.PI}) }}" title="Consulta"><i class="fas fa-calendar-plus"></i></a> 
+                      <a href="{{ path('ant_no_patologicos_new', {'id': paciente.PI}) }}"  title="Antecedentes no Patologicos"><i class="fas fa-address-book"></i></a>
+                     <a href="{{ path('ant_patologicos_new', {'id': paciente.PI}) }}" title="Antecedentes Patologicos"><i class="far fa-address-card"></i></a>
+                       <a href="{{ path('ant_reproductivos_new', {'id': paciente.PI}) }}"  title="Antecedentes Reproductivos"><i class="fas fa-heart"></i></a>
+                        <a href="{{ path('otros_antecedentes_new', {'id': paciente.PI}) }}"  title="Otros Antecedentes"><i class="fas fa-clipboard"></i></a>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="25">No Existen Registros</td>
+            </tr>
+            
+        {% endfor %}
+          
+        </tbody>
+        
+        <tfoot>
+        </tfoot>
+        
+    </table>
+            
+            </div>
+            {% endif %}
+
+</div>
+</div>
+        
+
+ 
+{% endblock %}
+
+
+{% block javascripts %}
+<script> 
+          
+        $(function() {
+  // Sidebar toggle behavior
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+  });
+});
+        </script>
+
+
+  <script> 
+       $(document).ready(function() {
+        $('#example1').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+       
+         'responsive': true,
+         
+  } );
+    } );
+
+  
+ </script>
+
+
+  
+
+   {% endblock %}
+

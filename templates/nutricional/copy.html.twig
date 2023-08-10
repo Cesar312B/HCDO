@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Nutricional{% endblock %}
+
+{% block body %}
+    <h1>Editar hábito Nutricional</h1>
+
+    {{ include('nutricional/_form.html.twig', {'button_label': 'Copiar'}) }}
+
+    <a href="{{ path('nutricional_new', {id: paciente.id, c:consulta.id}) }}">
+    <button class="btn btn-block btn-outline-warning btn-sm">
+    <i class="fas fa-chevron-left"> Regresar a la ficha médica</i>
+    </button>
+      </a>
+{% endblock %}

@@ -1,0 +1,157 @@
+{% set roles = app.user.roles %}
+{# Mostrar el formulario completo solo para el rol 'ROLE_MEDICO' #}
+{% if 'ROLE_MEDICO' in roles %}
+{{ form_start(form) }}
+<div class="row">
+     <div class="col-md-12">
+     </br>
+                         {{ form_row(form.enfermedad_actual,{
+                              attr: {
+                                   'placeholder': 'Que Enfermedad Padece Actualmente ',
+                               }
+                                 }) }}
+    </div>
+</div>
+ <div class="row">
+     <div class="col-md-6">
+                </br>
+                         {{ form_row(form.piel_anexos,{
+                              attr: {
+                                   'placeholder': 'Piel Anexos',
+                               }
+                                 }) }}
+     </div>
+    
+
+    <div class="col-md-6">
+    </br>
+                         {{ form_row(form.organos_sentidos,{
+                              attr: {
+                                   'placeholder': 'Órganos Sentidos',
+                               }
+                                 }) }}
+    </div>
+
+     <div class="col-md-6">
+     </br>
+                         {{ form_row(form.respiratorio,{
+                              attr: {
+                                   'placeholder': 'Respiratorio',
+                               }
+                                 }) }}
+    </div>
+     <div class="col-md-6">
+     </br>
+                         {{ form_row(form.cardiovascular,{
+                              attr: {
+                                   'placeholder': 'Cardiovascular',
+                               }
+                                 }) }}
+    </div>
+     <div class="col-md-6">
+     </br>
+                         {{ form_row(form.digestivo,{
+                              attr: {
+                                   'placeholder': 'Digestivo',
+                               }
+                                 }) }}
+    </div>
+     <div class="col-md-6">
+     </br>
+                         {{ form_row(form.genito_urinario,{
+                              attr: {
+                                   'placeholder': 'Génito Urinario',
+                               }
+                                 }) }}
+    </div>
+
+     <div class="col-md-6">
+     </br>
+                         {{ form_row(form.musculo_esqueletico,{
+                              attr: {
+                                   'placeholder': 'Músculo Esquelético',
+                               }
+                                 }) }}
+    </div>
+     <div class="col-md-6">
+     </br>
+                         {{ form_row(form.endocrino,{
+                              attr: {
+                                   'placeholder': 'Endócrino',
+                               }
+                                 }) }}
+    </div>
+     <div class="col-md-6">
+     </br>
+                         {{ form_row(form.hemolinfatico,{
+                              attr: {
+                                   'placeholder': 'Hemolinfático',
+                               }
+                                 }) }}
+    </div>
+     <div class="col-md-6">
+     </br>
+                         {{ form_row(form.nervioso,{
+                              attr: {
+                                   'placeholder': 'Nervioso',
+                               }
+                                 }) }}
+    </div>
+     
+     <div class="col-md-12">
+     </br>
+                         {{ form_row(form.observaciones,{
+                              attr: {
+                                   'placeholder': 'Observaciones',
+                               }
+                                 }) }}
+                                 </br>
+    </div>
+   
+</div>
+     <button class="btn btn-block bg-gradient-primary btn-sm">
+              <i class="fas fa-save"> </i>  
+              {{ button_label|default('Guardar') }}
+              </button>
+{{ form_end(form) }}
+    </br>
+{% else %}
+    {# Mostrar solo el campo 'enfermedad_actual' para el rol 'ROLE_ODONTOLOGO' #}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.enfermedad_actual, {
+                attr: {
+                    'placeholder': 'Que Enfermedad Padece Actualmente',
+                }
+            }) }}
+        </div>
+
+         <div class="col-md-12">
+     </br>
+                         {{ form_row(form.observaciones,{
+                              attr: {
+                                   'placeholder': 'Observaciones',
+                               }
+                                 }) }}
+                                 </br>
+    </div>
+    </div>
+
+    {% do form.piel_anexos.setRendered() %} 
+    {% do form.organos_sentidos.setRendered() %} 
+    {% do form.respiratorio.setRendered() %} 
+    {% do form.cardiovascular.setRendered() %} 
+    {% do form.digestivo.setRendered() %}
+    {% do form.genito_urinario.setRendered() %}
+    {% do form.musculo_esqueletico.setRendered() %}  
+    {% do form.endocrino.setRendered() %} 
+    {% do form.hemolinfatico.setRendered() %} 
+    {% do form.nervioso.setRendered() %} 
+    <button class="btn btn-block bg-gradient-primary btn-sm">
+        <i class="fas fa-save"> </i>
+        {{ button_label|default('Guardar') }}
+    </button>
+    {{ form_end(form) }}
+{% endif %}
+    

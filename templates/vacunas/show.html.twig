@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vacunas{% endblock %}
+
+{% block body %}
+    <h1>Vacunas</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vacuna.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ vacuna.Nombre }}</td>
+            </tr>
+            <tr>
+                <th>Dosis</th>
+                <td>{{ vacuna.Dosis }}</td>
+            </tr>
+            <tr>
+                <th>Indicaciones</th>
+                <td>{{ vacuna.Indicaciones }}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{{ vacuna.tipo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('vacunas_index') }}">
+        <button class="btn btn-block btn-outline-warning btn-sm">
+            <i class="fas fa-chevron-left"> Regresar</i>
+        </button>
+    </a>
+
+    <button class="btn btn-block bg-primary btn-sm">
+        <a href="{{ path('vacunas_edit', {'id': vacuna.id}) }}">Actualizar</a>
+    </button>
+
+    {{ include('vacunas/_delete_form.html.twig') }}
+{% endblock %}

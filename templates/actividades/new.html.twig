@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actividades de Puesto de Trabajo{% endblock %}
+
+{% block body %}
+    <h6>Crear una actividad en el puesto de: <b>{{puesto.nombre}}</b></h6>
+
+    {{ include('actividades/_form.html.twig') }}
+
+    <button class="btn btn-block btn-outline-warning btn-sm">
+      <a href="{{ path('puesto_trabajo_index') }}">
+        <i class="fas fa-chevron-left">
+          Regresar a la lista de puestos de trabajo
+        </i>
+      </a>
+    </button>
+
+       <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Actividad</th>
+                <th>Riesgos</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="articles">
+        {% for actividade in actividades %}
+            <tr>
+                <td>{{ actividade.actividad }}</td>
+                <td>{{ actividade.riesgos ? actividade.riesgos|json_encode : '' }}</td>
+                <td>
+                    <a href=" {{ path('actividades_edit', {puesto: puesto.id, id:actividade.id}) }}" title="Editar"><i class="fas fa-edit"></i></a>
+                </td>
+                <td>
+                      <a href="#" class="dropdown-item delete-article" data-id="{{actividade.id}}" style="font-size: 0.8em">Eliminar consulta</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+{% block javascripts %}
+
+
+  <script>
+
+   const articles = document.getElementById('articles');
+
+   if (articles) {
+     articles.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de elimianar este elemento?')) {
+            const value = e.target.getAttribute('data-id');
+            let route = "{{ path('delate_actividades', { id: 'fileId_' }) }}";
+            route = route.replace('fileId_', value);
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+
+
+   {% endblock %}
+

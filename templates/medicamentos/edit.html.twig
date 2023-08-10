@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Medicamentos{% endblock %}
+
+{% block body %}
+ <div class="card-body p-5 bg-white rounded">
+    <h1>Editar Medicamento</h1>
+
+    {{ include('medicamentos/_form.html.twig', 
+    {'button_label': 'Actualizar'}) }}
+    </br>
+    <button class="btn btn-block btn-outline-warning btn-sm">
+        <a href="{{ path('medicamentos_index') }}"><i class="fas fa-chevron-left"> Regresar</i></a>
+    </button>
+    </br>
+    {{ include('medicamentos/_delete_form.html.twig') }}
+</div>
+{% endblock %}

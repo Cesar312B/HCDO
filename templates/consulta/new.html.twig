@@ -1,0 +1,477 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nueva Consulta{% endblock %}
+
+{% block body %}
+
+   {% set var = "Ingreso" %}  
+      {% set var2 = "Periódica" %}  
+      {% set var3 = "Salida" %}  
+       {% set var4 = "Reingreso" %} 
+       {% set var5 = "Dental" %} 
+        {% set s1 = "Mujer" %}  
+       {% set s2 = "Hombre" %}   
+<div class="card-body p-5 bg-white rounded">
+
+<h4>Crear nueva consulta para:
+  <div style="float:right">
+<a href="{{ path('pacientes_edit', {'id': paciente.id}) }}" title="Completar Datos Personales"><i class="fas fa-user-edit"></i></a>
+</div>
+</h4>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 mt-3">
+            <div class="card">
+                <div class="card-horizontal">
+                    <div class="img-square-wrapper">
+                         {% if paciente.sexo == s2  %}
+                        <img class="mr-3  img-thumbnail shadow-sm" src="{{ asset('image/usuario.jpg') }}"  width="200" height="200" alt="Card image cap">
+                      {% elseif paciente.sexo == s1 %}
+                      <img class="mr-3  img-thumbnail shadow-sm" src="{{ asset('image/usuaria.jpg') }}"  width="200" height="200" alt="Card image cap">
+                      {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Cédula: {{ paciente.cedula }}</h4></br>
+           <p class="font-weight-light text-muted mb-0">Nombre: {{ paciente.pnombre }} {{ paciente.snombre }} {{ paciente.papellido }} {{ paciente.sapellido }}</p>
+              <p class="font-weight-light text-muted mb-0">Edad: {{ date('now').diff((date(paciente.fechaNacimiento))).format('%y años') }}</p>
+                 <p class="font-weight-light text-muted mb-0">Sexo: {{paciente.sexo}}</p>
+                 
+                {% if  paciente.puestotrabajo.nombre is defined and paciente.puestotrabajo.nombre is null  %}
+                   ....
+                  {% elseif paciente.puestotrabajo.nombre is defined and paciente.puestotrabajo.nombre is not null  %}
+                     <p class="font-weight-light text-muted mb-0">Puesto de Trabajo: {{ paciente.puestotrabajo.nombre }}</p>
+                {% endif %}
+                    
+                    </div>
+</div> 
+    </div>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">
+                     <a href="#" data-toggle="modal" data-target="#exampleModalLong">
+<i class="fas fa-briefcase"></i> Ver Detalles del Puesto de Trabajo
+</a> 
+</br>
+<a href="#" data-toggle="modal" data-target="#exampleModalLong2">
+<i class="fas fa-info-circle"></i> Ver Datos personales del Paciente
+</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      
+                {% if  paciente.puestotrabajo.nombre is defined and paciente.puestotrabajo.nombre is null  %}
+                   ....
+                  {% elseif paciente.puestotrabajo.nombre is defined and paciente.puestotrabajo.nombre is not null  %}
+                 <h5 class="modal-title" id="exampleModalLongTitle">Puesto de Trabajo: <b>{{ paciente.puestotrabajo.nombre }}</b> </h5>
+                {% endif %}
+        
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+    <table style="width:100%" class=" table-sm">
+        <thead>
+            <tr>
+             
+                <th>Actividad</th>
+                <th>Riesgos</th>
+            </tr>
+        </thead>
+       <tbody>
+        {% for p in puesto %}
+            <tr>
+             <td>{{ p.actividad}} </td>
+             
+              <td>{{(p.riesgos|json_encode|raw)}} </td>
+
+            </tr>
+
+          {% else %}
+            <tr>
+                <td colspan="3">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+  </table>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="exampleModalLong2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Datos personales del paciente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <table class="table table-striped">
+    
+    <div class="contenedor">
+    
+        <tbody>
+          
+            <tr>
+                <th>Cédula</th>
+                <td>{{ paciente.cedula }}</td>
+            </tr>
+      
+
+             <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
+            
+            <img src="{{ asset('uploads/'~paciente.image) }}" alt=""  class="img-fluid mb-3 d-none d-md-block  img-thumbnail shadow-sm" >
+        </div>
+            <tr>
+                <th>Primer Nombre</th>
+                <td>{{ paciente.pnombre }}</td>
+            </tr>
+            <tr>
+                <th>Segundo Nombre</th>
+                <td>{{ paciente.snombre }}</td>
+            </tr>
+            <tr>
+                <th>Primer Apellido</th>
+                <td>{{ paciente.papellido }}</td>
+            </tr>
+            <tr>
+                <th>Segundo Apellido</th>
+                <td>{{ paciente.sapellido }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ paciente.sexo }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de nacimiento</th>
+                <td>{{ paciente.fechaNacimiento ? paciente.fechaNacimiento|date('Y-m-d') : '' }}</td>
+            </tr>
+
+             <tr>
+                <th>Edad</th>
+                 <td>{{ date('now').diff((date(paciente.fechaNacimiento))).format('%y años') }}</td>
+            </tr>
+
+             
+            <tr>
+                <th>Estado civil</th>
+                <td>{{ paciente.estadoCivil }}</td>
+            </tr>
+            <tr>
+                <th>Tipo de sangre</th>
+                <td>{{ paciente.tipoSangre }}</td>
+            </tr>
+            <tr>
+                <th>Discapacidad</th>
+                <td>{{  paciente.discapacidad  ? paciente.discapacidad|json_encode : ''  }}</td>
+                
+            </tr>
+            <tr>
+                <th>Tipo de discapacidad</th>
+                <td>{{ paciente.tipoDiscapacidad }}</td>
+            </tr>
+            <tr>
+                <th>Religión</th>
+                <td>{{ paciente.religion }}</td>
+            </tr>
+            <tr>
+                <th>Identidad de género</th>
+                <td>{{ paciente.identidadGenero }}</td>
+            </tr>
+            <tr>
+                <th>Correo</th>
+                <td>{{ paciente.emailPaciente }}</td>
+            </tr>
+            <tr>
+                <th>Celular</th>
+                <td>{{ paciente.celular }}</td>
+            </tr>
+            <tr>
+                <th>Fecha de ingreso</th>
+                <td>{{ paciente.fechaIngreso ? paciente.fechaIngreso|date('Y-m-d') : '' }}</td>
+            </tr>
+
+             <tr>
+                <th>Tiempo de Trabajo</th>
+                 <td>{{ date('now').diff((date(paciente.fechaIngreso))).format('%y años') }}</td>
+            </tr>
+        </tbody>
+        </div>
+    </table>
+
+ 
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+ <div class="p-5 bg-white rounded shadow mb-5">
+ {% for flash_message in app.session.flashbag.get('exito') %}
+<div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+      {{ form_start(form) }} 
+    <!-- Lined tabs-->
+   
+ 
+
+                  <div class="row">
+                     <h4 class="card-title w-100">
+                    <a class="d-block w-100 collapsed" data-toggle="collapse"  aria-expanded="false" >
+                       DATOS DE LA CONSULTA MÉDICA
+                    </a>
+                     </h4>
+   <div class="col-md-6">
+     
+       {{ form_row(form.motivo_consulta) }}
+      </div>
+
+        <div class="col-md-6">
+          {{ form_row(form.fecha_atencion) }}
+        </div>
+
+      
+        <div class="col-md-4">
+     
+       {{ form_row(form.descripcion) }}
+      </div>
+     
+     
+     
+      
+
+        <h4 class="card-title w-100">
+                    <a class="d-block w-100 collapsed" data-toggle="collapse" aria-expanded="false" >
+                       SIGNOS VITALES
+                    </a>
+                </h4>
+                </br>
+                </br>
+              
+    
+                    <div class="col-md-6"> 
+                    <h6 class="card-title w-100">
+                    <a class="d-block w-100 collapsed" data-toggle="collapse"  aria-expanded="false" >
+                       Signos Vitales Médicos
+                    </a>
+                </h6>
+                       {{ form_row(form.estatura,{
+                        attr: {        
+                        'placeholder': 'Estatura en centímetros (161)',           
+                              }
+                        })}}
+                    
+                      {{ form_row(form.peso,{
+                        attr: {
+                          'placeholder': 'Peso en kg (55.5)',
+                              }
+                          })}}
+
+                      {{ form_row(form.temperatura,{
+                        attr: {
+                        'placeholder': 'Temperatura en grados Celsius (36.5)',
+                              }
+                      })}}
+
+                      {{ form_row(form.sistole,{
+                        attr: {        
+                        'placeholder': 'Presión arterial sistólica',           
+                              }
+                      })}}
+                    </div>
+                   
+
+                  
+                    <div class="col-md-6">
+                      </br>
+                      {{ form_row(form.diastole,{
+                        attr: {        
+                        'placeholder': 'Presión arterial diastólica',           
+                              }
+                      })}} 
+
+                      {{ form_row(form.frecuencia_cardiaca,{
+                        attr: {
+                        'placeholder': 'Latidos por minuto (80)',
+                              }
+                      })}}
+
+                      {{ form_row(form.frecuencia_respiratoria,{
+                        attr: {
+                        'placeholder': 'Respiraciones por minuto (15)',
+                              }
+                      })}}
+
+                      {{ form_row(form.saturacion_oxigeno,{
+                        attr: {
+                        'placeholder': 'Saturación de oxígeno',
+                              }
+                      })}}
+                    </div>
+                    </div>
+       
+      </div>
+
+  
+               
+                
+       <button class="btn btn-block bg-gradient-primary" ><i class="fas fa-save"> {{ button_label|default('Guardar') }}</i></button>
+ 
+
+   
+
+    
+ 
+{{ form_end(form) }}
+
+<br>
+  <table id="example" style="width:100%" class="content-table table-sm">
+        <thead>
+            <tr>
+             
+                <th>Motivo de la Cita</th>
+                <th>Nombre del Médico</th>
+                <th>Profesión</th>
+                <th>Unidad Operativa</th>
+                <th>Descripcion</th>
+                <th>Fecha de Atención</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="articles">
+        {% for consulta in consultas %}
+            <tr>
+                <td>{{ consulta.motivo_consulta}}  </td>
+                <td>{{ consulta.Nombre}} {{ consulta.Apellido}} </td>
+                <td>{{ consulta.Profesion}} </td>
+                 <td>{{ consulta.nombre}} </td>
+                 <td>{{ consulta.descripcion}} </td>
+               <td>{{ consulta.fecha_atencion ? consulta.fecha_atencion|date('Y-m-d H:i:s') : '' }}</td>
+                
+                <td>
+                 <a  id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false " title="Acciones">
+                    <i class="fas fa-allergies"></i>
+                   </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                 {% if consulta.motivo_consulta == var %}
+                 <a class="dropdown-item" href="{{ path('ant_quirugicos_new', {id: paciente.id, c: consulta.id}) }}" title="Antecedentes"  style="font-size: 0.8em"><i class="fas fa-briefcase"> FICHA MEDICA</i></a>
+                {% elseif   consulta.motivo_consulta == var2  %}
+                    <a class="dropdown-item" href="{{ path('ant_quirugicos_new', {id: paciente.id, c: consulta.id}) }}" title="Antecedentes"  style="font-size: 0.8em"><i class="fas fa-briefcase"> FICHA MEDICA</i></a>
+                 {% elseif   consulta.motivo_consulta == var3  %}
+                 <a class="dropdown-item" href="{{ path('ant_quirugicos_new', {id: paciente.id, c: consulta.id}) }}" title="Antecedentes"  style="font-size: 0.8em"><i class="fas fa-briefcase"> FICHA MEDICA</i></a>
+                 {% elseif   consulta.motivo_consulta == var4  %}
+                  <a class="dropdown-item" href="{{ path('ant_patologicos_new', {id: paciente.id, c: consulta.id}) }}" title="Antecedentes"  style="font-size: 0.8em"><i class="fas fa-briefcase"> FICHA MEDICA</i></a>
+                  {% elseif   consulta.motivo_consulta == var5  %}
+                  <a class="dropdown-item" href="{{ path('ant_patologicos_new', {id: paciente.id, c: consulta.id}) }}" title="Antecedentes"  style="font-size: 0.8em"><i class="fas fa-briefcase"> FICHA MEDICA</i></a>
+                  {% endif %}
+                  <a  class="dropdown-item" href=" {{ path('consulta_edit', {id: consulta.id, p: consulta.PI}) }}" style="font-size: 0.8em">Editar Consulta</a>
+                 
+                  <a  class="dropdown-item" href="{{ path('signos_vitales_edit', {id: consulta.SI, p: consulta.PI}) }}" style="font-size: 0.8em">Editar Signos Vitales</a>
+                  
+                  <a href="#" class="dropdown-item delete-article" data-id="{{consulta.id}}" style="font-size: 0.8em">Eliminar consulta</a>
+                   </div>
+                </td>
+            </tr>
+         {% if consultas is empty %}
+         <tr>
+        <td colspan="4">No hay registros disponibles</td>
+         </tr>
+      {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+  
+    
+
+    
+
+    
+
+  <button class="btn btn-block btn-outline-warning btn-sm">
+    <a href="{{ path('pacientes_index') }}">Regresar a la Lista de pacientes</a>
+  </button>
+ </div>
+
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+<script> 
+          
+        $(function() {
+  // Sidebar toggle behavior
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+  });
+});
+</script>
+<script> 
+          $(document).ready(function() {
+    $('#example').DataTable({ 
+       language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+         'responsive': true,
+          order: [[5, 'desc']],
+    });
+});
+   
+  
+        </script>
+
+
+   
+  <script>
+ 
+    
+    const articles = document.getElementById('articles');
+
+   if (articles) {
+     articles.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+              const value = e.target.getAttribute('data-id');
+              let route = "{{ path('consulta_delate', { id: 'fileId_' }) }}";
+              route = route.replace('fileId_', value);
+           fetch(route,{ 
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+
+
+   {% endblock %}
+
+

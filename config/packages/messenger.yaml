@@ -1,0 +1,10 @@
+framework:
+    messenger:
+        transports:
+            # ... other transports
+
+            sync: 'sync://'
+
+        routing:
+            # App\Message\SmsNotification: sync
+            # 'App\Message\YourMessage': async

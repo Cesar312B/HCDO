@@ -1,0 +1,292 @@
+
+{{ form_start(form) }}
+
+     <div class="row">
+                      <div class="col-md-6">
+                      
+                         {{ form_row(form.tipo_identificacion,{
+                              attr: {
+                               }
+                                 }) }}
+                    </div>
+               <!-- cedula -->
+                    <div class="col-md-6">
+                       
+                         {{ form_row(form.cedula,{
+                              attr: {
+                            'type':'number',
+                            'placeholder': 'N-Documento de Identificación*',
+                            'data-error': 'Número de Identificación requerido',
+                               }
+                                 }) }}
+                    </div>
+                <!-- Primer nombre -->
+                    <div class="col-md-6">
+                       
+                         {{ form_row(form.pnombre,{
+                              attr: {
+                            'placeholder': 'Digite Primer Nombre del Paciente*'
+                               }
+                                 }) }}
+                    </div>
+   
+                <!-- segundo nombre -->
+                    <div class="col-md-6">
+                        
+                         {{ form_row(form.snombre,{
+                              attr: {
+                            'placeholder': 'Digite Segundo Nombre del Paciente*'
+                               }
+                                 }) }}
+                    </div>
+
+                <!-- Primer Apellido -->
+                    <div class="col-md-6">
+                       
+                         {{ form_row(form.papellido,{
+                              attr: {
+                            'placeholder': 'Digite Primer Apellido del Paciente*'
+                               }
+                                 }) }}
+                    </div>
+
+                <!-- segundo apellido -->
+                    <div class="col-md-6">
+                         {{ form_row(form.sapellido,{
+                              attr: {
+                            'placeholder': 'Digite Segundo Apellido del Paciente*'
+                               }
+                                 }) }}
+                    </div>
+    
+                 <!-- email_paciente -->
+                    <div class="col-md-6">
+                         {{ form_row(form.email_paciente,{
+                              attr: {
+                            'placeholder': 'nombre@correo.com',
+                               }
+                                 }) }}
+                    </div>
+
+                <!-- Celular -->
+                    <div class="col-md-6">
+                         {{ form_row(form.celular,{
+                              attr: {
+                            'type':'number',
+                            'placeholder': '0999999999',
+                               }
+                                 }) }}
+                    </div>
+                <!-- Sexo -->
+                    <div class="col-md-6">
+                         {{ form_row(form.sexo,{
+                              attr: {
+                              'placeholder': 'Sexo',
+                              'data-error': 'Campo Sexo requerido',
+                               }
+                                 }) }}
+                    </div>
+    
+                <!-- Fecha de Nacimiento e Ingreso al Trabajo-->
+                    <div class="col-md-6">
+                         {{ form_row(form.fecha_nacimiento,{
+                              attr: {
+                            'placeholder': 'Fecha de Nacimiento'
+                               }
+                                 }) }}
+
+                      {{ form_row(form.fecha_ingreso,{
+                              attr: {
+                            'placeholder': 'Fecha de Ingreso'
+                               }
+                                 }) }}
+
+
+                    </div>
+
+
+                <!-- Estado civil -->
+                    <div class="col-md-6">
+                         {{ form_row(form.estado_civil,{
+                              attr: {
+                            'placeholder': 'Estado Civil',
+                               }
+                                 }) }}
+                    </div>
+
+                <!-- Tipo de sangre -->
+                    <div class="col-md-6">
+                         {{ form_row(form.tipo_sangre,{
+                              attr: {
+                            'placeholder': 'Tipo de Sangre',
+                               }
+                                 }) }}
+                    </div>
+      </div>   
+                   
+
+      <div class="row">
+                <!-- Discapacidad -->
+                    <div class="col-md-6">
+                         {{ form_row(form.discapacidad,{
+                              attr: {
+                               }
+                                 }) }}
+                    </div>
+
+                <!-- Tipo de Discapacidad -->
+                    <div class="col-md-6">
+                         {{ form_row(form.tipo_discapacidad,{
+                              attr: {
+                                'label':'Tipo Discapacidad',
+                                'placeholder': 'Descripción de la discapacidad y su porcentaje',
+                                'value' : 'No',
+                               }
+                                 }) }}
+                    </div>
+
+                <!-- Religion -->
+                    <div class="col-md-6">
+                         {{ form_row(form.religion,{
+                              attr: {
+                            'placeholder': 'Religión',
+                               }
+                                 }) }}
+                    </div>
+
+                    <!-- Identidad de Género -->
+                    <div class="col-md-6">
+                         {{ form_row(form.identidad_genero,{
+                              attr: {
+                            'placeholder': 'Identidad de género',
+                               }
+                                 }) }}
+                    </div>
+
+                    <!-- Orientación Sexual -->
+                    <div class="col-md-6">
+                         {{ form_row(form.orientacion_sexual,{
+                              attr: {
+                            'placeholder': 'Orientación sexual',
+                               }
+                                 }) }}
+                    </div>
+
+                    <!-- Lateralidad -->
+                    <div class="col-md-6">
+                         {{ form_row(form.lateralidad,{
+                              attr: {
+                            'label': 'Lateralidad',
+                            'placeholder': 'Lateralidad',
+                               }
+                                 }) }}
+                    </div>
+
+               
+      </div>
+
+      <div class="row">
+      
+                <!-- Provincia -->
+                    <div class="col-md-6">
+                      
+                         {{ form_row(form.Provincia,{
+                              attr: {
+                            
+                               }
+                                 }) }}
+                    </div>
+
+                <!-- Canton o Ciudad -->
+                     <div class="col-md-6">
+                         {{ form_row(form.Ciudad) }}
+                    </div>
+                       <!-- Calle principal -->
+                    
+                        <div class="col-md-6">
+                         {{ form_row(form.calle_principal,{
+                              attr: {
+                            'placeholder': 'Calle Principal',
+                               }
+                                 }) }}
+
+                        <!-- Calle secundaria -->
+                                {{ form_row(form.calle_secundaria,{
+                              attr: {
+                            'placeholder': 'Calle Secundaria',
+                               }
+                                 }) }} 
+                    </div>
+
+                    <!-- Sector -->
+                        <div class="col-md-6">
+                         {{ form_row(form.sector,{
+                              attr: {
+                            'placeholder': 'Sector',
+                               }
+                                 }) }}
+
+                    <!-- Número de casa -->
+                          {{ form_row(form.numero_casa,{
+                              attr: {
+                            'placeholder': 'Número de Casa',
+                               }
+                                 }) }}
+                    </div>
+              </div>
+
+      <div class="row">
+                <!-- Nivel de instruccion -->
+                  <div class="col-md-6">
+                        {{ form_row(form.nivel_instruccion,{
+                              attr: {
+                          
+                               }
+                                 }) }}
+
+                  </div>
+
+            <!-- Etnia -->
+                  <div class="col-md-6">
+                        {{ form_row(form.etnia,{
+                              attr: {
+                          
+                               }
+                                 }) }}
+                   </div>
+    </div>  
+
+    <div class="row">
+        <!-- Imagen -->
+                    <div class="col-md-12">
+                         {{ form_row(form.image,{
+                              attr: {
+                            'placeholder': 'Cargar imagen del paciente 500KB JPG'
+                               }
+                                 }) }}
+                    </div>
+
+                       <div class="col-md-6">
+                         {{ form_row(form.puesto_trabajo,{
+                              attr: {
+                               }
+                                 }) }}
+                    </div>
+
+
+                       <div class="col-md-6">
+                         {{ form_row(form.is_active,{
+                              attr: {
+                               }
+                                 }) }}
+                    </div>
+    </div>
+   
+    <button class="btn btn-block bg-gradient-primary btn-sm">
+    <i class="fas fa-save"> </i>
+{{ button_label|default('Guardar') }}</button>
+</br>
+{{ form_end(form) }}
+
+
+

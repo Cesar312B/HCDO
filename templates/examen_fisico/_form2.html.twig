@@ -1,0 +1,24 @@
+{{ form_start(form) }}
+<div class="row">
+                    <div class="col-md-6"> 
+                      {{ form_row(form.piel,{attr: { value : 'Normal' } }) }}
+                      {{ form_row(form.ojos,{attr: { value : 'Normal' } } )}}
+                      {{ form_row(form.oido,{attr: { value : 'Normal' } }) }}
+                      {{ form_row(form.oro_farinje,{attr: { value : 'Normal' } } )}}
+                      {{ form_row(form.nariz,{attr: { value : 'Normal' } }) }}
+                      {{ form_row(form.cuello,{attr: { value : 'Normal' } } )}}
+                    
+                    </div>
+                    <div class="col-md-6"> 
+                      {{ form_row(form.abdomen,{attr: { value : 'Normal' } }) }}
+                      {{ form_row(form.columna,{attr: { value : 'Normal' } }) }}
+                      {{ form_row(form.pelvis,{attr: { value : 'Normal' } }) }}
+                      {{ form_row(form.extremidades,{attr: { value : 'Normal' } }) }}
+                      {{ form_row(form.neurologico,{attr: { value : 'Normal' } } )}}
+                        {{ form_row(form.torax1,{attr: { value : 'Normal' } }) }}
+                      {{ form_row(form.observaciones,{attr: { value : 'Normal' } } )}}
+                       <button class="btn btn-primary">{{ button_label|default('Guardar') }}</button>   
+                    </div>
+</div> 
+
+{{ form_end(form) }}

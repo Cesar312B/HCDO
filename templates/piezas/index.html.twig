@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Piezas index{% endblock %}
+
+{% block body %}
+    <h1>Piezas index</h1>
+
+    <table class="table" id="example">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Tipo</th>
+                <th>Edad</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pieza in piezas %}
+            <tr>
+                <td>{{ pieza.numero }}</td>
+                <td>{{ pieza.tipo }}</td>
+                <td>{{ pieza.edad }}</td>
+                <td>
+                    <a href="{{ path('app_piezas_show', {'id': pieza.id}) }}">show</a>
+                    <a href="{{ path('app_piezas_edit', {'id': pieza.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_piezas_new') }}">Create new</a>
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+let table = new DataTable('#example', {
+
+    order: [[1, 'asc']],
+    rowGroup: {
+        dataSrc: 1
+    },
+    pageLength: 50
+});
+</script>
+    
+{% endblock %}

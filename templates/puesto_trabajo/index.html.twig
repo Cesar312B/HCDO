@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Puesto de Trabajo{% endblock %}
+
+
+{% block body %}
+  <div class="page-header">
+   <img src="{{ asset('image/Recursos_Banner 7.jpg') }}" height="100" width=100% >
+</div> 
+    {{ form_start(form) }}
+      {{ form_row(form.file, {
+        attr: {
+            'placeholder': 'Seleccione un archivo'
+        }
+    }) }}      
+    <button class="btn btn-block btn-success btn-sm">
+    <i class="fas fa-file-import"></i>
+                  {{ button_label|default('Importar datos') }}
+    </button>
+     {{ form_end(form) }}
+     </br>
+
+    <button class="btn btn-block bg-primary btn-sm">
+        <a href="{{ path('puesto_trabajo_new') }}">
+            <i class="fas fa-plus-square">
+                Crear Nuevo Puesto de Trabajo
+            </i>
+        </a>
+    </button>
+    </br>
+
+    <table id="example" class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Medidas Preventivas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for puesto_trabajo in puesto_trabajos %}
+            <tr>
+                <td>{{ puesto_trabajo.id }}</td>
+                <td>{{ puesto_trabajo.nombre }}</td>
+                <td>{{ puesto_trabajo.medidaspreventivas }}</td>
+                <td>
+                    <a href="{{ path('puesto_trabajo_edit', {'id': puesto_trabajo.id}) }}" title="Editar"><i class="fas fa-edit"></i></a>
+                      <a href="{{ path('actividades_new', {'id': puesto_trabajo.id}) }}" title="Agregar nueva Actividad"><i class="fas fa-plus-square"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+
+{% block javascripts %}
+<script> 
+          
+        $(function() {
+  // Sidebar toggle behavior
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+  });
+});
+        </script>
+
+  <script> 
+          $(document).ready(function() {
+    $('#example').DataTable({  
+      dom: 'Bfrtip',
+   
+       language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+
+          "ordering": true,
+         'responsive': true,
+         
+    });
+});
+   
+  
+        </script>
+
+
+  
+
+   {% endblock %}

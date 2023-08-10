@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nutricional index{% endblock %}
+
+{% block body %}
+    <h1>Nutricional index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Habito</th>
+                <th>Subtipo_hab</th>
+                <th>Descripcion_hab</th>
+                <th>Diagnostico</th>
+                <th>Plan_nutricional</th>
+                <th>Recomendaciones</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for nutricional in nutricionals %}
+            <tr>
+                <td>{{ nutricional.id }}</td>
+                <td>{{ nutricional.habito }}</td>
+                <td>{{ nutricional.subtipoHab }}</td>
+                <td>{{ nutricional.descripcionHab }}</td>
+                <td>{{ nutricional.diagnostico }}</td>
+                <td>{{ nutricional.planNutricional }}</td>
+                <td>{{ nutricional.recomendaciones }}</td>
+                <td>
+                    <a href="{{ path('nutricional_show', {'id': nutricional.id}) }}">show</a>
+                    <a href="{{ path('nutricional_edit', {'id': nutricional.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn btn-block bg-primary btn-sm">
+    <a href="{{ path('nutricional_new') }}">
+     <i class="fas fa-plus-square">
+                Crear Nuevo Puesto de Trabajo
+            </i>
+        </a>
+    </button>
+{% endblock %}

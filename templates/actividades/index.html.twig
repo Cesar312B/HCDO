@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actividades index{% endblock %}
+
+{% block body %}
+    <h1>Actividades index</h1>
+    {{ form_start(form) }}
+      {{ form_row(form.file, {
+        attr: {
+            'placeholder': 'Seleccione un archivo'
+        }
+    }) }}
+
+ 
+               
+                  
+            
+           
+    <button class="btn">
+    <i class="fas fa-file-import"></i>
+                  <p>{{ button_label|default('Importar datos') }}</p>
+    </button>
+     {{ form_end(form) }}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Actividad</th>
+                <th>Riesgos</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for actividade in actividades %}
+            <tr>
+                <td>{{ actividade.id }}</td>
+                <td>{{ actividade.actividad }}</td>
+                <td>{{ actividade.riesgos ? actividade.riesgos|json_encode : '' }}</td>
+                <td>
+                    <a href="{{ path('actividades_show', {'id': actividade.id}) }}">Mostrar</a>
+                    <a href="{{ path('actividades_edit', {'id': actividade.id}) }}">Editar</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('actividades_new') }}">Crear Nuevo</a>
+{% endblock %}

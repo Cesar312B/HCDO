@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Consulta{% endblock %}
+
+{% block body %}
+ <div class="card-body p-5 bg-white rounded">
+    <h6>Editar Consulta del Paciente: <b>{{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</b></h6>
+
+
+   {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary btn-block btn-sm">{{ button_label|default('Actualizar') }}</button>
+{{ form_end(form) }}
+
+    <a href="{{ path('consulta_new', {'id': paciente.id}) }}">
+    <button class="btn btn-block btn-outline-warning btn-sm">
+<i class="fas fa-chevron-left">Regresar a la Consulta</i>
+</button>
+      </a>
+</div>
+
+{% endblock %}

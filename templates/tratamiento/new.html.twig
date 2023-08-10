@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Tratamiento{% endblock %}
+
+{% block body %}
+<h6>Paciente: <b>{{diagnostico.pacientes.pnombre }} {{diagnostico.pacientes.snombre }} {{diagnostico.pacientes.papellido }} {{diagnostico.pacientes.sapellido }}</h6></b>
+<h6>Diagnóstico CIE: <b>{{diagnostico.cie.codigo}}-{{diagnostico.cie.descripcion}}</h6></b>
+{% for flash_message in app.session.flashbag.get('exito') %}
+<div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+    {{ include('tratamiento/_form.html.twig') }}
+
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Medicamento</th>
+                <th>Dosis</th>
+                <th>Frecuencia</th>
+                <th>Duración</th>
+                <th>Indicaciones</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody  id="articles">
+        {% for tratamiento in tratamientos %}
+            <tr>
+            <td>
+             {% if  tratamiento.medicamentos.codigo is defined and tratamiento.medicamentos.codigo  is null   and  tratamiento.medicamentos.descripcion is defined and tratamiento.medicamentos.descripcion is null  %}
+               {% elseif  tratamiento.medicamentos.codigo is defined and tratamiento.medicamentos.codigo is not null  and  tratamiento.medicamentos.descripcion is defined and tratamiento.medicamentos.descripcion is not null  %}
+                {{ tratamiento.medicamentos.codigo }}-{{tratamiento.medicamentos.descripcion}}
+               {% endif %}
+                </td>
+                <td>{{ tratamiento.dosis }}</td>
+                <td>{{ tratamiento.frecuencia }}</td>
+                <td>{{ tratamiento.duracion }}</td>
+                <td>{{ tratamiento.indicaciones }}</td>
+
+                <td>  
+                      <a href="#" class="dropdown-item delete-article" data-id="{{tratamiento.id}}" style="font-size: 0.8em">Eliminar</a> 
+                       <a href="{{ path('tratamiento_edit', {id:tratamiento.id ,p: diagnostico.pacientes.id, d: diagnostico.id,c:consulta.id}) }}" class="dropdown-item"  style="font-size: 0.8em">Editar</a> 
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+  <a href="{{ path('diagnostico_new', {id: paciente.id, c: consulta.id}) }}"> 
+<button class="btn btn-block btn-outline-primary btn-sm">
+<i class="fas fa-chevron-left">REGRESAR A DIAGNÓSTICO Y TRATAMIENTO</i>
+</button>
+</a>
+
+{% endblock %}
+
+
+
+{% block javascripts %}
+
+
+      <script type="text/javascript">
+        $(document).ready(function() {
+          $('select[data-select="true"]').select2({
+             language: "es",
+             minimumResultsForSearch: 5,
+             minimumInputLength: 2,
+             allowClear: true,
+             placeholder: 'Seleccione un medicamento'
+          });
+        });
+    </script>
+
+
+
+     <script>
+
+  const articles = document.getElementById('articles');
+   if (articles) {
+     articles.addEventListener('click', e => {
+       if (e.target.className === 'dropdown-item delete-article') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+             const value = e.target.getAttribute('data-id');
+             let route = "{{ path('tratamiento_delete', { id: 'fileId_' }) }}";
+             route = route.replace('fileId_', value);
+   
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+  
+
+ 
+
+
+  
+
+   {% endblock %}

@@ -1,0 +1,145 @@
+{{ form_start(form) }}
+    <div class="row">
+
+     <div class="col-md-12">
+                         {{ form_row(form.deporte_select) }}
+    </div>
+
+     <div class="col-md-6">
+                         {{ form_row(form.actividad_fisica,{
+                              attr: {
+                                    'placeholder': 'Describa Deporte que Realiza',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.numero_actividad_fisica)}}
+    </div>
+
+    {#Alcohol#}
+
+    <div class="col-md-12">
+
+                         {{ form_row(form.sustancia_selec) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.tiempo_consumo_a) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.cantidad_a,{
+                              attr: {
+                                   'placeholder': 'Hace cuanto tiempo consume? (años)',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.exconsumidor_a) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.tiempo_abstinencia_a,{
+                              attr: {
+                                   'placeholder': 'Abstinencia (años)',
+                               }
+                                 }) }}
+    </div>
+
+    {#Tabaco#}
+    <div class="col-md-12">
+     </br>
+                         {{ form_row(form.tabaco) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.tiempo_consumo) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.cantidad,{
+                              attr: {
+                                   'placeholder': 'Hace cuanto tiempo consume? (años)',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.exconsumidor) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.tiempo_abstinencia) }}
+    </div>
+
+    {#Drogas#}
+     <div class="col-md-12">
+     </br>
+                         {{ form_row(form.uso_sustancias) }}
+    </div>
+
+    <div class="col-md-12">
+                         {{ form_row(form.droga_descripcion,{
+                              attr: {
+                                   'placeholder': 'Que sustancia consume?',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.tiempo_consumo_d) }}
+    </div>
+
+     <div class="col-md-6">
+                         {{ form_row(form.numero_sustancias,{
+                              attr: {
+                                   'placeholder': 'Consumo en años',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.ex_consumidor) }}       
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form.tiempo_abstinencia_d) }}       
+    </div>
+
+     <div class="col-md-12">
+     </br>
+                         {{ form_row(form.medicamento_select) }}
+    </div>
+
+
+    
+     <div class="col-md-6">
+                         {{ form_row(form.medicacion_abitual,{
+                              attr: {
+                                   'placeholder': 'Cuál es la medicación habitual del Paciente',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                             {{ form_row(form.cantdad_medicacion,{
+                              attr: {
+                                   'placeholder': 'Hace cuanto tiempo consume? (años)',
+                               }
+                                 }) }}    
+    </div>
+   
+   
+   
+
+</div>
+  </br>
+    <button class="btn btn-block bg-gradient-primary btn-sm">
+    <i class="fas fa-save"></i>
+    {{ button_label|default('Guardar') }}
+    </button>
+    </br>
+  
+{{ form_end(form) }}

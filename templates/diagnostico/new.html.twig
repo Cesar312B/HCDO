@@ -1,0 +1,583 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuevo Diagnóstico{% endblock %}
+
+{% block body %}
+
+<div class="card-body p-5 bg-white rounded">
+
+ {{ include('full_antecedentes/ant_base.html.twig') }}
+<!-- Button trigger modal -->
+
+
+ {{ form_start(form) }}
+<h4 class="text-primary">Detalles de diagnóstico</h4>
+<div class="row">
+
+   <div class="col-md-12">
+    {{ form_row(form.cie) }}
+  </div>
+  
+  <div class="col-md-6">
+    {{ form_row(form.tipo_diagnostico,{
+           attr: {      
+            'label': 'Tipo de diagnóstico',  
+            'placeholder': 'Seleccione Tipo de diagnóstico',           
+                  }
+        }) }}
+  </div>
+
+    
+  <div class="col-md-6">
+    {{ form_row(form.solicitud) }}
+  </div>
+
+  </div>
+  </br>
+
+
+    <button class="btn btn-primary btn-block pull-left btn-smy">
+    <i class="fas fa-save"></i> {{ button_label|default('Guardar') }}
+    </button>
+    </br>
+{{ form_end(form) }}
+ 
+{% for flash_message in app.session.flashbag.get('exito') %}
+<div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+   <div class="p-5 bg-white rounded shadow mb-5">
+    <!-- Bordered tabs-->
+    <ul id="myTab1" role="tablist" class="nav nav-tabs nav-pills with-arrow flex-column flex-sm-row text-center">
+      <li class="nav-item flex-sm-fill">
+        <a id="home1-tab" data-toggle="tab" href="#home1" role="tab" aria-controls="home1" aria-selected="true" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 border active">DIAGNOSTICOS CONSULTA ACTUAL</a>
+      </li>
+      <li class="nav-item flex-sm-fill">
+        <a id="profile1-tab" data-toggle="tab" href="#profile1" role="tab" aria-controls="profile1" aria-selected="false" class="nav-link text-uppercase font-weight-bold mr-sm-3 rounded-0 border">Historial de Diagnósticos</a>
+      </li>
+
+
+    </ul>
+
+  
+    <div id="myTab1Content" class="tab-content">
+      <div id="home1" role="tabpanel" aria-labelledby="home-tab" class="tab-pane fade px-4 py-5 show active">
+        
+
+<a href="javascript:void(0);" id="print_Button_Full" class="btn btn-block btn-primary" align="left" >Imprimir Receta</a>
+<br>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Enfermedades con medicamentos</h5>
+         
+      </div>
+      <div class="modal-body">
+      <div class="content">
+      </br>  <div style="text-align: center"> <img src="{{ asset('image/logo-oc.png') }}" width="100" height="100"> <h6 style="text-align: center">Dr/a: {{consulta.employed.Nombre }} {{consulta.employed.Apellido }}  </h6> <h6 style="text-align: center">Especialidad: {{consulta.employed.Profesion }}</h6>  <h6 style="text-align: center">Unidad Operativa: {{consulta.employed.unidadesoperativas.nombre }}</h6> <h6 style="text-align: center">Dirección: {{consulta.employed.unidadesoperativas.direccion }}</h6></br>  </div> <h4 style="text-align: center"><b>RECETA MÉDICA</b></h4>  <h5>Paciente: <b>{{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</b></h5> <h5>Cedula:<b>{{paciente.cedula}}</b></h5> <h5>Motivo de la Consulta: <b>{{ consulta.motivoconsulta }}</b></h5> <h5>Fecha de atención: <b>{{ consulta.fechaatencion  ? consulta.fechaatencion|date('Y-m-d') : '' }}</b></h5></br>
+        <table id="example8" style="width:100%" class="content-table table-sm">
+    <thead>
+        <tr>
+            <th>Diagnóstico CIE</th>
+            <th>Medicamentos</th>
+            <th>Presentación</th>
+            <th>Cantidad</th>
+            <th>Dosis</th>
+            <th>Frecuencia</th>
+            <th>Duración</th>
+            <th>Indicaciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for diagnostico in antecedentes %}
+        {% if diagnostico.medicamento is not none %}
+        <tr>
+            <td>{{diagnostico.codigo}}-{{ diagnostico.descripcion }} </br> Tipo de Diagnóstico:{{ diagnostico.tipo_diagnostico}}</td>
+            <td>{{ diagnostico.medicamento}}</td>
+            <td>{{ diagnostico.presentacion}}</td>
+            <td>{{ diagnostico.cantidad}}</td>
+            <td>{{ diagnostico.dosis}}</td>
+            <td>{{ diagnostico.frecuencia}}</td>
+            <td>{{ diagnostico.duracion}}</td>
+            <td>{{ diagnostico.indicaciones}}</td>
+        </tr>
+        {% endif %}
+        {% if antecedentes is empty %}
+        <tr>
+            <td colspan="4">No Existen Registros</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+</br></br></br></br></br><h6 class="text-center">_____________________________</h6><h6 class="text-center" > Dr/a: {{consulta.employed.Nombre }} {{consulta.employed.Apellido }}</h6> <h6 class="text-center" >Medicina Ocupacional</h6>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="table-responsive">
+    <table  id="example" style="width:100%" class="content-table table-sm">
+        <thead>
+            <tr>
+                  <th>Diagnóstico CIE</th>
+                  <th>Medicamentos</th>
+                  <th>Presentación</th>
+                  <th>Cantidad</th>
+                  <th>Dosis</th>
+                  <th>Frecuencia</th>
+                  <th>Duración</th>
+                  <th>Indicaciones</th>
+                  
+            </tr>
+        </thead>
+        <tbody id="articles">
+        {% for diagnostico in antecedentes %}
+            <tr>
+                <td>{{diagnostico.codigo}}-{{ diagnostico.descripcion }} </br> Tipo de Diagnóstico:{{ diagnostico.tipo_diagnostico}}</br><a  href="{{ path('tratamiento_new', {p:paciente.id , c:consulta.id , d: diagnostico.id}) }}" title="Agregar Nuevo Tratamiento" style="font-size: 0.8em"><i class="fas fa-plus-square"></i></a> <a  href=" {{ path('diagnostico_edit', {p:paciente.id ,id:diagnostico.id, c:consulta.id }) }}" title="Editar Diagnóstico" style="font-size: 0.8em"><i class="fas fa-edit"></i></a> <a href="#"   title="Eliminar Diagnóstico" style="font-size: 0.8em"><i class="delete-article far fa-trash-alt" data-id="{{diagnostico.id}}" ></i></a></td>
+                <td>{{ diagnostico.medicamento}}</td>
+                <td>{{ diagnostico.presentacion}}</td>
+                <td>{{ diagnostico.cantidad}}</td>
+                <td>{{ diagnostico.dosis}}</td>
+                <td>{{ diagnostico.frecuencia}}</td>
+                <td>{{ diagnostico.duracion}}</td>
+                <td>{{ diagnostico.indicaciones}}</td>
+                
+            </tr>
+              {% if antecedentes is empty %}
+            <tr>
+                <td colspan="4">No Existen Registros</td>
+            </tr>  
+             {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+  </div>
+             
+
+</div>
+      <div id="profile1" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade px-4 py-5">
+          
+         <div class="table-responsive">
+             <table  id="example3" style="width:100%" class="content-table table-sm">
+              <thead>
+                <tr>  
+                  <th>Diagnóstico CIE</th>
+                  <th>Fecha</th>
+                  <th>Medicamentos</th>
+                  <th>Presentación</th>
+                  <th>Cantidad</th>
+                  <th>Dosis</th>
+                  <th>Frecuencia</th>
+                  <th>Duración</th>
+                  <th>Indicaciones</th>  
+                </tr>
+        </thead>
+        <tbody id="a">
+        {% for diagnostico in antecedentes2 %}
+            <tr>
+                <td>{{diagnostico.codigo}}-{{ diagnostico.descripcion }} </br> Tipo de Diagnóstico:{{ diagnostico.tipo_diagnostico}} </br>Fecha:{{ diagnostico.fecha_atencion ? diagnostico.fecha_atencion|date('Y-m-d') : '' }} </br> Consulta: {{diagnostico.motivo_consulta}}</br><a  href=" {{ path('diagnostico_copiar', {p:paciente.id ,id:diagnostico.id, c:consulta.id }) }}" title="Copiar Diagnostico" style="font-size: 0.8em"><i class="fas fa-copy"></i></a> </td>
+                <td>{{ diagnostico.fecha_atencion ? diagnostico.fecha_atencion|date('Y-m-d') : '' }}</td>
+                <td>{{ diagnostico.medicamento}}</td>
+                <td>{{ diagnostico.presentacion}}</td>
+                <td>{{ diagnostico.cantidad}}</td>
+                <td>{{ diagnostico.dosis}}</td>
+                <td>{{ diagnostico.frecuencia}}</td>
+                <td>{{ diagnostico.duracion}}</td>
+                <td>{{ diagnostico.indicaciones}}</td> 
+            </tr>
+             {% if antecedentes2 is empty %}
+            <tr>
+                <td colspan="4">No Existen Registros</td>
+            </tr>  
+             {% endif %}
+
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+       
+      </div>
+      
+     
+    </div>
+
+    <!-- End bordered tabs -->
+  </div>
+
+
+  
+
+  
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+   
+  <script type="text/javascript">
+        $(document).ready(function() {
+          $('select[data-select="true"]').select2({
+              minimumInputLength: 2,
+             allowClear: true,
+          });
+        });
+    </script>
+
+      <script type="text/javascript"> 
+     window.onload= function(){
+       document.getElementById("op8").style="background-color: #FDF4BC;";
+     }
+ </script>
+
+
+     <script> 
+       $(document).ready(function() {
+
+    
+
+        $('#example').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+        'responsive': true,
+        "columnDefs": [{"targets": [0], "visible": false, }, ],
+        "order": [[ 0, 'asc' ] != null , [ 1, 'asc' ]] != null,
+
+           rowGroup: {
+            dataSrc: [0]
+        },
+          
+         
+         
+  } );
+
+
+    } );
+
+  
+ </script>
+
+
+ <script> 
+       $(document).ready(function() {
+
+        $('#example8').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+        'responsive': true,
+        paging: false, // Desactivar paginado
+        searching: false, // Desactivar cuadro de búsqueda
+        lengthChange: false, // Desactivar botón "Show" para cambiar el número de registros por página
+        info: false, // Desactivar información sobre el número de registros mostrados
+        "columnDefs": [{"targets": [0], "visible": false, }, ],
+        "order": [[ 0, 'asc' ] != null , [ 1, 'asc' ]] != null,
+
+           rowGroup: {
+            dataSrc: [0]
+        },      
+  } );
+
+
+    } );
+
+  
+ </script>
+
+
+
+
+
+
+     <script> 
+       $(document).ready(function() {
+       var imagePath = 'http://drive.google.com/uc?export=view&id=1Rirlbq7GBrovPJO2hHWeWf9Xpu6PPxow';
+        $('#example2').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+      
+
+           dom: 'Bfrtip',
+          buttons: [
+         
+              {
+                extend: 'print',
+                 title: '',
+                text: "Exámenes de Laboratorio",
+                footer: true,
+                exportOptions: {
+               columns: function(column, data, node) {
+         if(column == 0){
+              return true;
+        }else if(column == 1){
+             return true;
+        }
+        return false;
+    },
+                     rows: function ( idx, data, node ) {  
+                          
+                         return   data[0,1]  != '' ? true : false;
+
+                        }
+                    },
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                        .prepend(
+                          
+                            '</br>  <div style="text-align: center"> <img src="' + imagePath + '" width="100" height="100"> <h6 style="text-align: center">Dr/a: {{consulta.employed.Nombre }} {{consulta.employed.Apellido }}  </h6> <h6 style="text-align: center">Especialidad: {{consulta.employed.Profesion }}</h6>  <h6 style="text-align: center">Unidad Operativa: {{consulta.employed.unidadesoperativas.nombre }}</h6> <h6 style="text-align: center">Dirección: {{consulta.employed.unidadesoperativas.direccion }}</h6></br>  </div> <h4 style="text-align: center"><b>PEDIDO DE EXÁMENES DE LABORATORIO</b></h4>  <h5>Paciente: <b>{{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</b></h5> <h5>Cedula:<b>{{paciente.cedula}}</b></h5> <h5>Motivo de la Consulta: <b>{{ consulta.motivoconsulta }}</b></h5> <h5>Fecha de atención: <b>{{ consulta.fechaatencion  ? consulta.fechaatencion|date('Y-m-d') : '' }}</b></h5></br>'
+                            
+                        );
+                  
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit','thead-dark','table' );
+
+                     $(win.document.body).append(' </br></br></br></br></br></br></br></br></br></br></br></br><h6 class="text-center">_____________________________</h6><h6 class="text-center" > Dr/a: {{consulta.employed.Nombre }} {{consulta.employed.Apellido }}</h6> <h6 class="text-center" >Medicina Ocupacional</h6>');
+                }
+            },
+
+
+             {
+                extend: 'print',
+                title: '',
+                text: "Exámenes Complementarios",
+                footer: true,
+                exportOptions: {
+                   columns: function(column, data, node) {
+         if(column == 0){
+              return true;
+        }else if(column == 2){
+             return true;
+        }
+        return false;
+    },
+                 rows: function ( idx, data, node ) {  
+                          
+                         return   data[0,2]  != '' ? true : false;
+
+                        }
+                    },
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                        .prepend(
+                          
+                            '</br>  <div style="text-align: center"> <img src="' + imagePath + '" width="100" height="100"> <h6 style="text-align: center">Dr/a: {{consulta.employed.Nombre }} {{consulta.employed.Apellido }}  </h6> <h6 style="text-align: center">Especialidad: {{consulta.employed.Profesion }}</h6>  <h6 style="text-align: center">Unidad Operativa: {{consulta.employed.unidadesoperativas.nombre }}</h6> <h6 style="text-align: center">Dirección: {{consulta.employed.unidadesoperativas.direccion }}</h6></br>  </div> <h4 style="text-align: center"><b>PEDIDO DE EXÁMENES COMPLEMENTARIOS</b></h4>  <h5>Paciente: <b>{{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</b> <h5>Cedula:<b>{{paciente.cedula}}</b></h5> </h5> <h5>Motivo de la Consulta: <b>{{ consulta.motivoconsulta }}</b></h5> <h5>Fecha de atención: <b>{{ consulta.fechaatencion  ? consulta.fechaatencion|date('Y-m-d') : '' }}</b></h5></br>'
+                            
+                        );
+                  
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit','thead-dark','table' );
+
+                     $(win.document.body).append(' </br></br></br></br></br></br></br></br></br></br></br></br><h6 class="text-center">_____________________________</h6><h6 class="text-center" > Dr/a: {{consulta.employed.Nombre }} {{consulta.employed.Apellido }}</h6> <h6 class="text-center" >Medicina Ocupacional</h6>');
+                }
+            },
+            
+             {
+                extend: 'print',
+                title: '',
+                text: "Fisioterapia",
+                footer: true,
+                exportOptions: {
+            
+
+                     columns: function(column, data, node) {
+         if(column == 0){
+              return true;
+        }else if(column == 3){
+             return true;
+        }
+        return false;
+    },
+                   rows: function ( idx, data, node ) {  
+                          
+                         return   data[0,3]  != '' ? true : false;
+
+                        }
+                    },
+
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                        .prepend(
+                          
+                            '</br>  <div style="text-align: center"> <img src="' + imagePath + '" width="100" height="100"> <h6 style="text-align: center">Dr/a: {{consulta.employed.Nombre }} {{consulta.employed.Apellido }}  </h6> <h6 style="text-align: center">Especialidad: {{consulta.employed.Profesion }}</h6>  <h6 style="text-align: center">Unidad Operativa: {{consulta.employed.unidadesoperativas.nombre }}</h6> <h6 style="text-align: center">Dirección: {{consulta.employed.unidadesoperativas.direccion }}</h6></br>  </div> <h4 style="text-align: center"><b>PEDIDO DE FISIOTERAPIA</b></h4>  <h5>Paciente: <b>{{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</b></h5> <h5>Cedula:<b>{{paciente.cedula}}</b></h5> <h5>Motivo de la Consulta: <b>{{ consulta.motivoconsulta }}</b></h5> <h5>Fecha de atención: <b>{{ consulta.fechaatencion  ? consulta.fechaatencion|date('Y-m-d') : '' }}</b></h5></br>'
+                            
+                        );
+                  
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit','thead-dark','table' );
+
+                     $(win.document.body).append(' </br></br></br></br></br></br></br></br></br></br></br></br><h6 class="text-center">_____________________________</h6><h6 class="text-center" > Dr/a: {{consulta.employed.Nombre }} {{consulta.employed.Apellido }}</h6> <h6 class="text-center" >Medicina Ocupacional</h6>');
+                }
+            },
+
+               {
+                extend: 'print',
+                title: '',
+                text: "Interconsulta",
+                footer: true,
+                exportOptions: {
+              
+        columns: function(column, data, node) {
+         if(column == 0){
+              return true;
+        }else if(column == 4){
+             return true;
+        }
+        return false;
+    },
+                    rows: function ( idx, data, node ) {  
+                          
+                         return   data[0,4]  != '' ? true : false;
+
+                        }
+                    },
+                customize: function ( win ) {
+                    $(win.document.body)
+                        .css( 'font-size', '10pt' )
+                        .prepend(
+                          
+                            '</br>  <div style="text-align: center"> <img src="' + imagePath + '" width="100" height="100"> <h6 style="text-align: center">Dr/a: {{consulta.employed.Nombre }} {{consulta.employed.Apellido }}  </h6> <h6 style="text-align: center">Especialidad: {{consulta.employed.Profesion }}</h6>  <h6 style="text-align: center">Unidad Operativa: {{consulta.employed.unidadesoperativas.nombre }}</h6> <h6 style="text-align: center">Dirección: {{consulta.employed.unidadesoperativas.direccion }}</h6></br>  </div> <h4 style="text-align: center"><b>PEDIDO DE INTERCONSULTA</b></h4>  <h5>Paciente: <b>{{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</b></h5> <h5>Cedula:<b>{{paciente.cedula}}</b></h5> <h5>Motivo de la Consulta: <b>{{ consulta.motivoconsulta }}</b></h5> <h5>Fecha de atención: <b>{{ consulta.fechaatencion  ? consulta.fechaatencion|date('Y-m-d') : '' }}</b></h5></br>'
+                            
+                        );
+                  
+ 
+                    $(win.document.body).find( 'table' )
+                        .addClass( 'compact' )
+                        .css( 'font-size', 'inherit','thead-dark','table' );
+
+                     $(win.document.body).append(' </br></br></br></br></br></br></br></br></br></br></br></br><h6 class="text-center">_____________________________</h6><h6 class="text-center" > Dr/a: {{consulta.employed.Nombre }} {{consulta.employed.Apellido }}</h6> <h6 class="text-center" >Medicina Ocupacional</h6>');
+                }
+            },
+
+
+            
+        ],
+
+         'responsive': true,
+         
+  } );
+
+
+    } );
+
+  
+ </script>
+
+
+
+
+   <script> 
+       $(document).ready(function() {
+
+        $('#example3').DataTable( {
+            language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
+        },
+        'responsive': true,
+        "columnDefs": [{"targets": [0,1], "visible": false, }, ],
+        order: [[1, 'desc']],
+
+           rowGroup: {
+            dataSrc: [0]
+        },
+
+          
+         
+         
+  } );
+
+
+    } );
+
+  
+ </script>
+
+
+
+
+  
+
+   
+
+
+
+
+   <script>
+
+  const articles = document.getElementById('articles');
+
+   if (articles) {
+     articles.addEventListener('click', e => {
+       if (e.target.className === 'delete-article far fa-trash-alt') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+              const value = e.target.getAttribute('data-id');
+              let route = "{{ path('delate_diagnostico', { id: 'fileId_' }) }}";
+              route = route.replace('fileId_', value);
+   
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+  </script>
+
+
+
+<script>
+
+  const articles2 = document.getElementById('a');
+
+   if (articles2) {
+     articles2.addEventListener('click', e => {
+       if (e.target.className === 'delete-article2 far fa-trash-alt') {
+         if (confirm('Esta seguro de eliminar este elemento?')) {
+              const value = e.target.getAttribute('data-id');
+              let route = "{{ path('delate_diagnostico', { id: 'fileId_' }) }}";
+              route = route.replace('fileId_', value);
+   
+           fetch(route, {
+             method: 'DELETE'
+           }).then(res => window.location.reload());
+         }
+       }
+     });
+   };
+</script>
+
+
+<script>
+  $(document).ready(function(){
+       $("#print_Button_Full").click(function(){
+          var mode = 'iframe'; // popup
+          var close = mode == "popup";
+          var options = { mode : mode, popClose : close};
+          $("div.content").printArea( options );
+      });
+  });
+
+</script>
+
+  
+
+
+
+  
+
+   {% endblock %}
+

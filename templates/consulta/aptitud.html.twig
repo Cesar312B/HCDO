@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Antecedentes Patológicos{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+{{ include('full_antecedentes/ant_base.html.twig') }}
+{% for flash_message in app.session.flashbag.get('exito') %}
+    <div class="flash-notice">
+        {{ flash_message }}
+    </div>
+{% endfor %}
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button class="btn-block btn-primary"><i class="fas fa-save">{{ button_label|default('Guardar') }}</i></button></p>
+
+<a href="{{ path('full_antecedentes', {id: paciente.id, c: consulta.id}) }}">
+<i class="fas fa-poll-h"> Imprimir Reporte de Ficha Medica</i>
+</a><br>
+
+<a href="{{ path('reporte_aptitud', {id: paciente.id, c: consulta.id}) }}">
+<i class="fas fa-poll-h"> Imprimir Certificado de Aptitud</i>
+</a>
+
+{{ form_end(form) }}
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+
+ <script type="text/javascript"> 
+     window.onload= function(){
+       document.getElementById("op11").style="background-color: #FDF4BC;";
+     }
+ </script>
+
+
+
+
+  
+
+   {% endblock %}

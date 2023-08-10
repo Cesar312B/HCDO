@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Vacunas{% endblock %}
+
+{% block body %}
+
+<div class="page-header">
+   <img src="{{ asset('image/Recursos_Banner 6.jpg') }}" height="80" width=100% >
+</div> 
+</p>
+<button class="btn btn-block bg-primary btn-sm">
+        <a href="{{ path('vacunas_new') }}">
+            <i class="fas fa-plus-square">
+                Crear Nueva vacuna
+            </i>
+        </a>
+</button>
+</p>
+<center>
+    <table class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Dosis</th>
+                <th>Indicaciones</th>
+                <th>Tipo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for vacuna in vacunas %}
+            <tr>
+                <td>{{ vacuna.id }}</td>
+                <td>{{ vacuna.Nombre }}</td>
+                <td>{{ vacuna.Dosis }}</td>
+                <td>{{ vacuna.Indicaciones }}</td>
+                <td>{{ vacuna.tipo }}</td>
+                <td>
+                   
+                    <a href="{{ path('vacunas_edit', {'id': vacuna.id}) }}" title="Editar"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</center>
+    
+{% endblock %}

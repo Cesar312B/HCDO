@@ -1,0 +1,304 @@
+{{ form_start(form3) }}
+ <div class="row">
+  
+
+  <div class="col-md-6">
+                         {{ form_row(form3.hijos,{
+                              attr: {
+                                   'placeholder': 'Número de Hijos',
+                               }
+                                 }) }}
+    </div>
+
+
+    <div class="col-md-6">
+                         {{ form_row(form3.vida_sexual,{
+                              attr: {
+                                   'placeholder': 'vida_sexual',
+                               }
+                                 }) }}
+                                 
+    </div>
+    </div>
+
+    <div class="row">
+    
+     <div class="col-md-6">
+                         {{ form_row(form3.metodo_planificacion,{
+                              attr: {
+                                   'placeholder': 'Método Planificación Familiar',
+                               }
+                                 }) }}</br>
+    </div>
+
+       {% set var = "Mujer" %}  
+                        {% if paciente.sexo == var %}
+                        <div class="row">
+  
+
+
+ 
+   
+    
+    <div class="col-md-3">
+                         {{ form_row(form3.menarquia,{
+                              attr: {
+                                   'placeholder': 'Edad en años',
+                               }
+                                 }) }}
+                                 
+    </div>
+  
+    <div class="col-md-3">
+                         {{ form_row(form3.ciclos,{
+                              attr: {
+                                   'placeholder': 'Ciclos',
+                               }
+                                 }) }}
+    </div>
+
+     <div class="col-md-3">
+                         {{ form_row(form3.gestas,{
+                              attr: {
+                                   'placeholder': 'Número de Gestas',
+                               }
+                                 }) }}
+    </div>
+     <div class="col-md-3">
+                         {{ form_row(form3.partos,{
+                              attr: {
+                                   'placeholder': 'Número de Partos',
+                               }
+                                 }) }}
+    </div>
+     <div class="col-md-3">
+                         {{ form_row(form3.abortos,{
+                              attr: {
+                                   'placeholder': 'Número de Abortos',
+                               }
+                                 }) }}
+    </div>
+
+
+     <div class="col-md-3">
+                         {{ form_row(form3.cesareas,{
+                              attr: {
+                                   'placeholder': 'Número de Cesáreas',
+                               }
+                                 }) }}
+                                 </br>
+    </div>
+
+      <div class="col-md-6">
+                         {{ form_row(form3.ultima_menstruacion,{
+                              attr: {
+                                   'placeholder': 'Última Menstruación',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-12">
+                         {{ form_row(form3.ultima_mastografia,{
+                              attr: {
+                                   'placeholder': 'Última Mamografía',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form3.tiempo_mastografia,{
+                              attr: {
+                                   'placeholder': 'Hace cuanto tiempo? (años)',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form3.resultado_mastografia,{
+                              attr: {
+                                   'placeholder': 'Describa los resultados del examen',
+                               }
+                                 }) }}
+    </div>
+
+     <div class="col-md-12">
+                         {{ form_row(form3.colposcopia,{
+                              attr: {
+                                   'placeholder': 'Se ha realizado una Colposcopia?',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form3.tiempo_colposcopia,{
+                              attr: {
+                                   'placeholder': 'Hace cuanto tiempo? (años)',
+                               }
+                                 }) }}
+    </div>
+     
+     <div class="col-md-6">
+                         {{ form_row(form3.resultado_colposcopia,{
+                              attr: {
+                                   'placeholder': 'Describa los resultados del examen',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-12">
+                         {{ form_row(form3.papanicolaou,{
+                              attr: {
+                                   'placeholder': 'Se ha realizado el examen de Papanicolau?',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form3.tiempo_papanicolaou,{
+                              attr: {
+                                   'placeholder': 'Hace cuanto tiempo? (años)',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form3.resultado_papanicolaou,{
+                              attr: {
+                                   'placeholder': 'Describa los resultados del examen',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-12">
+                         {{ form_row(form3.eco_mamario,{
+                              attr: {
+                                   'placeholder': 'Examen Eco Mamario',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form3.tiempo_ecomamario,{
+                              attr: {
+                                   'placeholder': 'Hace cuanto tiempo? (años)',
+                               }
+                                 }) }}
+    </div>
+
+    <div class="col-md-6">
+                         {{ form_row(form3.resultado_ecomamario,{
+                              attr: {
+                                   'placeholder': 'Describa los resultados del examen',
+                               }
+                                 }) }}
+    </div>
+</div>
+ {% else %}
+ {% do form3.menarquia.setRendered() %}
+  {% do form3.ciclos.setRendered() %}
+   {% do form3.gestas.setRendered() %}
+    {% do form3.partos.setRendered() %}
+     {% do form3.abortos.setRendered() %}
+      {% do form3.cesareas.setRendered() %}
+
+      {% do form3.ultima_menstruacion.setRendered() %}
+  {% do form3.ultima_mastografia.setRendered() %}
+   {% do form3.tiempo_mastografia.setRendered() %}
+    {% do form3.resultado_mastografia.setRendered() %}
+     {% do form3.colposcopia.setRendered() %}
+      {% do form3.tiempo_colposcopia.setRendered() %}
+
+      
+      {% do form3.resultado_colposcopia.setRendered() %}
+  {% do form3.papanicolaou.setRendered() %}
+   {% do form3.tiempo_papanicolaou.setRendered() %}
+    {% do form3.resultado_papanicolaou.setRendered() %}
+     {% do form3.eco_mamario.setRendered() %}
+      {% do form3.tiempo_ecomamario.setRendered() %}
+        {% do form3.resultado_ecomamario.setRendered() %}
+      
+{% endif %}
+
+
+ {% set var2 = "Hombre" %}  
+  {% if paciente.sexo == var2 %}
+  <div class="row">
+                        
+  
+      <div class="col-md-12">
+                        
+                         {{ form_row(form3.antigeno_prostatico,{
+                              attr: {
+                            'placeholder': 'Se ha realizado el examen Antígeno Prostático?',
+                               }
+                                 }) }}
+      </div>
+
+      <div class="col-md-6">
+                        
+                         {{ form_row(form3.tiempo_antigenoprostatico,{
+                              attr: {
+                            'placeholder': 'Hace cuanto tiempo? (años)',
+                               }
+                                 }) }}
+      </div>
+
+      <div class="col-md-6">
+                        
+                         {{ form_row(form3.resultado_antigenoprostatico,{
+                              attr: {
+                            'placeholder': 'Describa los resultados',
+                               }
+                                 }) }}
+      </div>
+
+      <div class="col-md-12">
+                        
+                         {{ form_row(form3.eco_prostatico,{
+                              attr: {
+                            'placeholder': 'Se ha realizado el examen Eco Prostático?',
+                               }
+                                 }) }}
+      </div>
+
+      <div class="col-md-6">
+                        
+                         {{ form_row(form3.tiempo_ecoprostatico,{
+                              attr: {
+                            'placeholder': 'Hace cuanto tiempo? (años)',
+                               }
+                                 }) }}
+      </div>
+      <div class="col-md-6">
+                        
+                         {{ form_row(form3.resultado_ecoprostatico,{
+                              attr: {
+                            'placeholder': 'Describa los resultados',
+                               }
+                                 }) }}
+      </div>
+
+
+</div>
+
+ {% else %}
+ {% do form3.antigeno_prostatico.setRendered() %}
+  {% do form3.tiempo_antigenoprostatico.setRendered() %}
+   {% do form3.resultado_antigenoprostatico.setRendered() %}
+    {% do form3.eco_prostatico.setRendered() %}
+     {% do form3.tiempo_ecoprostatico.setRendered() %}
+      {% do form3.resultado_ecoprostatico.setRendered() %}
+
+
+{% endif %}
+
+
+   <button class="btn btn-block bg-gradient-primary btn-sm">
+     <i class="fas fa-save"> </i>
+    {{ button_label|default('Guardar') }}
+    </button>
+          
+  </div>
+     </br>
+  {{ form_end(form3) }}
+

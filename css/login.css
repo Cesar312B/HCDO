@@ -1,0 +1,288 @@
+body {
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+.posicion-relativa[_ngcontent-c2] {
+    position: relative
+}
+
+.margin-cero[_ngcontent-c2] {
+    margin: 0
+}
+
+.padding-right-diez[_ngcontent-c2] {
+    padding-right: 10px
+}
+
+.login-body[_ngcontent-c2] {
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    width: 100%;
+    height: 100%
+}
+
+.login-body[_ngcontent-c2] .login-panel[_ngcontent-c2] {
+    height: 100%;
+    position: fixed;
+    width: 100%
+}
+
+.bg-image[_ngcontent-c2] {
+    background-image: url();
+    filter: blur(8px);
+    -webkit-filter: blur(2px);
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: fixed;
+    background-position: bottom
+}
+
+.login-body[_ngcontent-c2] .login-content[_ngcontent-c2] {
+    position: relative;
+    padding: 40px 0;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: #17a2b8;
+    overflow: auto
+}
+
+.login-body[_ngcontent-c2] .login-content[_ngcontent-c2] img[_ngcontent-c2] {
+    display: inline-block;
+    margin-bottom: 100px;
+    width: 200px
+}
+
+.login-body[_ngcontent-c2] .login-content[_ngcontent-c2] h1[_ngcontent-c2] {
+    font-size: 25px;
+    font-weight: 500;
+    margin: 14px 0;
+    color: #17a2b8;
+}
+
+.login-body[_ngcontent-c2] .login-content[_ngcontent-c2] h1[_ngcontent-c2] span[_ngcontent-c2] {
+    color: #17a2b8;
+}
+
+.login-body[_ngcontent-c2] .login-content[_ngcontent-c2] p[_ngcontent-c2] {
+    font-size: 15px;
+    color: #17a2b8;
+    margin: 0 0 32px
+}
+
+.login-body[_ngcontent-c2] .login-content[_ngcontent-c2] .login-input-wrapper[_ngcontent-c2] {
+    position: relative;
+    width: 300px;
+    margin-bottom: 16px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.login-body[_ngcontent-c2] .login-content[_ngcontent-c2] .login-input-wrapper[_ngcontent-c2] input[_ngcontent-c2] {
+    width: 80%;
+    padding-right: 16px;
+    align-items: center;
+    margin-left:10%;
+    margin: center
+}
+
+.login-body[_ngcontent-c2] .login-content[_ngcontent-c2] .login-input-wrapper[_ngcontent-c2] i[_ngcontent-c2] {
+    position: absolute;
+    color: #17a2b8;
+    font-size: 16px;
+    top: 50%;
+    right: .429em;
+    margin-top: -8px
+}
+
+.login-body[_ngcontent-c2] .login-content[_ngcontent-c2] button[_ngcontent-c2] {
+    min-width: 150px
+}
+
+.wrapper-login[_ngcontent-c2] {
+    overflow: hidden;
+    width: 100%;
+    height: 99%
+}
+
+@media screen and (min-width:360px) {
+    .bg-image[_ngcontent-c2] {
+        display: none
+    }
+    body[_ngcontent-c2], html[_ngcontent-c2] {
+        overflow: hidden;
+        width: 100%;
+        height: 100%
+    }
+    body[_ngcontent-c2] {
+        margin: 0
+    }
+    .login-body[_ngcontent-c2] .login-content[_ngcontent-c2] img[_ngcontent-c2] {
+        display: inline-block;
+        margin-bottom: 40%;
+        width: 90%
+    }
+    .elemnt[_ngcontent-c2], .elemnt1[_ngcontent-c2] {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        background-repeat: no-repeat;
+        --ms-background-size: cover;
+        --o-background-size: cover;
+        --moz-background-size: cover;
+        --background-size: cover;
+        height: 100%;
+        display: inline-block;
+        text-align: center
+    }
+    .elemnt[_ngcontent-c2] {
+        -webkit-animation:0s 8s infinite xfade;
+        animation:0s 8s infinite xfade;
+        background-image: url(image/Recursos_Login.jpg);
+        background-size: 100% 100%
+    }
+    .elemnt1[_ngcontent-c2] {
+        -webkit-animation:4s 0s infinite xfade;
+        animation:4s 0s infinite xfade;
+        background-image: url(image/Recursos_Inicio2.jpg);
+        background-size: 100% 100%
+    }
+    
+    @-webkit-keyframes xfade {
+        17% {
+            opacity: 1
+        }
+        25%, 92% {
+            opacity: 0
+        }
+    }
+    @keyframes xfade {
+        17% {
+            opacity: 1
+        }
+        25%, 92% {
+            opacity: 0
+        }
+    }
+  
+  
+    .login-body[_ngcontent-c2] .login-panel[_ngcontent-c2] {
+        padding: 80px;
+        display: block;
+        position: fixed;
+        background-color: #17a2b8;
+        height: 200%;
+        width: 83%;
+        left: -50%;
+        top: -50%;
+        opacity: .88;
+        filter: alpha(opacity=88);
+        border-radius: 88%
+    }
+    .login-body[_ngcontent-c2] .login-content[_ngcontent-c2] {
+        position: absolute;
+        padding: 60px 0;
+        margin: 0 auto;
+        width: 25%;
+        height: 100%;
+        text-align: center;
+        left: 62%;
+        top: 25%
+    }
+    .login-body[_ngcontent-c2] .login-content[_ngcontent-c2] .login-input-wrapper[_ngcontent-c2] {
+        width:100%;
+        margin-left: 0;
+        margin-right: 0;
+        text-align: left
+    }
+    .login-body[_ngcontent-c2] .login-content[_ngcontent-c2] button[_ngcontent-c2] {
+        min-width: 150px
+    }
+    .login-body[_ngcontent-c2] .login-content[_ngcontent-c2] h1[_ngcontent-c2] {
+        font-size: 25px;
+        font-weight: 500;
+        margin: 14px 0;
+        color: #ffffff;
+        text-align: left
+
+    }
+    .login-body[_ngcontent-c2] .login-content[_ngcontent-c2] h1[_ngcontent-c2] span[_ngcontent-c2] {
+        color: #ffffff;
+        text-align: left
+    }
+    .login-body[_ngcontent-c2] .login-content[_ngcontent-c2] p[_ngcontent-c2] {
+        font-size: 15px;
+        color: #fffdfd;
+        margin: 0 0 32px;
+        text-align: left
+    }
+    .tituloAplicacion[_ngcontent-c2] {
+        text-align: center!important;
+        margin-top: -40%!important;
+        padding: 20%!important;
+        font-size: 25px!important;
+        font-weight: 700!important;
+        text-transform: uppercase!important
+    }
+}
+.cajaContrasenia[_ngcontent-c2] {
+    margin: 20px;
+    color: white;
+    text-align: center;
+    position: relative;
+    border-radius: 20px
+}
+
+.textoContrasenia[_ngcontent-c2] {
+    color: rgb(255, 255, 255)!important;
+    text-align: center!important;
+    margin: 5px!important
+}
+
+.tituloAplicacion[_ngcontent-c2] {
+    text-align: center!important;
+    margin-top: -75px!important;
+    padding: 20px!important;
+    font-size: 25px!important;
+    font-weight: 700!important;
+    text-transform: uppercase!important
+}
+
+.tituloAplicacion[_ngcontent-c2]>span[_ngcontent-c2] {
+    color: rgb(255,255,255)!important
+}
+
+.ui-inputtext {
+    --webkit-writing-mode: horizontal-tb !important;
+    width: 60%;
+    text-rendering: auto;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: auto;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    font: 400 13.3333px Helvetica;
+    padding: 8px 6px;
+    border-style: inset;
+    border-image: initial;
+    border-radius: 3rem;
+}
+
+.text-warning {
+    color: #ffffff;
+  }
+  .register-btn-container {
+    color: #ffffff;
+  }
+  
+

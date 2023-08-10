@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Puesto de Trabajo{% endblock %}
+
+{% block body %}
+    <h1>Editar puesto de trabajo</h1>
+</br>
+    {{ include('puesto_trabajo/_form.html.twig', {'button_label': 'Actualizar'}) }}
+
+    <a href="{{ path('puesto_trabajo_index') }}">
+        <button class="btn btn-block btn-outline-warning btn-sm">
+            <i class="fas fa-chevron-left">Regresar a puestos de trabajo</i>
+        </button>
+    </a>
+    {{ include('puesto_trabajo/_delete_form.html.twig') }}
+{% endblock %}

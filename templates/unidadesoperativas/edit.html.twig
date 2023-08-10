@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Unidades Operativas{% endblock %}
+
+{% block body %}
+    <h1 class="text-primary">Editar Unidad Operativa</h1>
+
+    {{ include('unidadesoperativas/_form.html.twig', {'button_label': 'Actualizar'}) }}
+
+
+
+    {{ include('unidadesoperativas/_delete_form.html.twig', {'button_label': 'Eliminar'}) }}
+</p>
+    <button class="btn btn-block btn-outline-warning btn-sm">
+    <a href="{{ path('unidadesoperativas_index') }}"> <i class="fas fa-chevron-left"> Regresar a las unidades operativas</i></a>
+    </button>
+    </br>
+{% endblock %}

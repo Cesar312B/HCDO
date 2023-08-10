@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Pacientes{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+    <h4 class="text-primary">Editar Pacientes</h4>
+
+    {{ include('pacientes/_form.html.twig', {'button_label': 'Actualizar'}) }}
+
+    {{ include('pacientes/_delete_form.html.twig') }}
+
+      <a href="{{ path('consulta_new', {'id': paciente.id}) }}" title="Consulta" > 
+      <button class="btn btn-block btn-outline-primary btn-sm">
+        <i class="fas fa-chevron-left"> Regresar a la consulta médica</i>
+      </button>
+    </a>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+<script>     
+              $('.custom-file-input').on('change', function(event) {
+                    var inputFile = event.currentTarget;
+                    $(inputFile).parent()
+                        .find('.custom-file-label')
+                        .html(inputFile.files[0].name);
+                });
+            </script>
+       
+  <script type="text/javascript">
+        $(document).ready(function() {
+          $('select[data-select="true"]').select2();
+        });
+    </script>
+
+<script>
+var $sport = $('#pacientes_Provincia');
+// When sport gets selected ...
+$sport.change(function() {
+  // ... retrieve the corresponding form.
+  var $form = $(this).closest('form');
+  // Simulate form data, but only include the selected sport value.
+  var data = {};
+  var data = $form.serializeArray()
+  // Submit data via AJAX to the form's action path.
+  $.ajax({
+    url : $form.attr('action'),
+    type: $form.attr('method'),
+    data : data,
+    success: function(html) {
+      // Replace current position field ...
+      $('#pacientes_Ciudad').replaceWith(
+        // ... with the returned one from the AJAX response.
+        $(html).find('#pacientes_Ciudad')
+      );
+      // Position field now displays the appropriate positions.
+    }
+  });
+});
+</script>
+
+
+   {% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Provincia index{% endblock %}
+
+{% block body %}
+<div class="page-header">
+   <img src="{{ asset('image/Recursos_Banner 4.jpg') }}" height="100" width=100% >
+</div> 
+<br>
+<button class="btn btn-block bg-primary btn-sm">
+        <a href="{{ path('provincia_new') }}">
+            <i class="fas fa-plus-square">
+                Crear Nueva Provincia
+            </i>
+        </a>
+</button>
+</br>    
+
+{{ form_end(form) }}
+<center>
+    <table id="example" class="content-table table-sm">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>País</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for provincium in provincias %}
+            <tr>
+                <td>{{ provincium.nombre }}</td>
+                <td>{{ provincium.pais }}</td>
+                <td>
+                    <a href="{{ path('ciudad_new', {'id': provincium.id}) }}" title="Agregar Ciudades "><i class="fas fa-plus-square"></i></a> 
+                    <a href="{{ path('provincia_edit', {'id': provincium.id}) }}" title="Editar"><i class="fas fa-edit"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">No Existen Registros</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</center>    
+    </br>
+
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script> 
+          
+        $(function() {
+  // Sidebar toggle behavior
+  $('#sidebarCollapse').on('click', function() {
+    $('#sidebar, #content').toggleClass('active');
+  });
+});
+</script>
+
+  <script> 
+          $(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'Plfrtip',
+       language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json',
+
+            searchPanes: {
+                clearMessage: 'Limpiar Panel',
+                title: {
+                     _: 'Filters Selected - %d',
+                    0: 'Ningun Filtro Seleccionado',
+                    1: 'Filtros seleccionado - %d', 
+                   
+                },
+            }
+        },
+       
+         'responsive': true,
+    });
+});
+   
+  
+  </script>
+
+
+  
+
+   {% endblock %}
+

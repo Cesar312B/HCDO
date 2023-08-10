@@ -1,0 +1,229 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+ 
+   {{ include('full_antecedentes/diagnosticos.html.twig') }}
+<table id="example" style="width:100%" class="content-table table-sm" >
+        <thead>
+            <tr>
+              
+                <th>Médico</th>
+                <th>Motivo Consulta</th>
+                 <th>Paciente</th>
+                   <th>Diagnósticos</th>     
+
+              
+            </tr>
+        </thead>
+        <tbody>
+         {% for c in diagnosticos %}
+            <tr>
+                 <td>{{ c.consulta.employed.Nombre }} {{ c.consulta.employed.Apellido }}</td>
+                 <td>{{ c.consulta.motivoconsulta }}</td>
+                  <td>{{ c.pacientes.cedula }}</td>
+                    <td>{{ c.cie.descripcion }}</td>
+                 
+                  
+              </td>
+
+
+
+
+            </tr>
+        
+        {% if c  is empty  %}
+            <tr>
+                <td colspan="5">No hay registros</td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+     
+        </tbody>
+    </table>
+
+ 
+  
+{% endblock %}
+
+
+{% block javascripts %}
+
+<!-- Contenidon de  todas las librresias javascript para highcharts -->
+<script src="{{ asset('chars/highcharts.js') }}"></script>
+<script src="{{ asset('chars/data.js') }}" ></script>
+<script src="{{ asset('chars/exporting.js') }}" ></script>
+<script src="{{ asset('chars/accessibility.js') }}" ></script>
+
+ <script type="text/javascript"> 
+     window.onload= function(){
+       document.getElementById("op2").style="background-color: #FDF4BC;";
+     }
+ </script>
+
+  <script>
+   
+
+ $(document).ready(function (){
+var table = $('#example').DataTable({
+   "language": {
+        "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Mostrar _MENU_ registros",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sSearch":         "Buscar:",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+        "sFirst":    "Primero",
+        "sLast":     "Último",
+        "sNext":     "Siguiente",
+        "sPrevious": "Anterior"
+    },
+    "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    },
+    "buttons": {
+        "copy": "Copiar",
+        "colvis": "Visibilidad"
+    },
+
+    searchPanes: {
+                clearMessage: 'Limpiar Panel',
+                title: {
+                     _: 'Filters Selected - %d',
+                    0: 'Ningun Filtro Seleccionado',
+                    1: 'Filtros seleccionado ', 
+                   
+                },
+            },
+            
+              buttons: {
+                copyTitle: 'Agregado al portapapeles',
+                copyKeys: 'Seguir adelante <i>ctrl</i> ou <i>\u2318</i> + <i>C</i> para copiar los datos de la tabla a su portapapeles. <br><br>Para cancelar, haga clic en este mensaje o presione Esc.',
+                copySuccess: {
+                    _: '%d datos copiados',
+                    1: '1 ligne copiée'
+                }
+            }
+
+     },
+    'responsive': true,   
+    dom: 'Plfrtip',
+    columnDefs: [
+               {
+                searchPanes: {
+                    show:false
+                },
+                targets: [0]
+            },
+              
+               {
+                searchPanes: {
+                    show:true
+                },
+                targets: [1]
+            },
+        
+             {
+                searchPanes: {
+                    show:false
+                },
+                targets: [2]
+            },
+
+            
+             {
+                searchPanes: {
+                    show:true
+                },
+                targets: [3]
+            },
+
+            
+           
+        ],
+    });
+
+
+
+ var container = $('<div id="container" class="d-flex  shadow-sm" ></div> </br>').insertBefore(table.table().container());
+ 
+    var chart = Highcharts.chart(container[0], {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie',
+        },
+        title: {
+            text: 'Porcentaje de morbilidad CIE10, según número de consultas',
+        },
+           accessibility: {
+             point: {
+             valueSuffix: '%'
+         }
+         },
+
+          plotOptions: {
+             pie: {
+             allowPointSelect: true,
+             cursor: 'pointer',
+               dataLabels: {
+        enabled: true,
+        format: '{point.name}</b>: {point.percentage:.1f} % </b>',
+         connectorColor: 'silver',
+         distance: +10,
+      }
+    }
+  },
+
+ 
+        series: [
+            {    name: "Nº Consultas",
+                 data: chartData(table),
+            },
+        ],
+    });
+
+
+     table.on('draw', function () {
+        chart.series[0].setData(chartData(table));
+    });
+
+    
+
+});
+
+
+function chartData(table) {
+    var counts = {};
+ 
+    // Count the number of entries for each position
+    table
+        .column(3, { search: 'applied' })
+        .data()
+        .each(function (val) {
+            if (counts[val]  ) {
+                counts[val] += 1;
+            } else {
+                counts[val] = 1;
+            }
+        });
+ 
+    // And map it to the format highcharts uses
+    return $.map(counts, function (val, key) {
+        return {
+            name: key,
+            y: val,
+        };
+    });
+}
+
+</script>
+
+   {% endblock %}
+
+

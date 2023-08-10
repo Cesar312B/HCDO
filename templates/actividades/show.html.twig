@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actividades{% endblock %}
+
+{% block body %}
+    <h1>Actividades</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ actividade.id }}</td>
+            </tr>
+            <tr>
+                <th>Actividad</th>
+                <td>{{ actividade.actividad }}</td>
+            </tr>
+            <tr>
+                <th>Riesgos</th>
+                <td>{{ actividade.riesgos ? actividade.riesgos|json_encode : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('actividades_index') }}">Regresar</a>
+
+    <a href="{{ path('actividades_edit', {'id': actividade.id}) }}">Editar</a>
+
+    {{ include('actividades/_delete_form.html.twig') }}
+{% endblock %}

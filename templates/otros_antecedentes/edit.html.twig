@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit OtrosAntecedentes{% endblock %}
+
+{% block body %}
+<div class="card-body p-5 bg-white rounded">
+     <h6>Editar  Otros Antecedentes del Paciente: <b>{{paciente.pnombre}} {{paciente.snombre}} {{paciente.papellido}} {{paciente.sapellido}}</h6></b>
+{% for flash_message in app.session.flashbag.get('exito') %}
+    <div class="alert alert-success" role="alert">
+       {{ flash_message }}
+</div>
+{% endfor %}
+    {{ include('otros_antecedentes/_form.html.twig', {'button_label': 'Actualizar'}) }}
+
+      <a href="{{ path('otros_antecedentes_new', {id: paciente.id, c:consulta.id}) }}">
+      <button class="btn btn-block btn-outline-primary btn-sm">
+        <i class="fas fa-chevron-left">Regresar a la ficha médica</i>
+      </button>
+      </a>
+</div>
+{% endblock %}

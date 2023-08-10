@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ExamenFisico{% endblock %}
+
+{% block body %}
+    <h1>ExamenFisico</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ examen_fisico.id }}</td>
+            </tr>
+            <tr>
+                <th>Piel</th>
+                <td>{{ examen_fisico.piel }}</td>
+            </tr>
+            <tr>
+                <th>Ojos</th>
+                <td>{{ examen_fisico.ojos }}</td>
+            </tr>
+            <tr>
+                <th>Oido</th>
+                <td>{{ examen_fisico.oido }}</td>
+            </tr>
+            <tr>
+                <th>Oro_farinje</th>
+                <td>{{ examen_fisico.oroFarinje }}</td>
+            </tr>
+            <tr>
+                <th>Nariz</th>
+                <td>{{ examen_fisico.nariz }}</td>
+            </tr>
+            <tr>
+                <th>Cuello</th>
+                <td>{{ examen_fisico.cuello }}</td>
+            </tr>
+            <tr>
+                <th>Torax1</th>
+                <td>{{ examen_fisico.torax1 }}</td>
+            </tr>
+            <tr>
+                <th>Torax2</th>
+                <td>{{ examen_fisico.torax2 }}</td>
+            </tr>
+            <tr>
+                <th>Abdomen</th>
+                <td>{{ examen_fisico.abdomen }}</td>
+            </tr>
+            <tr>
+                <th>Columna</th>
+                <td>{{ examen_fisico.columna }}</td>
+            </tr>
+            <tr>
+                <th>Pelvis</th>
+                <td>{{ examen_fisico.pelvis }}</td>
+            </tr>
+            <tr>
+                <th>Extremidades</th>
+                <td>{{ examen_fisico.extremidades }}</td>
+            </tr>
+            <tr>
+                <th>Neurologico</th>
+                <td>{{ examen_fisico.neurologico }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ examen_fisico.observaciones }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('examen_fisico_index') }}">back to list</a>
+
+    {{ include('examen_fisico/_delete_form.html.twig') }}
+{% endblock %}
